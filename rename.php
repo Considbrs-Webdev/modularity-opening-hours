@@ -116,6 +116,9 @@ foreach ($filesToProcess as $file) {
         // ACF/other lowercase references
         'boilerplate-module' => $variants['kebab'] . '-module',
         'boilerplate' => $variants['kebab'],
+        
+        // Composer package name (vendor stays the same)
+        'considbrs-webdev/modularity-boilerplate' => 'considbrs-webdev/modularity-' . $variants['kebab'],
     ];
     
     foreach ($replacements as $search => $replace) {

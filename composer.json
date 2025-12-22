@@ -1,12 +1,12 @@
 {
-    "name": "helsingborg-stad/modularity-boilerplate",
+    "name": "considbrs-webdev/modularity-boilerplate",
     "description": "Modularity Boilerplate Module",
     "type": "wordpress-plugin",
     "license": "MIT",
     "authors": [
         {
-            "name": "Starter",
-            "email": "starter@helsingborg.se"
+            "name": "Considbrs-Webdev",
+            "email": "webdev@considbrs.se"
         }
     ],
     "minimum-stability": "dev",
