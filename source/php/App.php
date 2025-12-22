@@ -2,6 +2,8 @@
 
 namespace ModularityBoilerplate;
 
+use ModularityBoilerplate\Helper\CacheBust;
+
 /**
  * Class App
  * 
@@ -17,9 +19,27 @@ class App
         // Register module with Modularity
         add_action('init', [$this, 'registerModule']);
 
-        // Example: Add more initializations here
-        // new SomeOtherClass();
-        // new Admin\Settings();
+        // Enqueue styles
+        add_action('wp_enqueue_scripts', [$this, 'enqueueStyles']);
+    }
+
+    /**
+     * Enqueue styles
+     * 
+     * @return void
+     */
+    public function enqueueStyles(): void
+    {
+        $styleFile = CacheBust::name('css/modularity-boilerplate.css');
+
+        if ($styleFile) {
+            wp_enqueue_style(
+                'modularity-boilerplate',
+                MODULARITYBOILERPLATE_URL . '/assets/dist/' . $styleFile,
+                [],
+                null
+            );
+        }
     }
 
     /**
@@ -27,7 +47,7 @@ class App
      * 
      * @return void
      */
-    public function registerModule()
+    public function registerModule(): void
     {
         if (function_exists('modularity_register_module')) {
             modularity_register_module(

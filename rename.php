@@ -80,6 +80,7 @@ $filesToProcess = [
     'source/php/Module/views/boilerplate.blade.php',
     'source/php/AcfFields/json/boilerplate-module.json',
     'source/php/Helper/Utils.php',
+    'source/php/Helper/CacheBust.php',
     'source/sass/modularity-boilerplate.scss',
     'composer.json',
     'package.json',
