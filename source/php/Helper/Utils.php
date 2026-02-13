@@ -1,6 +1,6 @@
 <?php
 
-namespace ModularityBoilerplate\Helper;
+namespace ModularityOpeningHours\Helper;
 
 /**
  * Class Utils
@@ -8,7 +8,7 @@ namespace ModularityBoilerplate\Helper;
  * Example helper class demonstrating how to add utility functions
  * to your Modularity plugin.
  * 
- * @package ModularityBoilerplate\Helper
+ * @package ModularityOpeningHours\Helper
  */
 class Utils
 {
@@ -32,7 +32,7 @@ class Utils
      */
     public static function getOption(string $key, $default = null)
     {
-        return get_option('modularity_boilerplate_' . $key, $default);
+        return get_option('modularity_opening-hours_' . $key, $default);
     }
 
     /**

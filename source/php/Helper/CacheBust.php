@@ -1,13 +1,13 @@
 <?php
 
-namespace ModularityBoilerplate\Helper;
+namespace ModularityOpeningHours\Helper;
 
 /**
  * Class CacheBust
  * 
  * Handles resolving hashed filenames from the Vite manifest.
  * 
- * @package ModularityBoilerplate\Helper
+ * @package ModularityOpeningHours\Helper
  */
 class CacheBust
 {
@@ -16,7 +16,7 @@ class CacheBust
     /**
      * Get the hashed filename from the manifest
      *
-     * @param string $name The original filename (e.g., 'css/modularity-boilerplate.css')
+     * @param string $name The original filename (e.g., 'css/modularity-opening-hours.css')
      * @return string|false The hashed filename or false if not found
      */
     public static function name(string $name): string|false
@@ -41,7 +41,7 @@ class CacheBust
             return self::$manifest;
         }
 
-        $manifestPath = MODULARITYBOILERPLATE_PATH . 'assets/dist/manifest.json';
+        $manifestPath = MODULARITYOPENINGHOURS_PATH . 'assets/dist/manifest.json';
 
         if (file_exists($manifestPath)) {
             $manifestContent = file_get_contents($manifestPath);

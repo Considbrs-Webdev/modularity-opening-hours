@@ -1,7 +1,7 @@
 import { createViteConfig } from "vite-config-factory";
 
 const entries = {
-    'css/modularity-boilerplate': './source/sass/modularity-boilerplate.scss',
+    'css/modularity-opening-hours': './source/sass/modularity-opening-hours.scss',
 };
 
 export default createViteConfig(entries, {

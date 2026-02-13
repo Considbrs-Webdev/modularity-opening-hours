@@ -2,22 +2,22 @@
 
 declare(strict_types=1);
 
-namespace ModularityBoilerplate\Module;
+namespace ModularityOpeningHours\Module;
 
 /**
- * Class Boilerplate
- * @package ModularityBoilerplate\Module
+ * Class OpeningHours
+ * @package ModularityOpeningHours\Module
  */
-class Boilerplate extends \Modularity\Module
+class OpeningHours extends \Modularity\Module
 {
-    public $slug = 'boilerplate';
+    public $slug = 'opening-hours';
     public $supports = [];
 
     public function init(): void
     {
-        $this->nameSingular = __('Boilerplate', 'modularity-boilerplate');
-        $this->namePlural = __('Boilerplate', 'modularity-boilerplate');
-        $this->description = __('A boilerplate module.', 'modularity-boilerplate');
+        $this->nameSingular = __('OpeningHours', 'modularity-opening-hours');
+        $this->namePlural = __('OpeningHours', 'modularity-opening-hours');
+        $this->description = __('A opening-hours module.', 'modularity-opening-hours');
     }
 
     /**
@@ -42,7 +42,7 @@ class Boilerplate extends \Modularity\Module
      */
     public function template(): string
     {
-        return 'boilerplate.blade.php';
+        return 'opening-hours.blade.php';
     }
 
     /**
@@ -51,7 +51,7 @@ class Boilerplate extends \Modularity\Module
      */
     public function style(): void
     {
-        $this->wpEnqueue?->add('css/modularity-boilerplate.css', [], '1.0.0');
+        $this->wpEnqueue?->add('css/modularity-opening-hours.css', [], '1.0.0');
     }
 
     /**

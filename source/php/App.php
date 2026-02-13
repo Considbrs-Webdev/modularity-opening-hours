@@ -1,8 +1,8 @@
 <?php
 
-namespace ModularityBoilerplate;
+namespace ModularityOpeningHours;
 
-use ModularityBoilerplate\Helper\CacheBust;
+use ModularityOpeningHours\Helper\CacheBust;
 
 /**
  * Class App
@@ -10,7 +10,7 @@ use ModularityBoilerplate\Helper\CacheBust;
  * Main application bootstrap class.
  * Initialize your plugin components here.
  * 
- * @package ModularityBoilerplate
+ * @package ModularityOpeningHours
  */
 class App
 {
@@ -30,12 +30,12 @@ class App
      */
     public function enqueueStyles(): void
     {
-        $styleFile = CacheBust::name('css/modularity-boilerplate.css');
+        $styleFile = CacheBust::name('css/modularity-opening-hours.css');
 
         if ($styleFile) {
             wp_enqueue_style(
-                'modularity-boilerplate',
-                MODULARITYBOILERPLATE_URL . '/assets/dist/' . $styleFile,
+                'modularity-opening-hours',
+                MODULARITYOPENINGHOURS_URL . '/assets/dist/' . $styleFile,
                 [],
                 null
             );
@@ -51,8 +51,8 @@ class App
     {
         if (function_exists('modularity_register_module')) {
             modularity_register_module(
-                MODULARITYBOILERPLATE_MODULE_PATH,
-                'Boilerplate',
+                MODULARITYOPENINGHOURS_MODULE_PATH,
+                'OpeningHours',
             );
         }
     }

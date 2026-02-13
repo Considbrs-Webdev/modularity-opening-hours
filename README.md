@@ -1,6 +1,6 @@
-# Modularity Boilerplate
+# Modularity OpeningHours
 
-A boilerplate for creating Modularity modules.
+A opening-hours for creating Modularity modules.
 
 ## Getting Started
 
@@ -21,13 +21,13 @@ A boilerplate for creating Modularity modules.
 ## Structure
 
 ```
-├── modularity-boilerplate.php  # Main plugin file
+├── modularity-opening-hours.php  # Main plugin file
 ├── source/
 │   ├── php/
 │   │   ├── App.php             # Application bootstrap
 │   │   ├── AcfFields/          # ACF field definitions
 │   │   └── Module/             # Module classes
-│   │       ├── Boilerplate.php # Main module class
+│   │       ├── OpeningHours.php # Main module class
 │   │       ├── assets/         # Module assets (icons)
 │   │       └── views/          # Blade templates
 │   └── sass/                   # SCSS files
@@ -37,9 +37,9 @@ A boilerplate for creating Modularity modules.
 
 ## Creating Your Module
 
-1. Rename `modularity-boilerplate.php` and update the plugin header
+1. Rename `modularity-opening-hours.php` and update the plugin header
 2. Update the namespace in `composer.json` and all PHP files
-3. Rename `source/php/Module/Boilerplate.php` to your module name
+3. Rename `source/php/Module/OpeningHours.php` to your module name
 4. Update ACF fields in `source/php/AcfFields/json/`
 5. Customize views in `source/php/Module/views/`
 6. Add styles in `source/sass/`

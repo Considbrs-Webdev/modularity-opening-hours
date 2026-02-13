@@ -8,7 +8,7 @@
     @endtypography
 @endif
 
-<div class="mod-boilerplate">
+<div class="mod-opening-hours">
     {{-- Add your module content here --}}
 </div>
 

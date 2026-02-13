@@ -1,6 +1,6 @@
 {
-    "name": "considbrs-webdev/modularity-boilerplate",
-    "description": "Modularity Boilerplate Module",
+    "name": "considbrs-webdev/modularity-opening-hours",
+    "description": "Modularity OpeningHours Module",
     "type": "wordpress-plugin",
     "license": "MIT",
     "authors": [
@@ -41,7 +41,7 @@
     },
     "autoload": {
         "psr-4": {
-            "ModularityBoilerplate\\": "source/php/"
+            "ModularityOpeningHours\\": "source/php/"
         }
     },
     "config": {

@@ -1,18 +1,18 @@
 {
-    "name": "@helsingborg-stad/modularity-boilerplate",
+    "name": "@helsingborg-stad/modularity-opening-hours",
     "version": "1.0.0",
-    "description": "Modularity Boilerplate Module",
+    "description": "Modularity OpeningHours Module",
     "main": "",
     "repository": {
         "type": "git",
-        "url": "https://github.com/helsingborg-stad/modularity-boilerplate"
+        "url": "https://github.com/helsingborg-stad/modularity-opening-hours"
     },
     "author": "Starter",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/helsingborg-stad/modularity-boilerplate/issues"
+        "url": "https://github.com/helsingborg-stad/modularity-opening-hours/issues"
     },
-    "homepage": "https://github.com/helsingborg-stad/modularity-boilerplate",
+    "homepage": "https://github.com/helsingborg-stad/modularity-opening-hours",
     "scripts": {
         "test": "jest --coverage --maxWorkers=50%",
         "dev": "vite",

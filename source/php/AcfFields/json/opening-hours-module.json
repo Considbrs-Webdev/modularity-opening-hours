@@ -1,11 +1,11 @@
 [{
-    "key": "group_boilerplate_module",
-    "title": "Boilerplate Module",
+    "key": "group_opening-hours_module",
+    "title": "OpeningHours Module",
     "fields": [
         {
-            "key": "field_boilerplate_content",
+            "key": "field_opening-hours_content",
             "label": "Content",
-            "name": "boilerplate_content",
+            "name": "opening-hours_content",
             "aria-label": "",
             "type": "wysiwyg",
             "instructions": "Add your content here.",
@@ -28,14 +28,14 @@
             {
                 "param": "post_type",
                 "operator": "==",
-                "value": "mod-boilerplate"
+                "value": "mod-opening-hours"
             }
         ],
         [
             {
                 "param": "block",
                 "operator": "==",
-                "value": "acf/boilerplate"
+                "value": "acf/opening-hours"
             }
         ]
     ],
