@@ -1,4 +1,92 @@
 .mod-opening-hours {
-    // Add your module styles here
+    &__week-header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.25rem;
+    }
+
+    &__week-title {
+        margin: 0;
+        font-size: 1.125rem;
+        font-weight: 600;
+    }
+
+    &__paging {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-left: auto;
+    }
+
+    &__paging-link {
+        padding: 0.35rem 0.75rem;
+        font-size: 0.875rem;
+        font-family: inherit;
+        text-decoration: none;
+        border: 1px solid currentColor;
+        border-radius: 4px;
+        background: transparent;
+        cursor: pointer;
+
+        &:hover:not(:disabled) {
+            text-decoration: underline;
+        }
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    }
+
+    &__paging-info {
+        font-size: 0.875rem;
+        color: #666;
+    }
+
+    &__list {
+        display: grid;
+        margin: 0;
+        border: 1px solid #e0e0e0;
+        border-radius: 6px;
+        overflow: hidden;
+    }
+
+    &__row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        margin: 0;
+        border-bottom: 1px solid #e0e0e0;
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+
+    &__day {
+        padding: 0.6rem 1rem;
+        margin: 0;
+        font-weight: 500;
+        background: #f5f5f5;
+    }
+
+    &__slots {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.25rem;
+        margin: 0;
+        padding: 0.6rem 1rem;
+    }
+
+    &__closed {
+        color: #666;
+        font-style: italic;
+    }
+
+    &__range {
+        white-space: nowrap;
+    }
 }
 
