@@ -31,9 +31,12 @@ class OpeningHours extends \Modularity\Module
             $this->getFields(),
         ));
 
-        $weeks = $this->getOpeningWeeks();
+        $year = $this->getYear();
+        $weeks = $this->getOpeningWeeks($year);
         $currentIndex = $this->getCurrentWeekIndex($weeks);
         $data['weeks'] = $weeks;
+        $data['weeksJson'] = json_encode($weeks, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP);
+        $data['year'] = $year;
         $data['currentWeekIndex'] = $currentIndex;
         $data['currentWeek'] = $weeks[$currentIndex] ?? null;
         $data['totalWeeks'] = count($weeks);
@@ -46,19 +49,33 @@ class OpeningHours extends \Modularity\Module
     /**
      * @return int
      */
+    private function getYear(): int
+    {
+        if (isset($_GET['year']) && is_numeric($_GET['year'])) {
+            return (int) $_GET['year'];
+        }
+        return (int) (new \DateTimeImmutable())->format('Y');
+    }
+
+    /**
+     * @return int
+     */
     private function getCurrentWeekIndex(array $weeks): int
     {
         if (empty($weeks)) {
             return 0;
         }
-        $requested = isset($_GET['week']) ? (int) $_GET['week'] : 0;
-        return max(0, min($requested, count($weeks) - 1));
+        if (isset($_GET['week']) && is_numeric($_GET['week'])) {
+            return max(0, min((int) $_GET['week'], count($weeks) - 1));
+        }
+        $isoWeek = (int) (new \DateTimeImmutable())->format('W');
+        return max(0, min($isoWeek - 1, count($weeks) - 1));
     }
 
     /**
      * @return array<int, array{weekLabel: string, days: array<int, array{name: string, slots: array}>}>
      */
-    private function getOpeningWeeks(): array
+    private function getOpeningWeeks(int $year): array
     {
         $weekSlots = [
             ['name' => __('Monday', 'modularity-opening-hours'), 'slots' => [['open' => '09:00', 'close' => '12:00'], ['open' => '13:00', 'close' => '17:00']]],
@@ -71,9 +88,10 @@ class OpeningHours extends \Modularity\Module
         ];
 
         $weeks = [];
-        $base = new \DateTimeImmutable('monday this week');
-        for ($i = -1; $i <= 3; $i++) {
-            $weekStart = $base->modify("{$i} week");
+        $weekOne = new \DateTimeImmutable("{$year}-01-04");
+        $monday = $weekOne->modify('monday this week');
+        for ($i = 0; $i < 52; $i++) {
+            $weekStart = $monday->modify("+{$i} weeks");
             $weekEnd = $weekStart->modify('+6 days');
             $weeks[] = [
                 'weekLabel' => sprintf(
