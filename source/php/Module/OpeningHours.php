@@ -60,7 +60,7 @@ class OpeningHours extends \Modularity\Module
         if (isset($raw[0]) && is_array($raw[0])) {
             return array_values($raw);
         }
-        if (array_key_exists('weekNo', $raw)) {
+        if (array_key_exists('weekNoFrom', $raw) || array_key_exists('weekNoTo', $raw)) {
             return [$raw];
         }
         return [];
@@ -119,41 +119,85 @@ class OpeningHours extends \Modularity\Module
     }
 
     /**
+     * Parse date string from ACF date picker (d/m/Y format)
+     * @param string $dateStr
+     * @return \DateTimeImmutable|null
+     */
+    private function parseDate(string $dateStr): ?\DateTimeImmutable
+    {
+        if ($dateStr === '') {
+            return null;
+        }
+        $dt = \DateTimeImmutable::createFromFormat('d/m/Y', $dateStr);
+        if ($dt !== false) {
+            return $dt->setTime(0, 0, 0);
+        }
+        return null;
+    }
+
+    /**
+     * Get localized month name (short)
+     * @param int $month
+     * @return string
+     */
+    private function getMonthName(int $month): string
+    {
+        $months = [
+            1 => __('Jan', 'modularity-opening-hours'),
+            2 => __('Feb', 'modularity-opening-hours'),
+            3 => __('Mar', 'modularity-opening-hours'),
+            4 => __('Apr', 'modularity-opening-hours'),
+            5 => __('May', 'modularity-opening-hours'),
+            6 => __('Jun', 'modularity-opening-hours'),
+            7 => __('Jul', 'modularity-opening-hours'),
+            8 => __('Aug', 'modularity-opening-hours'),
+            9 => __('Sep', 'modularity-opening-hours'),
+            10 => __('Oct', 'modularity-opening-hours'),
+            11 => __('Nov', 'modularity-opening-hours'),
+            12 => __('Dec', 'modularity-opening-hours'),
+        ];
+        return $months[$month] ?? '';
+    }
+
+    /**
      * @param array<int, array> $repeater
      * @param int $year
-     * @return array<int, array{weekLabel: string, weekNo: int, days: array<int, array{name: string, slots: array}>}>
+     * @return array<int, array{weekLabel: string, weekNo: int, days: array<int, array{name: string, date: string, slots: array}>}>
      */
     private function buildWeeksFromRepeater(array $repeater, int $year): array
     {
         $weeks = [];
         $dayNames = [
-            'monday' => __('Monday', 'modularity-opening-hours'),
-            'tuesday' => __('Tuesday', 'modularity-opening-hours'),
-            'wednesday' => __('Wednesday', 'modularity-opening-hours'),
-            'thursday' => __('Thursday', 'modularity-opening-hours'),
-            'friday' => __('Friday', 'modularity-opening-hours'),
-            'saturday' => __('Saturday', 'modularity-opening-hours'),
-            'sunday' => __('Sunday', 'modularity-opening-hours'),
+            1 => __('Monday', 'modularity-opening-hours'),
+            2 => __('Tuesday', 'modularity-opening-hours'),
+            3 => __('Wednesday', 'modularity-opening-hours'),
+            4 => __('Thursday', 'modularity-opening-hours'),
+            5 => __('Friday', 'modularity-opening-hours'),
+            6 => __('Saturday', 'modularity-opening-hours'),
+            7 => __('Sunday', 'modularity-opening-hours'),
         ];
+
+        // Collect all special opening hours by date from all repeater rows
+        $allSpecialHours = [];
 
         foreach ($repeater as $row) {
             if (!is_array($row)) {
                 continue;
             }
 
-            $weekNo = (int) ($row['weekNo'] ?? 0);
-            if ($weekNo < 1 || $weekNo > 53) {
+            $weekNoFrom = (int) ($row['weekNoFrom'] ?? 0);
+            $weekNoTo = (int) ($row['weekNoTo'] ?? 0);
+
+            // Validate week numbers
+            if ($weekNoFrom < 1 || $weekNoFrom > 53) {
                 continue;
             }
-
-            // Get repeat count (default 0 = just this week, no additional repeats)
-            $repeatCount = (int) ($row['repeatThisPatternForXWeeks'] ?? 0);
-            if ($repeatCount < 0) {
-                $repeatCount = 0;
+            if ($weekNoTo < 1 || $weekNoTo > 53) {
+                $weekNoTo = $weekNoFrom;
             }
-
-            // Total weeks = 1 (the starting week) + repeatCount (additional weeks)
-            $totalWeeks = 1 + $repeatCount;
+            if ($weekNoTo < $weekNoFrom) {
+                $weekNoTo = $weekNoFrom;
+            }
 
             // Base hours for Mon-Fri
             $monFriOpen = $this->normalizeTime((string) ($row['opens'] ?? ''));
@@ -178,68 +222,77 @@ class OpeningHours extends \Modularity\Module
                 ? [['closed' => true]]
                 : [['open' => $sunOpen, 'close' => $sunClose]];
 
-            // Special opening hours overrides (per day)
-            $specialHours = $row['specialOpeningHoursThisWeek'] ?? [];
+            // Collect special opening hours (by date) from this row
+            $specialHours = $row['specialOpeningHours'] ?? [];
             $specialHours = is_array($specialHours) ? $specialHours : [];
-
-            // Build base days structure
-            $baseDays = [
-                'monday' => $monFriSlots,
-                'tuesday' => $monFriSlots,
-                'wednesday' => $monFriSlots,
-                'thursday' => $monFriSlots,
-                'friday' => $monFriSlots,
-                'saturday' => $satSlots,
-                'sunday' => $sunSlots,
-            ];
-
-            // Apply special hours overrides
+            
             foreach ($specialHours as $special) {
                 if (!is_array($special)) {
                     continue;
                 }
-                $dayKey = $special['dayOfTheWeek'] ?? null;
-                if ($dayKey && array_key_exists($dayKey, $baseDays)) {
-                    $specialOpen = $this->normalizeTime((string) ($special['opensThisDay'] ?? ''));
-                    $specialClose = $this->normalizeTime((string) ($special['closesThisDay'] ?? ''));
-                    if ($specialOpen !== '' && $specialClose !== '') {
-                        $baseDays[$dayKey] = [['open' => $specialOpen, 'close' => $specialClose]];
-                    } else {
-                        $baseDays[$dayKey] = [['closed' => true]];
-                    }
+                $specialDate = $this->parseDate((string) ($special['specialOpeningDate'] ?? ''));
+                if ($specialDate === null) {
+                    continue;
+                }
+                $dateKey = $specialDate->format('Y-m-d');
+                $specialOpen = $this->normalizeTime((string) ($special['opensThisDay'] ?? ''));
+                $specialClose = $this->normalizeTime((string) ($special['closesThisDay'] ?? ''));
+                
+                if ($specialOpen !== '' && $specialClose !== '') {
+                    $allSpecialHours[$dateKey] = [['open' => $specialOpen, 'close' => $specialClose]];
+                } else {
+                    $allSpecialHours[$dateKey] = [['closed' => true]];
                 }
             }
 
             // Generate weeks for the range
-            for ($i = 0; $i < $totalWeeks; $i++) {
-                $currentWeekNo = $weekNo + $i;
-                if ($currentWeekNo > 53) {
-                    break;
-                }
-
+            for ($currentWeekNo = $weekNoFrom; $currentWeekNo <= $weekNoTo; $currentWeekNo++) {
                 $weekOne = new \DateTimeImmutable("{$year}-01-04");
                 $monday = $weekOne->modify('monday this week')->modify('+' . ($currentWeekNo - 1) . ' weeks');
                 $weekEnd = $monday->modify('+6 days');
+                
                 $weekLabel = sprintf(
                     __('Week %1$s %2$s (%3$s – %4$s)', 'modularity-opening-hours'),
                     (string) $currentWeekNo,
                     (string) $year,
-                    $monday->format('j M'),
-                    $weekEnd->format('j M')
+                    $monday->format('j') . ' ' . $this->getMonthName((int) $monday->format('n')),
+                    $weekEnd->format('j') . ' ' . $this->getMonthName((int) $weekEnd->format('n'))
                 );
+
+                // Build days with actual dates
+                $days = [];
+                for ($dayOffset = 0; $dayOffset < 7; $dayOffset++) {
+                    $dayDate = $monday->modify("+{$dayOffset} days");
+                    $dayOfWeek = (int) $dayDate->format('N');
+                    $dateKey = $dayDate->format('Y-m-d');
+
+                    // Determine base slots for this day of week
+                    if ($dayOfWeek >= 1 && $dayOfWeek <= 5) {
+                        $baseSlots = $monFriSlots;
+                    } elseif ($dayOfWeek === 6) {
+                        $baseSlots = $satSlots;
+                    } else {
+                        $baseSlots = $sunSlots;
+                    }
+
+                    // Check for special hours override for this specific date
+                    $slots = $allSpecialHours[$dateKey] ?? $baseSlots;
+
+                    // Format date as "17 feb" (day + short month name)
+                    $formattedDate = $dayDate->format('j') . ' ' . $this->getMonthName((int) $dayDate->format('n'));
+
+                    $days[] = [
+                        'name' => $dayNames[$dayOfWeek],
+                        'date' => $formattedDate,
+                        'dateKey' => $dateKey,
+                        'slots' => $slots,
+                    ];
+                }
 
                 $weeks[] = [
                     'weekLabel' => $weekLabel,
                     'weekNo' => $currentWeekNo,
-                    'days' => [
-                        ['name' => $dayNames['monday'], 'slots' => $baseDays['monday']],
-                        ['name' => $dayNames['tuesday'], 'slots' => $baseDays['tuesday']],
-                        ['name' => $dayNames['wednesday'], 'slots' => $baseDays['wednesday']],
-                        ['name' => $dayNames['thursday'], 'slots' => $baseDays['thursday']],
-                        ['name' => $dayNames['friday'], 'slots' => $baseDays['friday']],
-                        ['name' => $dayNames['saturday'], 'slots' => $baseDays['saturday']],
-                        ['name' => $dayNames['sunday'], 'slots' => $baseDays['sunday']],
-                    ],
+                    'days' => $days,
                 ];
             }
         }
@@ -257,7 +310,19 @@ class OpeningHours extends \Modularity\Module
             }
         }
 
-        return array_reverse($uniqueWeeks);
+        $result = array_reverse($uniqueWeeks);
+
+        // Apply special hours to all weeks (for dates that fall within their range)
+        foreach ($result as &$week) {
+            foreach ($week['days'] as &$day) {
+                $dateKey = $day['dateKey'];
+                if (isset($allSpecialHours[$dateKey])) {
+                    $day['slots'] = $allSpecialHours[$dateKey];
+                }
+            }
+        }
+
+        return $result;
     }
 
     /**

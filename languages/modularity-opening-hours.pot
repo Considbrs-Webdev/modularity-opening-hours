@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-02-17T13:29:35+00:00\n"
+"POT-Creation-Date: 2026-02-17T14:29:59+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: modularity-opening-hours\n"
@@ -29,111 +29,76 @@ msgstr ""
 msgid "Considbrs-Webdev"
 msgstr ""
 
-#: source/php/AcfFields/php/opening-hours-module.php:15
+#: source/php/AcfFields/php/opening-hours-module.php:9
 msgid "Opening Hours"
 msgstr ""
 
-#: source/php/AcfFields/php/opening-hours-module.php:19
+#: source/php/AcfFields/php/opening-hours-module.php:13
 msgid "Week"
 msgstr ""
 
-#: source/php/AcfFields/php/opening-hours-module.php:37
+#: source/php/AcfFields/php/opening-hours-module.php:31
 msgid "Add week"
 msgstr ""
 
-#: source/php/AcfFields/php/opening-hours-module.php:42
-msgid "Week no."
+#: source/php/AcfFields/php/opening-hours-module.php:36
+msgid "Week number (from)"
 msgstr ""
 
-#: source/php/AcfFields/php/opening-hours-module.php:65
+#: source/php/AcfFields/php/opening-hours-module.php:59
+msgid "Week number (to)"
+msgstr ""
+
+#: source/php/AcfFields/php/opening-hours-module.php:82
 msgid "Opens (Mon-Fri)"
 msgstr ""
 
-#: source/php/AcfFields/php/opening-hours-module.php:83
+#: source/php/AcfFields/php/opening-hours-module.php:100
 msgid "Closes (Mon-Fri)"
 msgstr ""
 
-#: source/php/AcfFields/php/opening-hours-module.php:101
+#: source/php/AcfFields/php/opening-hours-module.php:118
 msgid "Closed Saturday"
 msgstr ""
 
-#: source/php/AcfFields/php/opening-hours-module.php:122
+#: source/php/AcfFields/php/opening-hours-module.php:139
 msgid "Opens Saturday"
 msgstr ""
 
-#: source/php/AcfFields/php/opening-hours-module.php:148
+#: source/php/AcfFields/php/opening-hours-module.php:165
 msgid "Closes Saturday"
 msgstr ""
 
-#: source/php/AcfFields/php/opening-hours-module.php:174
+#: source/php/AcfFields/php/opening-hours-module.php:191
 msgid "Closed Sunday"
 msgstr ""
 
-#: source/php/AcfFields/php/opening-hours-module.php:195
+#: source/php/AcfFields/php/opening-hours-module.php:212
 msgid "Opens Sunday"
 msgstr ""
 
-#: source/php/AcfFields/php/opening-hours-module.php:221
+#: source/php/AcfFields/php/opening-hours-module.php:238
 msgid "Closes Sunday"
 msgstr ""
 
-#: source/php/AcfFields/php/opening-hours-module.php:247
-msgid "Special opening hours this week"
-msgstr ""
-
 #: source/php/AcfFields/php/opening-hours-module.php:264
-msgid "Lägg till rad"
+msgid "Special opening hours"
 msgstr ""
 
-#: source/php/AcfFields/php/opening-hours-module.php:269
-msgid "Day of the week"
-msgstr ""
-
-#: source/php/AcfFields/php/opening-hours-module.php:282
-#: source/php/Module/OpeningHours.php:130
-msgid "Monday"
-msgstr ""
-
-#: source/php/AcfFields/php/opening-hours-module.php:283
-#: source/php/Module/OpeningHours.php:131
-msgid "Tuesday"
-msgstr ""
-
-#: source/php/AcfFields/php/opening-hours-module.php:284
-#: source/php/Module/OpeningHours.php:132
-msgid "Wednesday"
-msgstr ""
-
-#: source/php/AcfFields/php/opening-hours-module.php:285
-#: source/php/Module/OpeningHours.php:133
-msgid "Thursday"
+#: source/php/AcfFields/php/opening-hours-module.php:281
+msgid "Add row"
 msgstr ""
 
 #: source/php/AcfFields/php/opening-hours-module.php:286
-#: source/php/Module/OpeningHours.php:134
-msgid "Friday"
+msgid "Date"
 msgstr ""
 
-#: source/php/AcfFields/php/opening-hours-module.php:287
-#: source/php/Module/OpeningHours.php:135
-msgid "Saturday"
-msgstr ""
-
-#: source/php/AcfFields/php/opening-hours-module.php:288
-#: source/php/Module/OpeningHours.php:136
-msgid "Sunday"
-msgstr ""
-
-#: source/php/AcfFields/php/opening-hours-module.php:298
+#: source/php/AcfFields/php/opening-hours-module.php:305
 msgid "Opens this day"
 msgstr ""
 
-#: source/php/AcfFields/php/opening-hours-module.php:316
+#: source/php/AcfFields/php/opening-hours-module.php:323
 msgid "Closes this day"
-msgstr ""
-
-#: source/php/AcfFields/php/opening-hours-module.php:337
-msgid "Repeat this pattern for X weeks"
 msgstr ""
 
 #: source/php/Module/OpeningHours.php:18
@@ -145,7 +110,35 @@ msgstr ""
 msgid "A opening-hours module."
 msgstr ""
 
-#: source/php/Module/OpeningHours.php:224
+#: source/php/Module/OpeningHours.php:148
+msgid "Monday"
+msgstr ""
+
+#: source/php/Module/OpeningHours.php:149
+msgid "Tuesday"
+msgstr ""
+
+#: source/php/Module/OpeningHours.php:150
+msgid "Wednesday"
+msgstr ""
+
+#: source/php/Module/OpeningHours.php:151
+msgid "Thursday"
+msgstr ""
+
+#: source/php/Module/OpeningHours.php:152
+msgid "Friday"
+msgstr ""
+
+#: source/php/Module/OpeningHours.php:153
+msgid "Saturday"
+msgstr ""
+
+#: source/php/Module/OpeningHours.php:154
+msgid "Sunday"
+msgstr ""
+
+#: source/php/Module/OpeningHours.php:234
 #, php-format
 msgid "Week %1$s %2$s (%3$s – %4$s)"
 msgstr ""

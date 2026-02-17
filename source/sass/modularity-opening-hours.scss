@@ -1,3 +1,7 @@
+.mod-opening-hours__list[hidden] {
+    display: none !important;
+}
+
 .mod-opening-hours {
     &__week-header {
         display: flex;
