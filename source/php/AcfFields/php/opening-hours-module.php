@@ -10,7 +10,7 @@ add_action( 'acf/include_fields', function() {
 	'fields' => array(
 		array(
 			'key' => 'field_69944a2d44994',
-			'label' => 'Week',
+			'label' => __( 'Week', 'modularity-opening-hours' ),
 			'name' => 'week_repeater',
 			'aria-label' => '',
 			'type' => 'repeater',
@@ -28,12 +28,12 @@ add_action( 'acf/include_fields', function() {
 			'min' => 0,
 			'max' => 0,
 			'collapsed' => '',
-			'button_label' => 'Lägg till rad',
+			'button_label' => __( 'Lägg till rad', 'modularity-opening-hours' ),
 			'rows_per_page' => 20,
 			'sub_fields' => array(
 				array(
 					'key' => 'field_69945c794499a',
-					'label' => 'Week no.',
+					'label' => __( 'Week no.', 'modularity-opening-hours' ),
 					'name' => 'week_no',
 					'aria-label' => '',
 					'type' => 'number',
@@ -56,7 +56,7 @@ add_action( 'acf/include_fields', function() {
 				),
 				array(
 					'key' => 'field_69944a6544995',
-					'label' => 'Opens (Mon-Fri)',
+					'label' => __( 'Opens (Mon-Fri)', 'modularity-opening-hours' ),
 					'name' => 'opens',
 					'aria-label' => '',
 					'type' => 'time_picker',
@@ -74,7 +74,7 @@ add_action( 'acf/include_fields', function() {
 				),
 				array(
 					'key' => 'field_69945b7944996',
-					'label' => 'Closes (Mon-Fri)',
+					'label' => __( 'Closes (Mon-Fri)', 'modularity-opening-hours' ),
 					'name' => 'closes',
 					'aria-label' => '',
 					'type' => 'time_picker',
@@ -92,7 +92,7 @@ add_action( 'acf/include_fields', function() {
 				),
 				array(
 					'key' => 'field_69945bb444997',
-					'label' => 'Closed Saturday',
+					'label' => __( 'Closed Saturday', 'modularity-opening-hours' ),
 					'name' => 'closed_saturday',
 					'aria-label' => '',
 					'type' => 'true_false',
@@ -113,7 +113,7 @@ add_action( 'acf/include_fields', function() {
 				),
 				array(
 					'key' => 'field_69945cf74499d',
-					'label' => 'Opens Saturday',
+					'label' => __( 'Opens Saturday', 'modularity-opening-hours' ),
 					'name' => 'opens_saturday',
 					'aria-label' => '',
 					'type' => 'time_picker',
@@ -139,7 +139,7 @@ add_action( 'acf/include_fields', function() {
 				),
 				array(
 					'key' => 'field_69945d234499e',
-					'label' => 'Closes Saturday',
+					'label' => __( 'Closes Saturday', 'modularity-opening-hours' ),
 					'name' => 'closes_saturday_',
 					'aria-label' => '',
 					'type' => 'time_picker',
@@ -165,7 +165,7 @@ add_action( 'acf/include_fields', function() {
 				),
 				array(
 					'key' => 'field_69945bd644998',
-					'label' => 'Closed Sunday',
+					'label' => __( 'Closed Sunday', 'modularity-opening-hours' ),
 					'name' => 'closed_sunday',
 					'aria-label' => '',
 					'type' => 'true_false',
@@ -186,7 +186,7 @@ add_action( 'acf/include_fields', function() {
 				),
 				array(
 					'key' => 'field_69945cac4499b',
-					'label' => 'Opens Sunday',
+					'label' => __( 'Opens Sunday', 'modularity-opening-hours' ),
 					'name' => 'opens_sunday',
 					'aria-label' => '',
 					'type' => 'time_picker',
@@ -212,7 +212,7 @@ add_action( 'acf/include_fields', function() {
 				),
 				array(
 					'key' => 'field_69945cc64499c',
-					'label' => 'Closes Sunday',
+					'label' => __( 'Closes Sunday', 'modularity-opening-hours' ),
 					'name' => 'closes_sunday',
 					'aria-label' => '',
 					'type' => 'time_picker',
@@ -238,7 +238,7 @@ add_action( 'acf/include_fields', function() {
 				),
 				array(
 					'key' => 'field_69945be944999',
-					'label' => 'Special opening hours this week',
+					'label' => __( 'Special opening hours this week', 'modularity-opening-hours' ),
 					'name' => 'special_opening_hours_this_week',
 					'aria-label' => '',
 					'type' => 'repeater',
@@ -256,7 +256,7 @@ add_action( 'acf/include_fields', function() {
 					'min' => 0,
 					'max' => 0,
 					'collapsed' => '',
-					'button_label' => 'Lägg till rad',
+					'button_label' => __( 'Lägg till rad', 'modularity-opening-hours' ),
 					'rows_per_page' => 20,
 					'sub_fields' => array(
 					),
