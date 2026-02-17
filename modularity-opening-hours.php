@@ -2,11 +2,9 @@
 
 /**
  * Plugin Name:       Modularity OpeningHours
- * Plugin URI:        https://github.com/helsingborg-stad/modularity-opening-hours
  * Description:       A opening-hours for creating Modularity modules.
  * Version: 1.0.0
- * Author:            Starter
- * Author URI:        https://github.com/helsingborg-stad
+ * Author:            Considbrs-Webdev
  * License:           MIT
  * License URI:       https://opensource.org/licenses/MIT
  * Text Domain:       modularity-opening-hours

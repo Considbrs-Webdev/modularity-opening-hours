@@ -1,52 +1,295 @@
-[{
-    "key": "group_opening-hours_module",
-    "title": "OpeningHours Module",
-    "fields": [
-        {
-            "key": "field_opening-hours_content",
-            "label": "Content",
-            "name": "opening-hours_content",
-            "aria-label": "",
-            "type": "wysiwyg",
-            "instructions": "Add your content here.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "tabs": "all",
-            "toolbar": "full",
-            "media_upload": 1,
-            "delay": 0
-        }
-    ],
-    "location": [
-        [
+[
+    {
+        "key": "group_69944a2c22d00",
+        "title": "Opening Hours",
+        "fields": [
             {
-                "param": "post_type",
-                "operator": "==",
-                "value": "mod-opening-hours"
+                "key": "field_69944a2d44994",
+                "label": "Week",
+                "name": "week_repeater",
+                "aria-label": "",
+                "type": "repeater",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "acfe_repeater_stylised_button": 0,
+                "layout": "table",
+                "pagination": 0,
+                "min": 0,
+                "max": 0,
+                "collapsed": "",
+                "button_label": "Lägg till rad",
+                "rows_per_page": 20,
+                "sub_fields": [
+                    {
+                        "key": "field_69945c794499a",
+                        "label": "Week no.",
+                        "name": "week_no",
+                        "aria-label": "",
+                        "type": "number",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "min": 1,
+                        "max": 53,
+                        "placeholder": "",
+                        "step": "",
+                        "prepend": "",
+                        "append": "",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_69944a6544995",
+                        "label": "Opens (Mon-Fri)",
+                        "name": "opens",
+                        "aria-label": "",
+                        "type": "time_picker",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        },
+                        "display_format": "H:i:s",
+                        "return_format": "H:i:s",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_69945b7944996",
+                        "label": "Closes (Mon-Fri)",
+                        "name": "closes",
+                        "aria-label": "",
+                        "type": "time_picker",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        },
+                        "display_format": "H:i:s",
+                        "return_format": "H:i:s",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_69945bb444997",
+                        "label": "Closed Saturday",
+                        "name": "closed_saturday",
+                        "aria-label": "",
+                        "type": "true_false",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        },
+                        "message": "",
+                        "default_value": 1,
+                        "ui": 0,
+                        "ui_on_text": "",
+                        "ui_off_text": "",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_69945cf74499d",
+                        "label": "Opens Saturday",
+                        "name": "opens_saturday",
+                        "aria-label": "",
+                        "type": "time_picker",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_69945bb444997",
+                                    "operator": "!=",
+                                    "value": "1"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        },
+                        "display_format": "g:i a",
+                        "return_format": "g:i a",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_69945d234499e",
+                        "label": "Closes Saturday",
+                        "name": "closes_saturday_",
+                        "aria-label": "",
+                        "type": "time_picker",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_69945bb444997",
+                                    "operator": "!=",
+                                    "value": "1"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        },
+                        "display_format": "g:i a",
+                        "return_format": "g:i a",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_69945bd644998",
+                        "label": "Closed Sunday",
+                        "name": "closed_sunday",
+                        "aria-label": "",
+                        "type": "true_false",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        },
+                        "message": "",
+                        "default_value": 1,
+                        "ui": 0,
+                        "ui_on_text": "",
+                        "ui_off_text": "",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_69945cac4499b",
+                        "label": "Opens Sunday",
+                        "name": "opens_sunday",
+                        "aria-label": "",
+                        "type": "time_picker",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_69945bd644998",
+                                    "operator": "!=",
+                                    "value": "1"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        },
+                        "display_format": "g:i a",
+                        "return_format": "g:i a",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_69945cc64499c",
+                        "label": "Closes Sunday",
+                        "name": "closes_sunday",
+                        "aria-label": "",
+                        "type": "time_picker",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_69945bd644998",
+                                    "operator": "!=",
+                                    "value": "1"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        },
+                        "display_format": "g:i a",
+                        "return_format": "g:i a",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_69945be944999",
+                        "label": "Special opening hours this week",
+                        "name": "special_opening_hours_this_week",
+                        "aria-label": "",
+                        "type": "repeater",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "acfe_repeater_stylised_button": 0,
+                        "layout": "table",
+                        "pagination": 0,
+                        "min": 0,
+                        "max": 0,
+                        "collapsed": "",
+                        "button_label": "Lägg till rad",
+                        "rows_per_page": 20,
+                        "sub_fields": [],
+                        "parent_repeater": "field_69944a2d44994"
+                    }
+                ]
             }
         ],
-        [
-            {
-                "param": "block",
-                "operator": "==",
-                "value": "acf/opening-hours"
-            }
-        ]
-    ],
-    "menu_order": 0,
-    "position": "normal",
-    "style": "default",
-    "label_placement": "top",
-    "instruction_placement": "label",
-    "hide_on_screen": "",
-    "active": true,
-    "description": "",
-    "show_in_rest": 0
-}]
-
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "mod-opening-hours"
+                }
+            ],
+            [
+                {
+                    "param": "block",
+                    "operator": "==",
+                    "value": "acf\/opening-hours"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "left",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 0,
+        "acfe_display_title": "",
+        "acfe_autosync": [
+            "json"
+        ],
+        "acfe_form": 0,
+        "acfe_meta": "",
+        "acfe_note": ""
+    }
+]

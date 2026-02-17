@@ -1,18 +1,18 @@
 {
-    "name": "@helsingborg-stad/modularity-opening-hours",
+    "name": "@Considbrs-Webdev/modularity-opening-hours",
     "version": "1.0.0",
     "description": "Modularity OpeningHours Module",
     "main": "",
     "repository": {
         "type": "git",
-        "url": "https://github.com/helsingborg-stad/modularity-opening-hours"
+        "url": "https://github.com/Considbrs-Webdev/modularity-opening-hours"
     },
     "author": "Starter",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/helsingborg-stad/modularity-opening-hours/issues"
+        "url": "https://github.com/Considbrs-Webdev/modularity-opening-hours/issues"
     },
-    "homepage": "https://github.com/helsingborg-stad/modularity-opening-hours",
+    "homepage": "https://github.com/Considbrs-Webdev/modularity-opening-hours",
     "scripts": {
         "test": "jest --coverage --maxWorkers=50%",
         "dev": "vite",
