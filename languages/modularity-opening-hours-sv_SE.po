@@ -1,12 +1,12 @@
-# Copyright (C) 2026 Starter
+# Copyright (C) 2026 Considbrs-Webdev
 # This file is distributed under the MIT.
 msgid ""
 msgstr ""
 "Project-Id-Version: Modularity OpeningHours 1.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/modularity-"
-"boilerplate\n"
-"POT-Creation-Date: 2026-02-13T13:50:22+00:00\n"
-"PO-Revision-Date: 2026-02-13 14:54+0100\n"
+"opening-hours\n"
+"POT-Creation-Date: 2026-02-17T13:29:35+00:00\n"
+"PO-Revision-Date: 2026-02-17 14:32+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv_SE\n"
@@ -19,65 +19,134 @@ msgstr ""
 #. Plugin Name of the plugin
 #: modularity-opening-hours.php
 msgid "Modularity OpeningHours"
-msgstr ""
-
-#. Plugin URI of the plugin
-#: modularity-opening-hours.php
-msgid "https://github.com/helsingborg-stad/modularity-opening-hours"
-msgstr ""
+msgstr "Modularity Öppettider"
 
 #. Description of the plugin
 #: modularity-opening-hours.php
-msgid "A opening-hours for creating Modularity modules."
-msgstr ""
+msgid "A module for displaying opening hours."
+msgstr "En modul för att visa öppettider"
 
 #. Author of the plugin
 #: modularity-opening-hours.php
-msgid "Starter"
+msgid "Considbrs-Webdev"
 msgstr ""
 
-#. Author URI of the plugin
-#: modularity-opening-hours.php
-msgid "https://github.com/helsingborg-stad"
+#: source/php/AcfFields/php/opening-hours-module.php:15
+msgid "Opening Hours"
+msgstr "Öppettider"
+
+#: source/php/AcfFields/php/opening-hours-module.php:19
+msgid "Week"
+msgstr "Vecka"
+
+#: source/php/AcfFields/php/opening-hours-module.php:37
+msgid "Add week"
+msgstr "Lägg till vecka"
+
+#: source/php/AcfFields/php/opening-hours-module.php:42
+msgid "Week no."
+msgstr "Veckonummer"
+
+#: source/php/AcfFields/php/opening-hours-module.php:65
+msgid "Opens (Mon-Fri)"
+msgstr "Öppnar (mån-fre)"
+
+#: source/php/AcfFields/php/opening-hours-module.php:83
+msgid "Closes (Mon-Fri)"
+msgstr "Stänger (mån-fre)"
+
+#: source/php/AcfFields/php/opening-hours-module.php:101
+msgid "Closed Saturday"
+msgstr "Stängt lördag"
+
+#: source/php/AcfFields/php/opening-hours-module.php:122
+msgid "Opens Saturday"
+msgstr "Öppnar lördag"
+
+#: source/php/AcfFields/php/opening-hours-module.php:148
+msgid "Closes Saturday"
+msgstr "Stänger lördag"
+
+#: source/php/AcfFields/php/opening-hours-module.php:174
+msgid "Closed Sunday"
+msgstr "Stängt söndag"
+
+#: source/php/AcfFields/php/opening-hours-module.php:195
+msgid "Opens Sunday"
+msgstr "Öppnar söndag"
+
+#: source/php/AcfFields/php/opening-hours-module.php:221
+msgid "Closes Sunday"
+msgstr "Stänger söndag"
+
+#: source/php/AcfFields/php/opening-hours-module.php:247
+msgid "Special opening hours this week"
+msgstr "Avvikande öppettider denna veckan"
+
+#: source/php/AcfFields/php/opening-hours-module.php:264
+msgid "Lägg till rad"
 msgstr ""
 
-#: source/php/Module/OpeningHours.php:18 source/php/Module/OpeningHours.php:19
-msgid "OpeningHours"
-msgstr ""
+#: source/php/AcfFields/php/opening-hours-module.php:269
+msgid "Day of the week"
+msgstr "Veckodag"
 
-#: source/php/Module/OpeningHours.php:20
-msgid "A opening-hours module."
-msgstr "En modul för att visa öppettider"
-
-#: source/php/Module/OpeningHours.php:81
+#: source/php/AcfFields/php/opening-hours-module.php:282
+#: source/php/Module/OpeningHours.php:130
 msgid "Monday"
 msgstr "Måndag"
 
-#: source/php/Module/OpeningHours.php:82
+#: source/php/AcfFields/php/opening-hours-module.php:283
+#: source/php/Module/OpeningHours.php:131
 msgid "Tuesday"
 msgstr "Tisdag"
 
-#: source/php/Module/OpeningHours.php:83
+#: source/php/AcfFields/php/opening-hours-module.php:284
+#: source/php/Module/OpeningHours.php:132
 msgid "Wednesday"
 msgstr "Onsdag"
 
-#: source/php/Module/OpeningHours.php:84
+#: source/php/AcfFields/php/opening-hours-module.php:285
+#: source/php/Module/OpeningHours.php:133
 msgid "Thursday"
 msgstr "Torsdag"
 
-#: source/php/Module/OpeningHours.php:85
+#: source/php/AcfFields/php/opening-hours-module.php:286
+#: source/php/Module/OpeningHours.php:134
 msgid "Friday"
 msgstr "Fredag"
 
-#: source/php/Module/OpeningHours.php:86
+#: source/php/AcfFields/php/opening-hours-module.php:287
+#: source/php/Module/OpeningHours.php:135
 msgid "Saturday"
 msgstr "Lördag"
 
-#: source/php/Module/OpeningHours.php:87
+#: source/php/AcfFields/php/opening-hours-module.php:288
+#: source/php/Module/OpeningHours.php:136
 msgid "Sunday"
 msgstr "Söndag"
 
-#: source/php/Module/OpeningHours.php:98
+#: source/php/AcfFields/php/opening-hours-module.php:298
+msgid "Opens this day"
+msgstr "Öppnar denna dagen"
+
+#: source/php/AcfFields/php/opening-hours-module.php:316
+msgid "Closes this day"
+msgstr "Stänger denna dagen"
+
+#: source/php/AcfFields/php/opening-hours-module.php:337
+msgid "Repeat this pattern for X weeks"
+msgstr "Upprepa detta mönster i X veckor"
+
+#: source/php/Module/OpeningHours.php:18 source/php/Module/OpeningHours.php:19
+msgid "OpeningHours"
+msgstr "Öppettider"
+
+#: source/php/Module/OpeningHours.php:20
+msgid "A opening-hours module."
+msgstr "En modul för öppettider"
+
+#: source/php/Module/OpeningHours.php:224
 #, php-format
 msgid "Week %1$s %2$s (%3$s – %4$s)"
 msgstr "Vecka %1$s %2$s (%3$s – %4$s)"
@@ -89,7 +158,7 @@ msgstr "Stängt"
 
 #: source/php/Module/views/opening-hours.blade.php:17
 msgid "Opening hours week navigation"
-msgstr "Öppettider veckonavigation"
+msgstr "Öpettider navigering"
 
 #: source/php/Module/views/opening-hours.blade.php:18
 msgid "Previous week"

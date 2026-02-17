@@ -1,4 +1,10 @@
 <?php
+/**
+ * ACF field group: Opening Hours module.
+ *
+ * @package Modularity_OpeningHours
+ */
+
 add_action( 'acf/include_fields', function() {
 	if ( ! function_exists( 'acf_add_local_field_group' ) ) {
 		return;
@@ -6,7 +12,7 @@ add_action( 'acf/include_fields', function() {
 
 	acf_add_local_field_group( array(
 	'key' => 'group_69944a2c22d00',
-	'title' => 'Opening Hours',
+	'title' => __( 'Opening Hours', 'modularity-opening-hours' ),
 	'fields' => array(
 		array(
 			'key' => 'field_69944a2d44994',
@@ -23,12 +29,12 @@ add_action( 'acf/include_fields', function() {
 				'id' => '',
 			),
 			'acfe_repeater_stylised_button' => 0,
-			'layout' => 'table',
+			'layout' => 'block',
 			'pagination' => 0,
 			'min' => 0,
 			'max' => 0,
 			'collapsed' => '',
-			'button_label' => __( 'Lägg till rad', 'modularity-opening-hours' ),
+			'button_label' => __( 'Add week', 'modularity-opening-hours' ),
 			'rows_per_page' => 20,
 			'sub_fields' => array(
 				array(
@@ -100,7 +106,7 @@ add_action( 'acf/include_fields', function() {
 					'required' => 0,
 					'conditional_logic' => 0,
 					'wrapper' => array(
-						'width' => '50',
+						'width' => '100',
 						'class' => '',
 						'id' => '',
 					),
@@ -133,8 +139,8 @@ add_action( 'acf/include_fields', function() {
 						'class' => '',
 						'id' => '',
 					),
-					'display_format' => 'g:i a',
-					'return_format' => 'g:i a',
+					'display_format' => 'H:i:s',
+					'return_format' => 'H:i:s',
 					'parent_repeater' => 'field_69944a2d44994',
 				),
 				array(
@@ -159,8 +165,8 @@ add_action( 'acf/include_fields', function() {
 						'class' => '',
 						'id' => '',
 					),
-					'display_format' => 'g:i a',
-					'return_format' => 'g:i a',
+					'display_format' => 'H:i:s',
+					'return_format' => 'H:i:s',
 					'parent_repeater' => 'field_69944a2d44994',
 				),
 				array(
@@ -173,7 +179,7 @@ add_action( 'acf/include_fields', function() {
 					'required' => 0,
 					'conditional_logic' => 0,
 					'wrapper' => array(
-						'width' => '50',
+						'width' => '100',
 						'class' => '',
 						'id' => '',
 					),
@@ -206,8 +212,8 @@ add_action( 'acf/include_fields', function() {
 						'class' => '',
 						'id' => '',
 					),
-					'display_format' => 'g:i a',
-					'return_format' => 'g:i a',
+					'display_format' => 'H:i:s',
+					'return_format' => 'H:i:s',
 					'parent_repeater' => 'field_69944a2d44994',
 				),
 				array(
@@ -232,8 +238,8 @@ add_action( 'acf/include_fields', function() {
 						'class' => '',
 						'id' => '',
 					),
-					'display_format' => 'g:i a',
-					'return_format' => 'g:i a',
+					'display_format' => 'H:i:s',
+					'return_format' => 'H:i:s',
 					'parent_repeater' => 'field_69944a2d44994',
 				),
 				array(
@@ -251,15 +257,102 @@ add_action( 'acf/include_fields', function() {
 						'id' => '',
 					),
 					'acfe_repeater_stylised_button' => 0,
-					'layout' => 'table',
-					'pagination' => 0,
+					'layout' => 'block',
 					'min' => 0,
 					'max' => 0,
 					'collapsed' => '',
 					'button_label' => __( 'Lägg till rad', 'modularity-opening-hours' ),
 					'rows_per_page' => 20,
 					'sub_fields' => array(
+						array(
+							'key' => 'field_6994600753009',
+							'label' => __( 'Day of the week', 'modularity-opening-hours' ),
+							'name' => 'day_of_the_week',
+							'aria-label' => '',
+							'type' => 'button_group',
+							'instructions' => '',
+							'required' => 0,
+							'conditional_logic' => 0,
+							'wrapper' => array(
+								'width' => '',
+								'class' => '',
+								'id' => '',
+							),
+							'choices' => array(
+								'monday' => __( 'Monday', 'modularity-opening-hours' ),
+								'tuesday' => __( 'Tuesday', 'modularity-opening-hours' ),
+								'wednesday' => __( 'Wednesday', 'modularity-opening-hours' ),
+								'thursday' => __( 'Thursday', 'modularity-opening-hours' ),
+								'friday' => __( 'Friday', 'modularity-opening-hours' ),
+								'saturday' => __( 'Saturday', 'modularity-opening-hours' ),
+								'sunday' => __( 'Sunday', 'modularity-opening-hours' ),
+							),
+							'default_value' => 'monday',
+							'return_format' => 'value',
+							'allow_null' => 0,
+							'layout' => 'horizontal',
+							'parent_repeater' => 'field_69945be944999',
+						),
+						array(
+							'key' => 'field_6994604a5300a',
+							'label' => __( 'Opens this day', 'modularity-opening-hours' ),
+							'name' => 'opens_this_day',
+							'aria-label' => '',
+							'type' => 'time_picker',
+							'instructions' => '',
+							'required' => 0,
+							'conditional_logic' => 0,
+							'wrapper' => array(
+								'width' => '',
+								'class' => '',
+								'id' => '',
+							),
+							'display_format' => 'g:i a',
+							'return_format' => 'g:i a',
+							'parent_repeater' => 'field_69945be944999',
+						),
+						array(
+							'key' => 'field_699460605300b',
+							'label' => __( 'Closes this day', 'modularity-opening-hours' ),
+							'name' => 'closes_this_day',
+							'aria-label' => '',
+							'type' => 'time_picker',
+							'instructions' => '',
+							'required' => 0,
+							'conditional_logic' => 0,
+							'wrapper' => array(
+								'width' => '',
+								'class' => '',
+								'id' => '',
+							),
+							'display_format' => 'g:i a',
+							'return_format' => 'g:i a',
+							'parent_repeater' => 'field_69945be944999',
+						),
 					),
+					'parent_repeater' => 'field_69944a2d44994',
+				),
+				array(
+					'key' => 'field_69945f8653008',
+					'label' => __( 'Repeat this pattern for X weeks', 'modularity-opening-hours' ),
+					'name' => 'repeat_this_pattern_for_x_weeks',
+					'aria-label' => '',
+					'type' => 'number',
+					'instructions' => '',
+					'required' => 0,
+					'conditional_logic' => 0,
+					'wrapper' => array(
+						'width' => '',
+						'class' => '',
+						'id' => '',
+					),
+					'default_value' => '',
+					'min' => '',
+					'max' => '',
+					'placeholder' => '',
+					'step' => '',
+					'prepend' => '',
+					'append' => '',
 					'parent_repeater' => 'field_69944a2d44994',
 				),
 			),
@@ -292,7 +385,8 @@ add_action( 'acf/include_fields', function() {
 	'show_in_rest' => 0,
 	'acfe_display_title' => '',
 	'acfe_autosync' => array(
-		0 => 'json',
+		0 => 'php',
+		1 => 'json',
 	),
 	'acfe_form' => 0,
 	'acfe_meta' => '',

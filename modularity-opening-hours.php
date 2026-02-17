@@ -2,7 +2,7 @@
 
 /**
  * Plugin Name:       Modularity OpeningHours
- * Description:       A opening-hours for creating Modularity modules.
+ * Description:       A module for displaying opening hours.
  * Version: 1.0.0
  * Author:            Considbrs-Webdev
  * License:           MIT

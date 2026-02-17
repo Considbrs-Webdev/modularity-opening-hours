@@ -31,8 +31,9 @@ class OpeningHours extends \Modularity\Module
             $this->getFields(),
         ));
 
+        $weekRepeater = $this->normalizeWeekRepeater($data['weekRepeater'] ?? null);
         $year = $this->getYear();
-        $weeks = $this->getOpeningWeeks($year);
+        $weeks = $this->buildWeeksFromRepeater($weekRepeater, $year);
         $currentIndex = $this->getCurrentWeekIndex($weeks);
         $data['weeks'] = $weeks;
         $data['weeksJson'] = json_encode($weeks, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP);
@@ -47,6 +48,25 @@ class OpeningHours extends \Modularity\Module
     }
 
     /**
+     * Ensures weekRepeater is always an array of rows.
+     * @param mixed $raw
+     * @return array<int, array>
+     */
+    private function normalizeWeekRepeater($raw): array
+    {
+        if (!is_array($raw) || empty($raw)) {
+            return [];
+        }
+        if (isset($raw[0]) && is_array($raw[0])) {
+            return array_values($raw);
+        }
+        if (array_key_exists('weekNo', $raw)) {
+            return [$raw];
+        }
+        return [];
+    }
+
+    /**
      * @return int
      */
     private function getYear(): int
@@ -58,6 +78,7 @@ class OpeningHours extends \Modularity\Module
     }
 
     /**
+     * @param array<int, array{weekLabel: string, weekNo?: int, days: array}> $weeks
      * @return int
      */
     private function getCurrentWeekIndex(array $weeks): int
@@ -69,42 +90,174 @@ class OpeningHours extends \Modularity\Module
             return max(0, min((int) $_GET['week'], count($weeks) - 1));
         }
         $isoWeek = (int) (new \DateTimeImmutable())->format('W');
-        return max(0, min($isoWeek - 1, count($weeks) - 1));
+        foreach ($weeks as $i => $week) {
+            if (($week['weekNo'] ?? 0) === $isoWeek) {
+                return $i;
+            }
+        }
+        return 0;
     }
 
     /**
-     * @return array<int, array{weekLabel: string, days: array<int, array{name: string, slots: array}>}>
+     * @param string $time ACF time (H:i:s or g:i a)
+     * @return string H:i
      */
-    private function getOpeningWeeks(int $year): array
+    private function normalizeTime(string $time): string
     {
-        $weekSlots = [
-            ['name' => __('Monday', 'modularity-opening-hours'), 'slots' => [['open' => '09:00', 'close' => '12:00'], ['open' => '13:00', 'close' => '17:00']]],
-            ['name' => __('Tuesday', 'modularity-opening-hours'), 'slots' => [['open' => '09:00', 'close' => '17:00']]],
-            ['name' => __('Wednesday', 'modularity-opening-hours'), 'slots' => [['open' => '09:00', 'close' => '12:00']]],
-            ['name' => __('Thursday', 'modularity-opening-hours'), 'slots' => [['open' => '09:00', 'close' => '17:00']]],
-            ['name' => __('Friday', 'modularity-opening-hours'), 'slots' => [['open' => '09:00', 'close' => '15:00']]],
-            ['name' => __('Saturday', 'modularity-opening-hours'), 'slots' => [['closed' => true]]],
-            ['name' => __('Sunday', 'modularity-opening-hours'), 'slots' => [['closed' => true]]],
+        if ($time === '') {
+            return '';
+        }
+        $dt = \DateTimeImmutable::createFromFormat('H:i:s', $time);
+        if ($dt !== false) {
+            return $dt->format('H:i');
+        }
+        $dt = \DateTimeImmutable::createFromFormat('g:i a', $time);
+        if ($dt !== false) {
+            return $dt->format('H:i');
+        }
+        return $time;
+    }
+
+    /**
+     * @param array<int, array> $repeater
+     * @param int $year
+     * @return array<int, array{weekLabel: string, weekNo: int, days: array<int, array{name: string, slots: array}>}>
+     */
+    private function buildWeeksFromRepeater(array $repeater, int $year): array
+    {
+        $weeks = [];
+        $dayNames = [
+            'monday' => __('Monday', 'modularity-opening-hours'),
+            'tuesday' => __('Tuesday', 'modularity-opening-hours'),
+            'wednesday' => __('Wednesday', 'modularity-opening-hours'),
+            'thursday' => __('Thursday', 'modularity-opening-hours'),
+            'friday' => __('Friday', 'modularity-opening-hours'),
+            'saturday' => __('Saturday', 'modularity-opening-hours'),
+            'sunday' => __('Sunday', 'modularity-opening-hours'),
         ];
 
-        $weeks = [];
-        $weekOne = new \DateTimeImmutable("{$year}-01-04");
-        $monday = $weekOne->modify('monday this week');
-        for ($i = 0; $i < 52; $i++) {
-            $weekStart = $monday->modify("+{$i} weeks");
-            $weekEnd = $weekStart->modify('+6 days');
-            $weeks[] = [
-                'weekLabel' => sprintf(
-                    __('Week %1$s %2$s (%3$s – %4$s)', 'modularity-opening-hours'),
-                    $weekStart->format('W'),
-                    $weekStart->format('Y'),
-                    $weekStart->format('j M'),
-                    $weekEnd->format('j M')
-                ),
-                'days' => $weekSlots,
+        foreach ($repeater as $row) {
+            if (!is_array($row)) {
+                continue;
+            }
+
+            $weekNo = (int) ($row['weekNo'] ?? 0);
+            if ($weekNo < 1 || $weekNo > 53) {
+                continue;
+            }
+
+            // Get repeat count (default 0 = just this week, no additional repeats)
+            $repeatCount = (int) ($row['repeatThisPatternForXWeeks'] ?? 0);
+            if ($repeatCount < 0) {
+                $repeatCount = 0;
+            }
+
+            // Total weeks = 1 (the starting week) + repeatCount (additional weeks)
+            $totalWeeks = 1 + $repeatCount;
+
+            // Base hours for Mon-Fri
+            $monFriOpen = $this->normalizeTime((string) ($row['opens'] ?? ''));
+            $monFriClose = $this->normalizeTime((string) ($row['closes'] ?? ''));
+            $monFriSlots = ($monFriOpen !== '' && $monFriClose !== '')
+                ? [['open' => $monFriOpen, 'close' => $monFriClose]]
+                : [['closed' => true]];
+
+            // Saturday
+            $closedSat = !empty($row['closedSaturday']);
+            $satOpen = $this->normalizeTime((string) ($row['opensSaturday'] ?? ''));
+            $satClose = $this->normalizeTime((string) ($row['closesSaturday'] ?? ''));
+            $satSlots = $closedSat || $satOpen === '' || $satClose === ''
+                ? [['closed' => true]]
+                : [['open' => $satOpen, 'close' => $satClose]];
+
+            // Sunday
+            $closedSun = !empty($row['closedSunday']);
+            $sunOpen = $this->normalizeTime((string) ($row['opensSunday'] ?? ''));
+            $sunClose = $this->normalizeTime((string) ($row['closesSunday'] ?? ''));
+            $sunSlots = $closedSun || $sunOpen === '' || $sunClose === ''
+                ? [['closed' => true]]
+                : [['open' => $sunOpen, 'close' => $sunClose]];
+
+            // Special opening hours overrides (per day)
+            $specialHours = $row['specialOpeningHoursThisWeek'] ?? [];
+            $specialHours = is_array($specialHours) ? $specialHours : [];
+
+            // Build base days structure
+            $baseDays = [
+                'monday' => $monFriSlots,
+                'tuesday' => $monFriSlots,
+                'wednesday' => $monFriSlots,
+                'thursday' => $monFriSlots,
+                'friday' => $monFriSlots,
+                'saturday' => $satSlots,
+                'sunday' => $sunSlots,
             ];
+
+            // Apply special hours overrides
+            foreach ($specialHours as $special) {
+                if (!is_array($special)) {
+                    continue;
+                }
+                $dayKey = $special['dayOfTheWeek'] ?? null;
+                if ($dayKey && array_key_exists($dayKey, $baseDays)) {
+                    $specialOpen = $this->normalizeTime((string) ($special['opensThisDay'] ?? ''));
+                    $specialClose = $this->normalizeTime((string) ($special['closesThisDay'] ?? ''));
+                    if ($specialOpen !== '' && $specialClose !== '') {
+                        $baseDays[$dayKey] = [['open' => $specialOpen, 'close' => $specialClose]];
+                    } else {
+                        $baseDays[$dayKey] = [['closed' => true]];
+                    }
+                }
+            }
+
+            // Generate weeks for the range
+            for ($i = 0; $i < $totalWeeks; $i++) {
+                $currentWeekNo = $weekNo + $i;
+                if ($currentWeekNo > 53) {
+                    break;
+                }
+
+                $weekOne = new \DateTimeImmutable("{$year}-01-04");
+                $monday = $weekOne->modify('monday this week')->modify('+' . ($currentWeekNo - 1) . ' weeks');
+                $weekEnd = $monday->modify('+6 days');
+                $weekLabel = sprintf(
+                    __('Week %1$s %2$s (%3$s – %4$s)', 'modularity-opening-hours'),
+                    (string) $currentWeekNo,
+                    (string) $year,
+                    $monday->format('j M'),
+                    $weekEnd->format('j M')
+                );
+
+                $weeks[] = [
+                    'weekLabel' => $weekLabel,
+                    'weekNo' => $currentWeekNo,
+                    'days' => [
+                        ['name' => $dayNames['monday'], 'slots' => $baseDays['monday']],
+                        ['name' => $dayNames['tuesday'], 'slots' => $baseDays['tuesday']],
+                        ['name' => $dayNames['wednesday'], 'slots' => $baseDays['wednesday']],
+                        ['name' => $dayNames['thursday'], 'slots' => $baseDays['thursday']],
+                        ['name' => $dayNames['friday'], 'slots' => $baseDays['friday']],
+                        ['name' => $dayNames['saturday'], 'slots' => $baseDays['saturday']],
+                        ['name' => $dayNames['sunday'], 'slots' => $baseDays['sunday']],
+                    ],
+                ];
+            }
         }
-        return $weeks;
+
+        // Sort by week number
+        usort($weeks, fn($a, $b) => $a['weekNo'] <=> $b['weekNo']);
+
+        // Remove duplicate week numbers (later entries in original data win)
+        $seen = [];
+        $uniqueWeeks = [];
+        foreach (array_reverse($weeks) as $week) {
+            if (!isset($seen[$week['weekNo']])) {
+                $seen[$week['weekNo']] = true;
+                $uniqueWeeks[] = $week;
+            }
+        }
+
+        return array_reverse($uniqueWeeks);
     }
 
     /**
@@ -136,15 +289,4 @@ class OpeningHours extends \Modularity\Module
             $this->wpEnqueue?->add($scriptFile, [], null, true);
         }
     }
-
-    /**
-     * Available "magic" methods for modules:
-     * init()            What to do on initialization
-     * data()            Use to send data to view (return array)
-     * style()           Enqueue style only when module is used on page
-     * script            Enqueue script only when module is used on page
-     * adminEnqueue()    Enqueue scripts for the module edit/add page in admin
-     * template()        Return the view template (blade) the module should use when displayed
-     */
 }
-
