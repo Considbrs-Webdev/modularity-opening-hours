@@ -135,3 +135,18 @@ msgstr "Nästa"
 #: source/php/Module/views/opening-hours.blade.php:44
 msgid "Closed"
 msgstr "Stängt"
+
+msgid "Today"
+msgstr "Idag"
+
+msgid "Tomorrow"
+msgstr "Imorgon"
+
+msgid "Opening hours day navigation"
+msgstr "Öppettider dag-navigering"
+
+msgid "Previous day"
+msgstr "Föregående dag"
+
+msgid "Next day"
+msgstr "Nästa dag"

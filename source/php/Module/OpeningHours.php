@@ -45,9 +45,21 @@ class OpeningHours extends \Modularity\Module
         $data['hasNext'] = $currentIndex < count($weeks) - 1;
 
         $highlightToday = !empty($data['highlightToday']);
+        $showTomorrow = !empty($data['showTomorrowHighlight']);
         $todayDay = $highlightToday ? $this->getTodayDay($weeks) : null;
-        $data['showTodayHighlight'] = $highlightToday && $todayDay !== null;
+        $allDays = $this->flattenDaysForJs($weeks);
+        $data['showTodayHighlight'] = $highlightToday && !empty($allDays);
         $data['todayDay'] = $todayDay;
+        $data['showTomorrowHighlight'] = $showTomorrow;
+
+        // Flatten all days for JS day navigation (with weekIndex) and determine initial active day
+        $data['allDaysJson'] = json_encode($allDays, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP);
+        $data['todayDateKey'] = (new \DateTimeImmutable())->format('Y-m-d');
+        $data['initialActiveDateKey'] = $this->getInitialActiveDateKey($weeks, $allDays, $currentIndex);
+        $data['initialDay1'] = $this->getDayByDateKey($allDays, $data['initialActiveDateKey']);
+        $data['initialDay2'] = $data['initialActiveDateKey'] !== null
+            ? $this->getDayByDateKey($allDays, (new \DateTimeImmutable($data['initialActiveDateKey'] . ' +1 day'))->format('Y-m-d'))
+            : null;
 
         return $data;
     }
@@ -116,6 +128,74 @@ class OpeningHours extends \Modularity\Module
                 if (($day['dateKey'] ?? '') === $todayKey) {
                     return $day;
                 }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Flatten all days from weeks into a single array with weekIndex for JS.
+     * @param array<int, array{weekLabel: string, weekNo: int, days: array}> $weeks
+     * @return array<int, array{name: string, date: string, dateKey: string, slots: array, weekIndex: int}>
+     */
+    private function flattenDaysForJs(array $weeks): array
+    {
+        $result = [];
+        foreach ($weeks as $weekIndex => $week) {
+            foreach ($week['days'] ?? [] as $day) {
+                $result[] = array_merge($day, ['weekIndex' => $weekIndex]);
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * Determine initial active dateKey for the featured view.
+     * If ?week=N is set, use first day of that week; otherwise use today.
+     * @param array $weeks
+     * @param array $allDays
+     * @param int $currentWeekIndex
+     * @return string|null
+     */
+    private function getInitialActiveDateKey(array $weeks, array $allDays, int $currentWeekIndex): ?string
+    {
+        if (empty($allDays)) {
+            return null;
+        }
+        $todayKey = (new \DateTimeImmutable())->format('Y-m-d');
+        if (isset($_GET['week']) && is_numeric($_GET['week'])) {
+            $requestedWeek = (int) $_GET['week'];
+            $firstDayOfWeek = null;
+            foreach ($allDays as $day) {
+                if (($day['weekIndex'] ?? -1) === $requestedWeek) {
+                    $firstDayOfWeek = $day['dateKey'] ?? null;
+                    break;
+                }
+            }
+            return $firstDayOfWeek ?? $allDays[0]['dateKey'] ?? null;
+        }
+        foreach ($allDays as $day) {
+            if (($day['dateKey'] ?? '') === $todayKey) {
+                return $todayKey;
+            }
+        }
+        return $allDays[0]['dateKey'] ?? null;
+    }
+
+    /**
+     * Get day data by dateKey from flattened days array.
+     * @param array $allDays
+     * @param string|null $dateKey
+     * @return array{name: string, date: string, dateKey: string, slots: array}|null
+     */
+    private function getDayByDateKey(array $allDays, ?string $dateKey): ?array
+    {
+        if ($dateKey === null || $dateKey === '') {
+            return null;
+        }
+        foreach ($allDays as $day) {
+            if (($day['dateKey'] ?? '') === $dateKey) {
+                return $day;
             }
         }
         return null;
@@ -222,28 +302,60 @@ class OpeningHours extends \Modularity\Module
                 $weekNoTo = $weekNoFrom;
             }
 
-            // Base hours for Mon-Fri
-            $monFriOpen = $this->normalizeTime((string) ($row['opens'] ?? ''));
-            $monFriClose = $this->normalizeTime((string) ($row['closes'] ?? ''));
-            $monFriSlots = ($monFriOpen !== '' && $monFriClose !== '')
-                ? [['open' => $monFriOpen, 'close' => $monFriClose]]
-                : [['closed' => true]];
+            $mode = $row['scheduleMode'] ?? 'standard';
+            if ($mode !== 'granular') {
+                $mode = 'standard';
+            }
 
-            // Saturday
-            $closedSat = !empty($row['closedSaturday']);
-            $satOpen = $this->normalizeTime((string) ($row['opensSaturday'] ?? ''));
-            $satClose = $this->normalizeTime((string) ($row['closesSaturday'] ?? ''));
-            $satSlots = $closedSat || $satOpen === '' || $satClose === ''
-                ? [['closed' => true]]
-                : [['open' => $satOpen, 'close' => $satClose]];
-
-            // Sunday
-            $closedSun = !empty($row['closedSunday']);
-            $sunOpen = $this->normalizeTime((string) ($row['opensSunday'] ?? ''));
-            $sunClose = $this->normalizeTime((string) ($row['closesSunday'] ?? ''));
-            $sunSlots = $closedSun || $sunOpen === '' || $sunClose === ''
-                ? [['closed' => true]]
-                : [['open' => $sunOpen, 'close' => $sunClose]];
+            // Build day slots: granular = per-day, standard = Mon-Fri / Sat / Sun
+            $daySlotsByDow = [];
+            if ($mode === 'granular') {
+                $granularMap = [
+                    1 => ['opens' => 'mondayOpens', 'closes' => 'mondayCloses', 'closed' => 'mondayIsClosed'],
+                    2 => ['opens' => 'tuesdayOpens', 'closes' => 'tuesdayCloses', 'closed' => 'tuesdayIsClosed'],
+                    3 => ['opens' => 'wednesdayOpens', 'closes' => 'wednesdayCloses', 'closed' => 'wednesdayIsClosed'],
+                    4 => ['opens' => 'thursdayOpens', 'closes' => 'thursdayCloses', 'closed' => 'thursdayIsClosed'],
+                    5 => ['opens' => 'fridayOpens', 'closes' => 'fridayCloses', 'closed' => 'fridayIsClosed'],
+                    6 => ['opens' => 'saturdayOpens', 'closes' => 'saturdayCloses', 'closed' => 'saturdayIsClosed'],
+                    7 => ['opens' => 'sundayOpens', 'closes' => 'sundayCloses', 'closed' => 'sundayIsClosed'],
+                ];
+                for ($dow = 1; $dow <= 7; $dow++) {
+                    $m = $granularMap[$dow];
+                    $closed = !empty($row[$m['closed']]);
+                    $open = $this->normalizeTime((string) ($row[$m['opens']] ?? ''));
+                    $close = $this->normalizeTime((string) ($row[$m['closes']] ?? ''));
+                    $daySlotsByDow[$dow] = ($closed || $open === '' || $close === '')
+                        ? [['closed' => true]]
+                        : [['open' => $open, 'close' => $close]];
+                }
+            } else {
+                $monFriOpen = $this->normalizeTime((string) ($row['opens'] ?? ''));
+                $monFriClose = $this->normalizeTime((string) ($row['closes'] ?? ''));
+                $monFriSlots = ($monFriOpen !== '' && $monFriClose !== '')
+                    ? [['open' => $monFriOpen, 'close' => $monFriClose]]
+                    : [['closed' => true]];
+                $closedSat = !empty($row['closedSaturday']);
+                $satOpen = $this->normalizeTime((string) ($row['opensSaturday'] ?? ''));
+                $satClose = $this->normalizeTime((string) ($row['closesSaturday'] ?? ''));
+                $satSlots = $closedSat || $satOpen === '' || $satClose === ''
+                    ? [['closed' => true]]
+                    : [['open' => $satOpen, 'close' => $satClose]];
+                $closedSun = !empty($row['closedSunday']);
+                $sunOpen = $this->normalizeTime((string) ($row['opensSunday'] ?? ''));
+                $sunClose = $this->normalizeTime((string) ($row['closesSunday'] ?? ''));
+                $sunSlots = $closedSun || $sunOpen === '' || $sunClose === ''
+                    ? [['closed' => true]]
+                    : [['open' => $sunOpen, 'close' => $sunClose]];
+                $daySlotsByDow = [
+                    1 => $monFriSlots,
+                    2 => $monFriSlots,
+                    3 => $monFriSlots,
+                    4 => $monFriSlots,
+                    5 => $monFriSlots,
+                    6 => $satSlots,
+                    7 => $sunSlots,
+                ];
+            }
 
             // Collect special opening hours (by date) from this row
             $specialHours = $row['specialOpeningHours'] ?? [];
@@ -290,13 +402,7 @@ class OpeningHours extends \Modularity\Module
                     $dateKey = $dayDate->format('Y-m-d');
 
                     // Determine base slots for this day of week
-                    if ($dayOfWeek >= 1 && $dayOfWeek <= 5) {
-                        $baseSlots = $monFriSlots;
-                    } elseif ($dayOfWeek === 6) {
-                        $baseSlots = $satSlots;
-                    } else {
-                        $baseSlots = $sunSlots;
-                    }
+                    $baseSlots = $daySlotsByDow[$dayOfWeek] ?? [['closed' => true]];
 
                     // Check for special hours override for this specific date
                     $slots = $allSpecialHours[$dateKey] ?? $baseSlots;
