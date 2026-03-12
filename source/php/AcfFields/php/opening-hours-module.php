@@ -8,6 +8,26 @@ if (!defined('ABSPATH')) {
 	'title' => 'Öppettider',
 	'fields' => array(
 		array(
+			'key' => 'field_highlight_today_0001',
+			'label' => 'Visa dagens öppettider',
+			'name' => 'highlight_today',
+			'aria-label' => '',
+			'type' => 'true_false',
+			'instructions' => 'Visa en sammanfattning av dagens öppettider ovanför kalendern.',
+			'required' => 0,
+			'conditional_logic' => 0,
+			'wrapper' => array(
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			),
+			'message' => '',
+			'default_value' => 0,
+			'ui' => 1,
+			'ui_on_text' => 'Ja',
+			'ui_off_text' => 'Nej',
+		),
+		array(
 			'key' => 'field_69944a2d44994',
 			'label' => 'Vecka',
 			'name' => 'week_repeater',

@@ -44,6 +44,11 @@ class OpeningHours extends \Modularity\Module
         $data['hasPrev'] = $currentIndex > 0;
         $data['hasNext'] = $currentIndex < count($weeks) - 1;
 
+        $highlightToday = !empty($data['highlightToday']);
+        $todayDay = $highlightToday ? $this->getTodayDay($weeks) : null;
+        $data['showTodayHighlight'] = $highlightToday && $todayDay !== null;
+        $data['todayDay'] = $todayDay;
+
         return $data;
     }
 
@@ -96,6 +101,24 @@ class OpeningHours extends \Modularity\Module
             }
         }
         return 0;
+    }
+
+    /**
+     * Find today's day entry from the weeks array by dateKey.
+     * @param array<int, array{weekLabel: string, weekNo?: int, days: array}> $weeks
+     * @return array{name: string, date: string, dateKey: string, slots: array}|null
+     */
+    private function getTodayDay(array $weeks): ?array
+    {
+        $todayKey = (new \DateTimeImmutable())->format('Y-m-d');
+        foreach ($weeks as $week) {
+            foreach ($week['days'] as $day) {
+                if (($day['dateKey'] ?? '') === $todayKey) {
+                    return $day;
+                }
+            }
+        }
+        return null;
     }
 
     /**

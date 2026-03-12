@@ -9,6 +9,23 @@
 @endif
 
 <div class="mod-opening-hours" data-current-week-index="{{ $currentWeekIndex }}" data-total-weeks="{{ $totalWeeks }}">
+    @if (!empty($showTodayHighlight) && $todayDay)
+        <div class="mod-opening-hours__today-highlight">
+            <p class="mod-opening-hours__today-label">
+                {{ __('Today', 'modularity-opening-hours') }},
+                <span class="mod-opening-hours__today-name">{{ $todayDay['name'] }} {{ $todayDay['date'] }}</span>
+            </p>
+            <p class="mod-opening-hours__today-hours">
+                @foreach ($todayDay['slots'] as $slot)
+                    @if (!empty($slot['closed']))
+                        <span class="mod-opening-hours__closed">{{ __('Closed', 'modularity-opening-hours') }}</span>
+                    @else
+                        <span class="mod-opening-hours__range">{{ $slot['open'] }} – {{ $slot['close'] }}</span>
+                    @endif
+                @endforeach
+            </p>
+        </div>
+    @endif
     @if (!empty($weeks))
         <div class="mod-opening-hours__week-header">
             <h3 class="mod-opening-hours__week-title" data-week-title>{{ $currentWeek['weekLabel'] ?? '' }}</h3>
