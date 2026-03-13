@@ -5,24 +5,13 @@ if (php_sapi_name() !== 'cli') {
     exit(0);
 }
 
-/* Parameters: 
- --no-composer      Does not install vendors via composer
- --cleanup          Remove removeables
- --install-npm      Installs npm package as per package.json name field
- --release          Does not run composer install and does not remove .git
-*/
-
-// Any command needed to run and build plugin assets when newly cheched out of repo.
 $buildCommands = [];
 
-//Add composer build, if flag --no-composer is undefined.
-//Dump autloader. 
-//Only if composer.json exists.
+//Run composer if composer.json is found
 if (file_exists('composer.json')) {
     if (is_array($argv) && !in_array('--no-composer', $argv)) {
         $buildCommands[] = 'composer install --prefer-dist --no-progress --no-dev';
     }
-
     $buildCommands[] = 'composer dump-autoload';
 }
 
@@ -32,20 +21,16 @@ if (file_exists('package.json') && file_exists('package-lock.json')) {
         $buildCommands[] = 'npm ci --no-progress --no-audit';
         $buildCommands[] = 'npm run build';
     } else {
-        $npmPackage = json_decode(file_get_contents('package.json'));
-        $buildCommands[] = "npm install $npmPackage->name";
-        $buildCommands[] = "rm -rf ./dist";
-        $buildCommands[] = "mv node_modules/$npmPackage->name/dist ./";
+        $buildCommands[] = "npm install --no-progress --no-audit";
+        $buildCommands[] = "npm run build";
     }
 } elseif (file_exists('package.json') && !file_exists('package-lock.json')) {
     if (is_array($argv) && !in_array('--install-npm', $argv)) {
         $buildCommands[] = 'npm install --no-progress --no-audit';
         $buildCommands[] = 'npm run build';
     } else {
-        $npmPackage = json_decode(file_get_contents('package.json'));
-        $buildCommands[] = "npm install $npmPackage->name";
-        $buildCommands[] = "rm -rf ./dist";
-        $buildCommands[] = "mv node_modules/$npmPackage->name/dist ./";
+        $buildCommands[] = "npm install --no-progress --no-audit";
+        $buildCommands[] = "npm run build";
     }
 }
 
@@ -57,12 +42,13 @@ $removables = [
     'build.php',
     'build.js',
     '.npmrc',
-    //'composer.json',
     'composer.lock',
     'env-example',
     'webpack.config.js',
-    'package-lock.json',
+    'vite.config.js',
+    'vite.config.mjs',
     'package.json',
+    'package-lock.json',
     'phpunit.xml.dist',
     'README.md',
     './node_modules/',
@@ -72,6 +58,7 @@ $removables = [
     'babel.config.js',
     'yarn.lock',
     '.devcontainer',
+    '.vscode',
 ];
 
 if (is_array($argv) && !in_array('--release', $argv)) {
