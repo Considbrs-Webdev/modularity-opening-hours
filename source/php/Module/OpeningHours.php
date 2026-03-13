@@ -47,19 +47,15 @@ class OpeningHours extends \Modularity\Module
         $highlightToday = !empty($data['highlightToday']);
         $showTomorrow = !empty($data['showTomorrowHighlight']);
         $todayDay = $highlightToday ? $this->getTodayDay($weeks) : null;
-        $allDays = $this->flattenDaysForJs($weeks);
-        $data['showTodayHighlight'] = $highlightToday && !empty($allDays);
+        $todayDateKey = (new \DateTimeImmutable())->format('Y-m-d');
+        $tomorrowDateKey = (new \DateTimeImmutable($todayDateKey . ' +1 day'))->format('Y-m-d');
+        $tomorrowDay = $showTomorrow ? $this->getDayByDateKeyFromWeeks($weeks, $tomorrowDateKey) : null;
+
+        $data['showTodayHighlight'] = $highlightToday && !empty($todayDay);
         $data['todayDay'] = $todayDay;
         $data['showTomorrowHighlight'] = $showTomorrow;
-
-        // Flatten all days for JS day navigation (with weekIndex) and determine initial active day
-        $data['allDaysJson'] = json_encode($allDays, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP);
-        $data['todayDateKey'] = (new \DateTimeImmutable())->format('Y-m-d');
-        $data['initialActiveDateKey'] = $this->getInitialActiveDateKey($weeks, $allDays, $currentIndex);
-        $data['initialDay1'] = $this->getDayByDateKey($allDays, $data['initialActiveDateKey']);
-        $data['initialDay2'] = $data['initialActiveDateKey'] !== null
-            ? $this->getDayByDateKey($allDays, (new \DateTimeImmutable($data['initialActiveDateKey'] . ' +1 day'))->format('Y-m-d'))
-            : null;
+        $data['tomorrowDay'] = $tomorrowDay;
+        $data['todayDateKey'] = $todayDateKey;
 
         return $data;
     }
@@ -134,68 +130,21 @@ class OpeningHours extends \Modularity\Module
     }
 
     /**
-     * Flatten all days from weeks into a single array with weekIndex for JS.
-     * @param array<int, array{weekLabel: string, weekNo: int, days: array}> $weeks
-     * @return array<int, array{name: string, date: string, dateKey: string, slots: array, weekIndex: int}>
-     */
-    private function flattenDaysForJs(array $weeks): array
-    {
-        $result = [];
-        foreach ($weeks as $weekIndex => $week) {
-            foreach ($week['days'] ?? [] as $day) {
-                $result[] = array_merge($day, ['weekIndex' => $weekIndex]);
-            }
-        }
-        return $result;
-    }
-
-    /**
-     * Determine initial active dateKey for the featured view.
-     * If ?week=N is set, use first day of that week; otherwise use today.
-     * @param array $weeks
-     * @param array $allDays
-     * @param int $currentWeekIndex
-     * @return string|null
-     */
-    private function getInitialActiveDateKey(array $weeks, array $allDays, int $currentWeekIndex): ?string
-    {
-        if (empty($allDays)) {
-            return null;
-        }
-        $todayKey = (new \DateTimeImmutable())->format('Y-m-d');
-        if (isset($_GET['week']) && is_numeric($_GET['week'])) {
-            $requestedWeek = (int) $_GET['week'];
-            $firstDayOfWeek = null;
-            foreach ($allDays as $day) {
-                if (($day['weekIndex'] ?? -1) === $requestedWeek) {
-                    $firstDayOfWeek = $day['dateKey'] ?? null;
-                    break;
-                }
-            }
-            return $firstDayOfWeek ?? $allDays[0]['dateKey'] ?? null;
-        }
-        foreach ($allDays as $day) {
-            if (($day['dateKey'] ?? '') === $todayKey) {
-                return $todayKey;
-            }
-        }
-        return $allDays[0]['dateKey'] ?? null;
-    }
-
-    /**
-     * Get day data by dateKey from flattened days array.
-     * @param array $allDays
-     * @param string|null $dateKey
+     * Find a day by dateKey in the weeks array.
+     * @param array<int, array{weekLabel: string, weekNo?: int, days: array}> $weeks
+     * @param string $dateKey
      * @return array{name: string, date: string, dateKey: string, slots: array}|null
      */
-    private function getDayByDateKey(array $allDays, ?string $dateKey): ?array
+    private function getDayByDateKeyFromWeeks(array $weeks, string $dateKey): ?array
     {
-        if ($dateKey === null || $dateKey === '') {
+        if ($dateKey === '') {
             return null;
         }
-        foreach ($allDays as $day) {
-            if (($day['dateKey'] ?? '') === $dateKey) {
-                return $day;
+        foreach ($weeks as $week) {
+            foreach ($week['days'] ?? [] as $day) {
+                if (($day['dateKey'] ?? '') === $dateKey) {
+                    return $day;
+                }
             }
         }
         return null;
