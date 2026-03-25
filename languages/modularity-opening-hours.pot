@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-02-17T14:45:09+00:00\n"
+"POT-Creation-Date: 2026-03-25T16:43:40+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: modularity-opening-hours\n"
@@ -38,99 +38,110 @@ msgstr ""
 msgid "A opening-hours module."
 msgstr ""
 
-#: source/php/Module/OpeningHours.php:146
+#: source/php/Module/OpeningHours.php:198
 msgid "Jan"
 msgstr ""
 
-#: source/php/Module/OpeningHours.php:147
+#: source/php/Module/OpeningHours.php:199
 msgid "Feb"
 msgstr ""
 
-#: source/php/Module/OpeningHours.php:148
+#: source/php/Module/OpeningHours.php:200
 msgid "Mar"
 msgstr ""
 
-#: source/php/Module/OpeningHours.php:149
+#: source/php/Module/OpeningHours.php:201
 msgid "Apr"
 msgstr ""
 
-#: source/php/Module/OpeningHours.php:150
+#: source/php/Module/OpeningHours.php:202
 msgid "May"
 msgstr ""
 
-#: source/php/Module/OpeningHours.php:151
+#: source/php/Module/OpeningHours.php:203
 msgid "Jun"
 msgstr ""
 
-#: source/php/Module/OpeningHours.php:152
+#: source/php/Module/OpeningHours.php:204
 msgid "Jul"
 msgstr ""
 
-#: source/php/Module/OpeningHours.php:153
+#: source/php/Module/OpeningHours.php:205
 msgid "Aug"
 msgstr ""
 
-#: source/php/Module/OpeningHours.php:154
+#: source/php/Module/OpeningHours.php:206
 msgid "Sep"
 msgstr ""
 
-#: source/php/Module/OpeningHours.php:155
+#: source/php/Module/OpeningHours.php:207
 msgid "Oct"
 msgstr ""
 
-#: source/php/Module/OpeningHours.php:156
+#: source/php/Module/OpeningHours.php:208
 msgid "Nov"
 msgstr ""
 
-#: source/php/Module/OpeningHours.php:157
+#: source/php/Module/OpeningHours.php:209
 msgid "Dec"
 msgstr ""
 
-#: source/php/Module/OpeningHours.php:171
+#: source/php/Module/OpeningHours.php:223
 msgid "Monday"
 msgstr ""
 
-#: source/php/Module/OpeningHours.php:172
+#: source/php/Module/OpeningHours.php:224
 msgid "Tuesday"
 msgstr ""
 
-#: source/php/Module/OpeningHours.php:173
+#: source/php/Module/OpeningHours.php:225
 msgid "Wednesday"
 msgstr ""
 
-#: source/php/Module/OpeningHours.php:174
+#: source/php/Module/OpeningHours.php:226
 msgid "Thursday"
 msgstr ""
 
-#: source/php/Module/OpeningHours.php:175
+#: source/php/Module/OpeningHours.php:227
 msgid "Friday"
 msgstr ""
 
-#: source/php/Module/OpeningHours.php:176
+#: source/php/Module/OpeningHours.php:228
 msgid "Saturday"
 msgstr ""
 
-#: source/php/Module/OpeningHours.php:177
+#: source/php/Module/OpeningHours.php:229
 msgid "Sunday"
 msgstr ""
 
-#: source/php/Module/OpeningHours.php:255
+#. translators: 1: ISO week number, 2: year, 3: week start (day and month), 4: week end (day and month).
+#: source/php/Module/OpeningHours.php:340
 #, php-format
 msgid "Week %1$s %2$s (%3$s – %4$s)"
 msgstr ""
 
-#: source/php/Module/views/opening-hours.blade.php:17
+#: source/php/Module/views/opening-hours.blade.php:19
+msgid "Today"
+msgstr ""
+
+#: source/php/Module/views/opening-hours.blade.php:25
+#: source/php/Module/views/opening-hours.blade.php:41
+#: source/php/Module/views/opening-hours.blade.php:83
+msgid "Closed"
+msgstr ""
+
+#: source/php/Module/views/opening-hours.blade.php:35
+msgid "Tomorrow"
+msgstr ""
+
+#: source/php/Module/views/opening-hours.blade.php:56
 msgid "Opening hours week navigation"
 msgstr ""
 
-#: source/php/Module/views/opening-hours.blade.php:19
+#: source/php/Module/views/opening-hours.blade.php:58
 msgid "Previous week"
 msgstr ""
 
-#: source/php/Module/views/opening-hours.blade.php:22
+#: source/php/Module/views/opening-hours.blade.php:61
 msgid "Next week"
-msgstr ""
-
-#: source/php/Module/views/opening-hours.blade.php:44
-msgid "Closed"
 msgstr ""

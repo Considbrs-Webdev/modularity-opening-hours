@@ -336,6 +336,7 @@ class OpeningHours extends \Modularity\Module
                 $weekEnd = $monday->modify('+6 days');
                 
                 $weekLabel = sprintf(
+                    /* translators: 1: ISO week number, 2: year, 3: week start (day and month), 4: week end (day and month). */
                     __('Week %1$s %2$s (%3$s – %4$s)', 'modularity-opening-hours'),
                     (string) $currentWeekNo,
                     (string) $year,

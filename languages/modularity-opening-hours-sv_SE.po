@@ -1,18 +1,15 @@
-# Copyright (C) 2026 Considbrs-Webdev
-# This file is distributed under the MIT.
 msgid ""
 msgstr ""
 "Project-Id-Version: Modularity OpeningHours 1.0.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/modularity-"
-"opening-hours\n"
-"POT-Creation-Date: 2026-02-17T14:45:09+00:00\n"
-"PO-Revision-Date: 2026-02-17 15:46+0100\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/modularity-opening-hours\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: sv_SE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-02-17T14:45:09+00:00\n"
+"PO-Revision-Date: 2026-02-17 15:46+0100\n"
+"Language: sv_SE\n"
 "X-Generator: Poedit 3.8\n"
 "X-Domain: modularity-opening-hours\n"
 
@@ -31,7 +28,8 @@ msgstr ""
 msgid "Considbrs-Webdev"
 msgstr ""
 
-#: source/php/Module/OpeningHours.php:18 source/php/Module/OpeningHours.php:19
+#: source/php/Module/OpeningHours.php:18
+#: source/php/Module/OpeningHours.php:19
 msgid "OpeningHours"
 msgstr ""
 
@@ -39,114 +37,109 @@ msgstr ""
 msgid "A opening-hours module."
 msgstr ""
 
-#: source/php/Module/OpeningHours.php:146
+#: source/php/Module/OpeningHours.php:198
 msgid "Jan"
 msgstr "jan"
 
-#: source/php/Module/OpeningHours.php:147
+#: source/php/Module/OpeningHours.php:199
 msgid "Feb"
 msgstr "feb"
 
-#: source/php/Module/OpeningHours.php:148
+#: source/php/Module/OpeningHours.php:200
 msgid "Mar"
 msgstr "mars"
 
-#: source/php/Module/OpeningHours.php:149
+#: source/php/Module/OpeningHours.php:201
 msgid "Apr"
 msgstr "april"
 
-#: source/php/Module/OpeningHours.php:150
+#: source/php/Module/OpeningHours.php:202
 msgid "May"
 msgstr "maj"
 
-#: source/php/Module/OpeningHours.php:151
+#: source/php/Module/OpeningHours.php:203
 msgid "Jun"
 msgstr "juni"
 
-#: source/php/Module/OpeningHours.php:152
+#: source/php/Module/OpeningHours.php:204
 msgid "Jul"
 msgstr "juli"
 
-#: source/php/Module/OpeningHours.php:153
+#: source/php/Module/OpeningHours.php:205
 msgid "Aug"
 msgstr "aug"
 
-#: source/php/Module/OpeningHours.php:154
+#: source/php/Module/OpeningHours.php:206
 msgid "Sep"
 msgstr "sep"
 
-#: source/php/Module/OpeningHours.php:155
+#: source/php/Module/OpeningHours.php:207
 msgid "Oct"
 msgstr "okt"
 
-#: source/php/Module/OpeningHours.php:156
+#: source/php/Module/OpeningHours.php:208
 msgid "Nov"
 msgstr "nov"
 
-#: source/php/Module/OpeningHours.php:157
+#: source/php/Module/OpeningHours.php:209
 msgid "Dec"
 msgstr "dec"
 
-#: source/php/Module/OpeningHours.php:171
+#: source/php/Module/OpeningHours.php:223
 msgid "Monday"
 msgstr "Måndag"
 
-#: source/php/Module/OpeningHours.php:172
+#: source/php/Module/OpeningHours.php:224
 msgid "Tuesday"
 msgstr "Tisdag"
 
-#: source/php/Module/OpeningHours.php:173
+#: source/php/Module/OpeningHours.php:225
 msgid "Wednesday"
 msgstr "Onsdag"
 
-#: source/php/Module/OpeningHours.php:174
+#: source/php/Module/OpeningHours.php:226
 msgid "Thursday"
 msgstr "Torsdag"
 
-#: source/php/Module/OpeningHours.php:175
+#: source/php/Module/OpeningHours.php:227
 msgid "Friday"
 msgstr "Fredag"
 
-#: source/php/Module/OpeningHours.php:176
+#: source/php/Module/OpeningHours.php:228
 msgid "Saturday"
 msgstr "Lördag"
 
-#: source/php/Module/OpeningHours.php:177
+#: source/php/Module/OpeningHours.php:229
 msgid "Sunday"
 msgstr "Söndag"
 
-#: source/php/Module/OpeningHours.php:255
+#: source/php/Module/OpeningHours.php:339
 #, php-format
 msgid "Week %1$s %2$s (%3$s – %4$s)"
 msgstr "Vecka %1$s %2$s (%3$s – %4$s)"
 
-#: source/php/Module/views/opening-hours.blade.php:17
+#: source/php/Module/views/opening-hours.blade.php:56
 msgid "Opening hours week navigation"
 msgstr "Öppettider navigering"
 
-#: source/php/Module/views/opening-hours.blade.php:19
+#: source/php/Module/views/opening-hours.blade.php:58
 msgid "Previous week"
 msgstr "Föregående"
 
-#: source/php/Module/views/opening-hours.blade.php:22
+#: source/php/Module/views/opening-hours.blade.php:61
 msgid "Next week"
 msgstr "Nästa"
 
-#: source/php/Module/views/opening-hours.blade.php:44
+#: source/php/Module/views/opening-hours.blade.php:25
+#: source/php/Module/views/opening-hours.blade.php:41
+#: source/php/Module/views/opening-hours.blade.php:83
 msgid "Closed"
 msgstr "Stängt"
 
+#: source/php/Module/views/opening-hours.blade.php:19
 msgid "Today"
 msgstr "Idag"
 
+#: source/php/Module/views/opening-hours.blade.php:35
 msgid "Tomorrow"
 msgstr "Imorgon"
-
-msgid "Opening hours day navigation"
-msgstr "Öppettider dag-navigering"
-
-msgid "Previous day"
-msgstr "Föregående dag"
-
-msgid "Next day"
-msgstr "Nästa dag"
