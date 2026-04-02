@@ -74,6 +74,10 @@
         background: transparent;
         cursor: pointer;
 
+        &--icon {
+            padding: 4px 4px 0px 4px;
+        }
+
         &:hover:not(:disabled) {
             text-decoration: underline;
         }

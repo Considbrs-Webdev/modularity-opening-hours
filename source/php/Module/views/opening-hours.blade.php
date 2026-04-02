@@ -51,11 +51,25 @@
             <h3 class="mod-opening-hours__week-title" data-week-title>{{ $currentWeek['weekLabel'] ?? '' }}</h3>
             <nav class="mod-opening-hours__paging"
                 aria-label="{{ __('Opening hours week navigation', 'modularity-opening-hours') }}">
-                <button type="button" class="mod-opening-hours__paging-link mod-opening-hours__paging-link--prev"
-                    {{ !$hasPrev ? 'disabled' : '' }}>{{ __('Previous week', 'modularity-opening-hours') }}</button>
+                <button type="button" class="mod-opening-hours__paging-link mod-opening-hours__paging-link--prev{{ ($paginationBtnStyle ?? 'text') === 'icon' ? ' mod-opening-hours__paging-link--icon' : '' }}"
+                    {{ !$hasPrev ? 'disabled' : '' }}>
+                    @if (($paginationBtnStyle ?? 'text') === 'icon')
+                        @icon(['icon' => 'keyboard_arrow_left', 'size' => 'md'])@endicon
+                        <span class="sr-only">{{ __('Previous week', 'modularity-opening-hours') }}</span>
+                    @else
+                        {{ __('Previous week', 'modularity-opening-hours') }}
+                    @endif
+                </button>
                 <span class="mod-opening-hours__paging-info">{{ $currentWeekIndex + 1 }} / {{ $totalWeeks }}</span>
-                <button type="button" class="mod-opening-hours__paging-link mod-opening-hours__paging-link--next"
-                    {{ !$hasNext ? 'disabled' : '' }}>{{ __('Next week', 'modularity-opening-hours') }}</button>
+                <button type="button" class="mod-opening-hours__paging-link mod-opening-hours__paging-link--next{{ ($paginationBtnStyle ?? 'text') === 'icon' ? ' mod-opening-hours__paging-link--icon' : '' }}"
+                    {{ !$hasNext ? 'disabled' : '' }}>
+                    @if (($paginationBtnStyle ?? 'text') === 'icon')
+                        @icon(['icon' => 'keyboard_arrow_right', 'size' => 'md'])@endicon
+                        <span class="sr-only">{{ __('Next week', 'modularity-opening-hours') }}</span>
+                    @else
+                        {{ __('Next week', 'modularity-opening-hours') }}
+                    @endif
+                </button>
             </nav>
         </div>
 

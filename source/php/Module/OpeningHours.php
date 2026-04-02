@@ -33,7 +33,10 @@ class OpeningHours extends \Modularity\Module
 
         $weekRepeater = $this->normalizeWeekRepeater($data['weekRepeater'] ?? null);
         $year = $this->getYear();
-        $weeks = $this->buildWeeksFromRepeater($weekRepeater, $year);
+        $showYear = !empty($data['showYear']);
+        $showWeekDates = !empty($data['showWeekDates']);
+        $weeks = $this->buildWeeksFromRepeater($weekRepeater, $year, $showYear, $showWeekDates);
+        $data['paginationBtnStyle'] = $data['paginationBtnStyle'] ?? 'text';
         $currentIndex = $this->getCurrentWeekIndex($weeks);
         $data['weeks'] = $weeks;
         $data['weeksJson'] = json_encode($weeks, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP);
@@ -214,9 +217,11 @@ class OpeningHours extends \Modularity\Module
     /**
      * @param array<int, array> $repeater
      * @param int $year
+     * @param bool $showYear
+     * @param bool $showWeekDates
      * @return array<int, array{weekLabel: string, weekNo: int, days: array<int, array{name: string, date: string, slots: array}>}>
      */
-    private function buildWeeksFromRepeater(array $repeater, int $year): array
+    private function buildWeeksFromRepeater(array $repeater, int $year, bool $showYear = true, bool $showWeekDates = true): array
     {
         $weeks = [];
         $dayNames = [
@@ -335,14 +340,7 @@ class OpeningHours extends \Modularity\Module
                 $monday = $weekOne->modify('monday this week')->modify('+' . ($currentWeekNo - 1) . ' weeks');
                 $weekEnd = $monday->modify('+6 days');
                 
-                $weekLabel = sprintf(
-                    /* translators: 1: ISO week number, 2: year, 3: week start (day and month), 4: week end (day and month). */
-                    __('Week %1$s %2$s (%3$s – %4$s)', 'modularity-opening-hours'),
-                    (string) $currentWeekNo,
-                    (string) $year,
-                    $monday->format('j') . ' ' . $this->getMonthName((int) $monday->format('n')),
-                    $weekEnd->format('j') . ' ' . $this->getMonthName((int) $weekEnd->format('n'))
-                );
+                $weekLabel = $this->buildWeekLabel($currentWeekNo, $year, $monday, $weekEnd, $showYear, $showWeekDates);
 
                 // Build days with actual dates
                 $days = [];
@@ -402,6 +400,59 @@ class OpeningHours extends \Modularity\Module
         }
 
         return $result;
+    }
+
+    /**
+     * Build week label based on display settings
+     * @param int $weekNo
+     * @param int $year
+     * @param \DateTimeImmutable $monday
+     * @param \DateTimeImmutable $weekEnd
+     * @param bool $showYear
+     * @param bool $showWeekDates
+     * @return string
+     */
+    private function buildWeekLabel(int $weekNo, int $year, \DateTimeImmutable $monday, \DateTimeImmutable $weekEnd, bool $showYear, bool $showWeekDates): string
+    {
+        $startDate = $monday->format('j') . ' ' . $this->getMonthName((int) $monday->format('n'));
+        $endDate = $weekEnd->format('j') . ' ' . $this->getMonthName((int) $weekEnd->format('n'));
+
+        if ($showYear && $showWeekDates) {
+            return sprintf(
+                /* translators: 1: ISO week number, 2: year, 3: week start (day and month), 4: week end (day and month). */
+                __('Week %1$s %2$s (%3$s – %4$s)', 'modularity-opening-hours'),
+                (string) $weekNo,
+                (string) $year,
+                $startDate,
+                $endDate
+            );
+        }
+
+        if ($showYear && !$showWeekDates) {
+            return sprintf(
+                /* translators: 1: ISO week number, 2: year. */
+                __('Week %1$s %2$s', 'modularity-opening-hours'),
+                (string) $weekNo,
+                (string) $year
+            );
+        }
+
+        if (!$showYear && $showWeekDates) {
+            return sprintf(
+                /* translators: 1: ISO week number, 2: week start (day and month), 3: week end (day and month). */
+                __('Week %1$s (%2$s – %3$s)', 'modularity-opening-hours'),
+                (string) $weekNo,
+                $startDate,
+                $endDate
+            );
+        }
+
+        // Neither year nor dates
+        return sprintf(
+            /* translators: 1: ISO week number. */
+            __('Week %1$s', 'modularity-opening-hours'),
+            (string) $weekNo
+        );
     }
 
     /**
