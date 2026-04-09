@@ -104,7 +104,7 @@
                                     @endif
                                 @endforeach
                                 @if (!empty($day['description']))
-                                    <span class="mod-opening-hours__description">{{ $day['description'] }}</span>
+                                    <span class="mod-opening-hours__description">- {{ $day['description'] }}</span>
                                 @endif
                             </dd>
                         </div>
