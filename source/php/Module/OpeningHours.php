@@ -67,6 +67,8 @@ class OpeningHours extends \Modularity\Module
         if (!empty($data['textColor'])) {
             $styles[] = 'color: ' . $data['textColor'];
         }
+        $closedColor = strtolower(trim($data['textColor'] ?? '')) === 'white' ? '#FCA5A5' : '#a11818';
+        $styles[] = '--closed-color: ' . $closedColor;
         $data['inlineStyle'] = implode('; ', $styles);
 
         return $data;

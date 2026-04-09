@@ -131,7 +131,7 @@
     }
 
     &__closed {
-        color: #a11818;
+        color: var(--closed-color, #a11818);
         font-style: italic;
     }
 
