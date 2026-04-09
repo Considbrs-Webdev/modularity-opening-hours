@@ -60,6 +60,15 @@ class OpeningHours extends \Modularity\Module
         $data['tomorrowDay'] = $tomorrowDay;
         $data['todayDateKey'] = $todayDateKey;
 
+        $styles = [];
+        if (!empty($data['backgroundColor'])) {
+            $styles[] = 'background-color: ' . $data['backgroundColor'];
+        }
+        if (!empty($data['textColor'])) {
+            $styles[] = 'color: ' . $data['textColor'];
+        }
+        $data['inlineStyle'] = implode('; ', $styles);
+
         return $data;
     }
 
@@ -326,11 +335,18 @@ class OpeningHours extends \Modularity\Module
                 $dateKey = $specialDate->format('Y-m-d');
                 $specialOpen = $this->normalizeTime((string) ($special['opensThisDay'] ?? ''));
                 $specialClose = $this->normalizeTime((string) ($special['closesThisDay'] ?? ''));
+                $specialDescription = trim((string) ($special['specialOpeningHoursDescription'] ?? ''));
                 
                 if ($specialOpen !== '' && $specialClose !== '') {
-                    $allSpecialHours[$dateKey] = [['open' => $specialOpen, 'close' => $specialClose]];
+                    $allSpecialHours[$dateKey] = [
+                        'slots' => [['open' => $specialOpen, 'close' => $specialClose]],
+                        'description' => $specialDescription,
+                    ];
                 } else {
-                    $allSpecialHours[$dateKey] = [['closed' => true]];
+                    $allSpecialHours[$dateKey] = [
+                        'slots' => [['closed' => true]],
+                        'description' => $specialDescription,
+                    ];
                 }
             }
 
@@ -353,7 +369,9 @@ class OpeningHours extends \Modularity\Module
                     $baseSlots = $daySlotsByDow[$dayOfWeek] ?? [['closed' => true]];
 
                     // Check for special hours override for this specific date
-                    $slots = $allSpecialHours[$dateKey] ?? $baseSlots;
+                    $specialEntry = $allSpecialHours[$dateKey] ?? null;
+                    $slots = $specialEntry !== null ? $specialEntry['slots'] : $baseSlots;
+                    $description = $specialEntry['description'] ?? '';
 
                     // Format date as "17 feb" (day + short month name)
                     $formattedDate = $dayDate->format('j') . ' ' . $this->getMonthName((int) $dayDate->format('n'));
@@ -363,6 +381,7 @@ class OpeningHours extends \Modularity\Module
                         'date' => $formattedDate,
                         'dateKey' => $dateKey,
                         'slots' => $slots,
+                        'description' => $description,
                     ];
                 }
 
@@ -394,7 +413,8 @@ class OpeningHours extends \Modularity\Module
             foreach ($week['days'] as &$day) {
                 $dateKey = $day['dateKey'];
                 if (isset($allSpecialHours[$dateKey])) {
-                    $day['slots'] = $allSpecialHours[$dateKey];
+                    $day['slots'] = $allSpecialHours[$dateKey]['slots'];
+                    $day['description'] = $allSpecialHours[$dateKey]['description'] ?? '';
                 }
             }
         }

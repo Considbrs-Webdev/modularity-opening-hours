@@ -37,7 +37,7 @@ add_action('acf/init', function () {
     $acfExportManager->setTextdomain('modularity-opening-hours');
     $acfExportManager->setExportFolder(MODULARITYOPENINGHOURS_PATH . 'source/php/AcfFields/');
     $acfExportManager->autoExport(array(
-        'opening-hours-module' => 'group_opening-hours_module',
+        'opening-hours-module' => 'group_69944a2c22d00',
     ));
     $acfExportManager->import();
 });

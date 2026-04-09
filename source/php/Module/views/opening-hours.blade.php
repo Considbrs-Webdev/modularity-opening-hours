@@ -9,7 +9,8 @@
 @endif
 
 <div class="mod-opening-hours" data-current-week-index="{{ $currentWeekIndex }}" data-total-weeks="{{ $totalWeeks }}"
-    data-today-date-key="{{ $todayDateKey ?? '' }}">
+    data-today-date-key="{{ $todayDateKey ?? '' }}"
+    @if (!empty($inlineStyle)) style="{{ $inlineStyle }}" @endif>
     @if (!empty($showTodayHighlight) && $todayDay)
         <div class="mod-opening-hours__featured">
             <div class="mod-opening-hours__featured-slots">
@@ -26,6 +27,9 @@
                             @endif
                         @endforeach
                     </p>
+                    @if (!empty($todayDay['description']))
+                        <p class="mod-opening-hours__description">{{ $todayDay['description'] }}</p>
+                    @endif
                 </div>
                 @if (!empty($showTomorrowHighlight) && $tomorrowDay)
                     <div class="mod-opening-hours__featured-slot">
@@ -41,6 +45,9 @@
                                 @endif
                             @endforeach
                         </p>
+                        @if (!empty($tomorrowDay['description']))
+                            <p class="mod-opening-hours__description">{{ $tomorrowDay['description'] }}</p>
+                        @endif
                     </div>
                 @endif
             </div>
@@ -96,6 +103,9 @@
                                         <span class="mod-opening-hours__sep">, </span>
                                     @endif
                                 @endforeach
+                                @if (!empty($day['description']))
+                                    <span class="mod-opening-hours__description">{{ $day['description'] }}</span>
+                                @endif
                             </dd>
                         </div>
                     @endforeach

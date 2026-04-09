@@ -3,7 +3,6 @@
 }
 
 .mod-opening-hours {
-    background-color: var(--color-secondary-light);
     padding: 1rem;
 
     &__featured {
@@ -138,6 +137,13 @@
 
     &__range {
         white-space: nowrap;
+    }
+
+    &__description {
+        display: block;
+        margin-top: 0.35rem;
+        font-size: 0.85rem;
+        font-style: italic;
     }
 }
 
