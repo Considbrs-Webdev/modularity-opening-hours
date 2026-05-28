@@ -49,5 +49,5 @@ document.querySelectorAll('.mod-opening-hours').forEach((root) => {
         if (current < total - 1) showWeek(current + 1);
     });
 
-    applyActiveDay();
+    showWeek(current);
 });

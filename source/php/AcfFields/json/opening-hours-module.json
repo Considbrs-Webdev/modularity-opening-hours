@@ -1,1225 +1,1429 @@
-[{
-    "key": "group_69944a2c22d00",
-    "title": "\u00d6ppettider",
-    "fields": [
-        {
-            "key": "field_69ce1de199e6c",
-            "label": "Inneh\u00e5ll",
-            "name": "",
-            "aria-label": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
+[
+    {
+        "key": "group_69944a2c22d00",
+        "title": "Öppettider",
+        "fields": [
+            {
+                "key": "field_69ce1de199e6c",
+                "label": "Innehåll",
+                "name": "",
+                "aria-label": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "placement": "top",
+                "endpoint": 0,
+                "selected": 0
             },
-            "placement": "top",
-            "endpoint": 0,
-            "selected": 0
-        },
-        {
-            "key": "field_highlight_today_0001",
-            "label": "Visa dagens \u00f6ppettider",
-            "name": "highlight_today",
-            "aria-label": "",
-            "type": "true_false",
-            "instructions": "Visa en sammanfattning av dagens \u00f6ppettider ovanf\u00f6r kalendern.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
+            {
+                "key": "field_highlight_today_0001",
+                "label": "Visa dagens öppettider",
+                "name": "highlight_today",
+                "aria-label": "",
+                "type": "true_false",
+                "instructions": "Visa en sammanfattning av dagens öppettider ovanför kalendern.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "",
+                "default_value": 0,
+                "ui": 1,
+                "ui_on_text": "Ja",
+                "ui_off_text": "Nej"
             },
-            "message": "",
-            "default_value": 0,
-            "ui": 1,
-            "ui_on_text": "Ja",
-            "ui_off_text": "Nej"
-        },
-        {
-            "key": "field_show_tomorrow_0001",
-            "label": "Visa \u00e4ven morgondagen",
-            "name": "show_tomorrow_highlight",
-            "aria-label": "",
-            "type": "true_false",
-            "instructions": "Visa tv\u00e5 dagar sida vid sida (idag och morgondagen).",
-            "required": 0,
-            "conditional_logic": [
-                [
+            {
+                "key": "field_show_tomorrow_0001",
+                "label": "Visa även morgondagen",
+                "name": "show_tomorrow_highlight",
+                "aria-label": "",
+                "type": "true_false",
+                "instructions": "Visa två dagar sida vid sida (idag och morgondagen).",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_highlight_today_0001",
+                            "operator": "==",
+                            "value": "1"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "",
+                "default_value": 0,
+                "ui": 1,
+                "ui_on_text": "Ja",
+                "ui_off_text": "Nej"
+            },
+            {
+                "key": "field_69944a2d44994",
+                "label": "Vecka",
+                "name": "week_repeater",
+                "aria-label": "",
+                "type": "repeater",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "acfe_repeater_stylised_button": 0,
+                "layout": "block",
+                "pagination": 0,
+                "min": 0,
+                "max": 0,
+                "collapsed": "",
+                "button_label": "Lägg till vecka",
+                "rows_per_page": 20,
+                "sub_fields": [
                     {
-                        "field": "field_highlight_today_0001",
-                        "operator": "==",
-                        "value": "1"
+                        "key": "field_gran_monday",
+                        "label": "Måndag",
+                        "name": "monday_is_closed",
+                        "aria-label": "",
+                        "type": "true_false",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "==",
+                                    "value": "granular"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "25",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": 0,
+                        "ui": 1,
+                        "ui_on_text": "Stängt",
+                        "ui_off_text": "Öppen",
+                        "parent_repeater": "field_69944a2d44994",
+                        "message": ""
+                    },
+                    {
+                        "key": "field_gran_monday_opens",
+                        "label": "Måndag öppnar",
+                        "name": "monday_opens",
+                        "aria-label": "",
+                        "type": "time_picker",
+                        "instructions": "",
+                        "required": false,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "==",
+                                    "value": "granular"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "25",
+                            "class": "",
+                            "id": ""
+                        },
+                        "display_format": "H:i:s",
+                        "return_format": "H:i:s",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_gran_monday_closes",
+                        "label": "Måndag stänger",
+                        "name": "monday_closes",
+                        "aria-label": "",
+                        "type": "time_picker",
+                        "instructions": "",
+                        "required": false,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "==",
+                                    "value": "granular"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "25",
+                            "class": "",
+                            "id": ""
+                        },
+                        "display_format": "H:i:s",
+                        "return_format": "H:i:s",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_gran_monday_desc",
+                        "label": "Beskrivning (måndag)",
+                        "name": "monday_description",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "==",
+                                    "value": "granular"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "25",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_gran_tuesday",
+                        "label": "Tisdag",
+                        "name": "tuesday_is_closed",
+                        "aria-label": "",
+                        "type": "true_false",
+                        "instructions": "",
+                        "required": false,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "==",
+                                    "value": "granular"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "25",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": 0,
+                        "ui": 1,
+                        "ui_on_text": "Stängt",
+                        "ui_off_text": "Öppen",
+                        "parent_repeater": "field_69944a2d44994",
+                        "message": ""
+                    },
+                    {
+                        "key": "field_gran_tuesday_opens",
+                        "label": "Tisdag öppnar",
+                        "name": "tuesday_opens",
+                        "aria-label": "",
+                        "type": "time_picker",
+                        "instructions": "",
+                        "required": false,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "==",
+                                    "value": "granular"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "25",
+                            "class": "",
+                            "id": ""
+                        },
+                        "display_format": "H:i:s",
+                        "return_format": "H:i:s",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_gran_tuesday_closes",
+                        "label": "Tisdag stänger",
+                        "name": "tuesday_closes",
+                        "aria-label": "",
+                        "type": "time_picker",
+                        "instructions": "",
+                        "required": false,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "==",
+                                    "value": "granular"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "25",
+                            "class": "",
+                            "id": ""
+                        },
+                        "display_format": "H:i:s",
+                        "return_format": "H:i:s",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_gran_tuesday_desc",
+                        "label": "Beskrivning (tisdag)",
+                        "name": "tuesday_description",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "==",
+                                    "value": "granular"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "25",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_gran_wednesday",
+                        "label": "Onsdag",
+                        "name": "wednesday_is_closed",
+                        "aria-label": "",
+                        "type": "true_false",
+                        "instructions": "",
+                        "required": false,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "==",
+                                    "value": "granular"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "25",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": 0,
+                        "ui": 1,
+                        "ui_on_text": "Stängt",
+                        "ui_off_text": "Öppen",
+                        "parent_repeater": "field_69944a2d44994",
+                        "message": ""
+                    },
+                    {
+                        "key": "field_gran_wednesday_opens",
+                        "label": "Onsdag öppnar",
+                        "name": "wednesday_opens",
+                        "aria-label": "",
+                        "type": "time_picker",
+                        "instructions": "",
+                        "required": false,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "==",
+                                    "value": "granular"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "25",
+                            "class": "",
+                            "id": ""
+                        },
+                        "display_format": "H:i:s",
+                        "return_format": "H:i:s",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_gran_wednesday_closes",
+                        "label": "Onsdag stänger",
+                        "name": "wednesday_closes",
+                        "aria-label": "",
+                        "type": "time_picker",
+                        "instructions": "",
+                        "required": false,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "==",
+                                    "value": "granular"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "25",
+                            "class": "",
+                            "id": ""
+                        },
+                        "display_format": "H:i:s",
+                        "return_format": "H:i:s",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_gran_wednesday_desc",
+                        "label": "Beskrivning (onsdag)",
+                        "name": "wednesday_description",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "==",
+                                    "value": "granular"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "25",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_gran_thursday",
+                        "label": "Torsdag",
+                        "name": "thursday_is_closed",
+                        "aria-label": "",
+                        "type": "true_false",
+                        "instructions": "",
+                        "required": false,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "==",
+                                    "value": "granular"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "25",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": 0,
+                        "ui": 1,
+                        "ui_on_text": "Stängt",
+                        "ui_off_text": "Öppen",
+                        "parent_repeater": "field_69944a2d44994",
+                        "message": ""
+                    },
+                    {
+                        "key": "field_gran_thursday_opens",
+                        "label": "Torsdag öppnar",
+                        "name": "thursday_opens",
+                        "aria-label": "",
+                        "type": "time_picker",
+                        "instructions": "",
+                        "required": false,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "==",
+                                    "value": "granular"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "25",
+                            "class": "",
+                            "id": ""
+                        },
+                        "display_format": "H:i:s",
+                        "return_format": "H:i:s",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_gran_thursday_closes",
+                        "label": "Torsdag stänger",
+                        "name": "thursday_closes",
+                        "aria-label": "",
+                        "type": "time_picker",
+                        "instructions": "",
+                        "required": false,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "==",
+                                    "value": "granular"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "25",
+                            "class": "",
+                            "id": ""
+                        },
+                        "display_format": "H:i:s",
+                        "return_format": "H:i:s",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_gran_thursday_desc",
+                        "label": "Beskrivning (torsdag)",
+                        "name": "thursday_description",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "==",
+                                    "value": "granular"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "25",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_gran_friday",
+                        "label": "Fredag",
+                        "name": "friday_is_closed",
+                        "aria-label": "",
+                        "type": "true_false",
+                        "instructions": "",
+                        "required": false,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "==",
+                                    "value": "granular"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "25",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": 0,
+                        "ui": 1,
+                        "ui_on_text": "Stängt",
+                        "ui_off_text": "Öppen",
+                        "parent_repeater": "field_69944a2d44994",
+                        "message": ""
+                    },
+                    {
+                        "key": "field_gran_friday_opens",
+                        "label": "Fredag öppnar",
+                        "name": "friday_opens",
+                        "aria-label": "",
+                        "type": "time_picker",
+                        "instructions": "",
+                        "required": false,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "==",
+                                    "value": "granular"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "25",
+                            "class": "",
+                            "id": ""
+                        },
+                        "display_format": "H:i:s",
+                        "return_format": "H:i:s",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_gran_friday_closes",
+                        "label": "Fredag stänger",
+                        "name": "friday_closes",
+                        "aria-label": "",
+                        "type": "time_picker",
+                        "instructions": "",
+                        "required": false,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "==",
+                                    "value": "granular"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "25",
+                            "class": "",
+                            "id": ""
+                        },
+                        "display_format": "H:i:s",
+                        "return_format": "H:i:s",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_gran_friday_desc",
+                        "label": "Beskrivning (fredag)",
+                        "name": "friday_description",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "==",
+                                    "value": "granular"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "25",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_gran_saturday",
+                        "label": "Lördag",
+                        "name": "saturday_is_closed",
+                        "aria-label": "",
+                        "type": "true_false",
+                        "instructions": "",
+                        "required": false,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "==",
+                                    "value": "granular"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "25",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": 1,
+                        "ui": 1,
+                        "ui_on_text": "Stängt",
+                        "ui_off_text": "Öppen",
+                        "parent_repeater": "field_69944a2d44994",
+                        "message": ""
+                    },
+                    {
+                        "key": "field_gran_saturday_opens",
+                        "label": "Lördag öppnar",
+                        "name": "saturday_opens",
+                        "aria-label": "",
+                        "type": "time_picker",
+                        "instructions": "",
+                        "required": false,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "==",
+                                    "value": "granular"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "25",
+                            "class": "",
+                            "id": ""
+                        },
+                        "display_format": "H:i:s",
+                        "return_format": "H:i:s",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_gran_saturday_closes",
+                        "label": "Lördag stänger",
+                        "name": "saturday_closes",
+                        "aria-label": "",
+                        "type": "time_picker",
+                        "instructions": "",
+                        "required": false,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "==",
+                                    "value": "granular"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "25",
+                            "class": "",
+                            "id": ""
+                        },
+                        "display_format": "H:i:s",
+                        "return_format": "H:i:s",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_gran_saturday_desc",
+                        "label": "Beskrivning (lördag)",
+                        "name": "saturday_description",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "==",
+                                    "value": "granular"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "25",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_gran_sunday",
+                        "label": "Söndag",
+                        "name": "sunday_is_closed",
+                        "aria-label": "",
+                        "type": "true_false",
+                        "instructions": "",
+                        "required": false,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "==",
+                                    "value": "granular"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "25",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": 1,
+                        "ui": 1,
+                        "ui_on_text": "Stängt",
+                        "ui_off_text": "Öppen",
+                        "parent_repeater": "field_69944a2d44994",
+                        "message": ""
+                    },
+                    {
+                        "key": "field_gran_sunday_opens",
+                        "label": "Söndag öppnar",
+                        "name": "sunday_opens",
+                        "aria-label": "",
+                        "type": "time_picker",
+                        "instructions": "",
+                        "required": false,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "==",
+                                    "value": "granular"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "25",
+                            "class": "",
+                            "id": ""
+                        },
+                        "display_format": "H:i:s",
+                        "return_format": "H:i:s",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_gran_sunday_closes",
+                        "label": "Söndag stänger",
+                        "name": "sunday_closes",
+                        "aria-label": "",
+                        "type": "time_picker",
+                        "instructions": "",
+                        "required": false,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "==",
+                                    "value": "granular"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "25",
+                            "class": "",
+                            "id": ""
+                        },
+                        "display_format": "H:i:s",
+                        "return_format": "H:i:s",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_gran_sunday_desc",
+                        "label": "Beskrivning (söndag)",
+                        "name": "sunday_description",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "==",
+                                    "value": "granular"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "25",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_69945bb444997",
+                        "label": "Stängt lördag",
+                        "name": "closed_saturday",
+                        "aria-label": "",
+                        "type": "true_false",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "!=",
+                                    "value": "granular"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "100",
+                            "class": "",
+                            "id": ""
+                        },
+                        "message": "",
+                        "default_value": 1,
+                        "ui": 0,
+                        "ui_on_text": "",
+                        "ui_off_text": "",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_69945bd644998",
+                        "label": "Stängt söndag",
+                        "name": "closed_sunday",
+                        "aria-label": "",
+                        "type": "true_false",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "!=",
+                                    "value": "granular"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "100",
+                            "class": "",
+                            "id": ""
+                        },
+                        "message": "",
+                        "default_value": 1,
+                        "ui": 0,
+                        "ui_on_text": "",
+                        "ui_off_text": "",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_69945b7944996",
+                        "label": "Stänger (mån-fre)",
+                        "name": "closes",
+                        "aria-label": "",
+                        "type": "time_picker",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "!=",
+                                    "value": "granular"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        },
+                        "display_format": "H:i:s",
+                        "return_format": "H:i:s",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_69945d234499e",
+                        "label": "Stänger lördag",
+                        "name": "closes_saturday_",
+                        "aria-label": "",
+                        "type": "time_picker",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "!=",
+                                    "value": "granular"
+                                },
+                                {
+                                    "field": "field_69945bb444997",
+                                    "operator": "!=",
+                                    "value": "1"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        },
+                        "display_format": "H:i:s",
+                        "return_format": "H:i:s",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_69945cc64499c",
+                        "label": "Stänger söndag",
+                        "name": "closes_sunday",
+                        "aria-label": "",
+                        "type": "time_picker",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "!=",
+                                    "value": "granular"
+                                },
+                                {
+                                    "field": "field_69945bd644998",
+                                    "operator": "!=",
+                                    "value": "1"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        },
+                        "display_format": "H:i:s",
+                        "return_format": "H:i:s",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_69944a6544995",
+                        "label": "Öppnar (mån-fre)",
+                        "name": "opens",
+                        "aria-label": "",
+                        "type": "time_picker",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "!=",
+                                    "value": "granular"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        },
+                        "display_format": "H:i:s",
+                        "return_format": "H:i:s",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_69945cf74499d",
+                        "label": "Öppnar lördag",
+                        "name": "opens_saturday",
+                        "aria-label": "",
+                        "type": "time_picker",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "!=",
+                                    "value": "granular"
+                                },
+                                {
+                                    "field": "field_69945bb444997",
+                                    "operator": "!=",
+                                    "value": "1"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        },
+                        "display_format": "H:i:s",
+                        "return_format": "H:i:s",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_69945cac4499b",
+                        "label": "Öppnar söndag",
+                        "name": "opens_sunday",
+                        "aria-label": "",
+                        "type": "time_picker",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "!=",
+                                    "value": "granular"
+                                },
+                                {
+                                    "field": "field_69945bd644998",
+                                    "operator": "!=",
+                                    "value": "1"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        },
+                        "display_format": "H:i:s",
+                        "return_format": "H:i:s",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_schedule_mode_0001",
+                        "label": "Schema-läge",
+                        "name": "schedule_mode",
+                        "aria-label": "",
+                        "type": "button_group",
+                        "instructions": "Standard grupperar mån-fre. Granulärt låter dig ställa in varje veckodag individuellt.",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "100",
+                            "class": "",
+                            "id": ""
+                        },
+                        "choices": {
+                            "standard": "Standard",
+                            "granular": "Granulärt"
+                        },
+                        "default_value": "standard",
+                        "return_format": "value",
+                        "allow_null": 1,
+                        "layout": "horizontal",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_69945be944999",
+                        "label": "Avvikande öppettider",
+                        "name": "special_opening_hours",
+                        "aria-label": "",
+                        "type": "repeater",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "acfe_repeater_stylised_button": 0,
+                        "layout": "block",
+                        "min": 0,
+                        "max": 0,
+                        "collapsed": "",
+                        "button_label": "Lägg till rad",
+                        "rows_per_page": 20,
+                        "sub_fields": [
+                            {
+                                "key": "field_6994600753009",
+                                "label": "Veckodag",
+                                "name": "special_opening_date",
+                                "aria-label": "",
+                                "type": "date_picker",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "display_format": "d/m/Y",
+                                "return_format": "d/m/Y",
+                                "first_day": 1,
+                                "parent_repeater": "field_69945be944999"
+                            },
+                            {
+                                "key": "field_6994604a5300a",
+                                "label": "Öppnar denna dagen",
+                                "name": "opens_this_day",
+                                "aria-label": "",
+                                "type": "time_picker",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "display_format": "H:i:s",
+                                "return_format": "H:i:s",
+                                "parent_repeater": "field_69945be944999"
+                            },
+                            {
+                                "key": "field_699460605300b",
+                                "label": "Stänger denna dagen",
+                                "name": "closes_this_day",
+                                "aria-label": "",
+                                "type": "time_picker",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "display_format": "H:i:s",
+                                "return_format": "H:i:s",
+                                "parent_repeater": "field_69945be944999"
+                            },
+                            {
+                                "key": "field_69d664a65069e",
+                                "label": "Beskrivning",
+                                "name": "special_opening_hours_description",
+                                "aria-label": "",
+                                "type": "text",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "default_value": "",
+                                "maxlength": "",
+                                "placeholder": "",
+                                "prepend": "",
+                                "append": "",
+                                "parent_repeater": "field_69945be944999"
+                            }
+                        ],
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_69945c794499a",
+                        "label": "Veckonummer (från)",
+                        "name": "week_no_from",
+                        "aria-label": "",
+                        "type": "number",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "min": 1,
+                        "max": 53,
+                        "placeholder": "",
+                        "step": "",
+                        "prepend": "",
+                        "append": "",
+                        "parent_repeater": "field_69944a2d44994"
+                    },
+                    {
+                        "key": "field_69947962de62a",
+                        "label": "Veckonummer (till)",
+                        "name": "week_no_to",
+                        "aria-label": "",
+                        "type": "number",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "min": 1,
+                        "max": 53,
+                        "placeholder": "",
+                        "step": "",
+                        "prepend": "",
+                        "append": "",
+                        "parent_repeater": "field_69944a2d44994"
                     }
                 ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
             },
-            "message": "",
-            "default_value": 0,
-            "ui": 1,
-            "ui_on_text": "Ja",
-            "ui_off_text": "Nej"
-        },
-        {
-            "key": "field_69944a2d44994",
-            "label": "Vecka",
-            "name": "week_repeater",
-            "aria-label": "",
-            "type": "repeater",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "acfe_repeater_stylised_button": 0,
-            "layout": "block",
-            "pagination": 0,
-            "min": 0,
-            "max": 0,
-            "collapsed": "",
-            "button_label": "L\u00e4gg till vecka",
-            "rows_per_page": 20,
-            "sub_fields": [
-                {
-                    "key": "field_69945c794499a",
-                    "label": "Veckonummer (fr\u00e5n)",
-                    "name": "week_no_from",
-                    "aria-label": "",
-                    "type": "number",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "50",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "min": 1,
-                    "max": 53,
-                    "placeholder": "",
-                    "step": "",
-                    "prepend": "",
-                    "append": "",
-                    "parent_repeater": "field_69944a2d44994"
-                },
-                {
-                    "key": "field_69947962de62a",
-                    "label": "Veckonummer (till)",
-                    "name": "week_no_to",
-                    "aria-label": "",
-                    "type": "number",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "50",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "min": 1,
-                    "max": 53,
-                    "placeholder": "",
-                    "step": "",
-                    "prepend": "",
-                    "append": "",
-                    "parent_repeater": "field_69944a2d44994"
-                },
-                {
-                    "key": "field_schedule_mode_0001",
-                    "label": "Schema-l\u00e4ge",
-                    "name": "schedule_mode",
-                    "aria-label": "",
-                    "type": "button_group",
-                    "instructions": "Standard grupperar m\u00e5n-fre. Granul\u00e4rt l\u00e5ter dig st\u00e4lla in varje veckodag individuellt.",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "100",
-                        "class": "",
-                        "id": ""
-                    },
-                    "choices": {
-                        "standard": "Standard",
-                        "granular": "Granul\u00e4rt"
-                    },
-                    "default_value": "standard",
-                    "return_format": "value",
-                    "allow_null": 1,
-                    "layout": "horizontal",
-                    "parent_repeater": "field_69944a2d44994"
-                },
-                {
-                    "key": "field_69944a6544995",
-                    "label": "\u00d6ppnar (m\u00e5n-fre)",
-                    "name": "opens",
-                    "aria-label": "",
-                    "type": "time_picker",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_schedule_mode_0001",
-                                "operator": "!=",
-                                "value": "granular"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "50",
-                        "class": "",
-                        "id": ""
-                    },
-                    "display_format": "H:i:s",
-                    "return_format": "H:i:s",
-                    "parent_repeater": "field_69944a2d44994"
-                },
-                {
-                    "key": "field_69945b7944996",
-                    "label": "St\u00e4nger (m\u00e5n-fre)",
-                    "name": "closes",
-                    "aria-label": "",
-                    "type": "time_picker",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_schedule_mode_0001",
-                                "operator": "!=",
-                                "value": "granular"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "50",
-                        "class": "",
-                        "id": ""
-                    },
-                    "display_format": "H:i:s",
-                    "return_format": "H:i:s",
-                    "parent_repeater": "field_69944a2d44994"
-                },
-                {
-                    "key": "field_69945bb444997",
-                    "label": "St\u00e4ngt l\u00f6rdag",
-                    "name": "closed_saturday",
-                    "aria-label": "",
-                    "type": "true_false",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_schedule_mode_0001",
-                                "operator": "!=",
-                                "value": "granular"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "100",
-                        "class": "",
-                        "id": ""
-                    },
-                    "message": "",
-                    "default_value": 1,
-                    "ui": 0,
-                    "ui_on_text": "",
-                    "ui_off_text": "",
-                    "parent_repeater": "field_69944a2d44994"
-                },
-                {
-                    "key": "field_69945cf74499d",
-                    "label": "\u00d6ppnar l\u00f6rdag",
-                    "name": "opens_saturday",
-                    "aria-label": "",
-                    "type": "time_picker",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_schedule_mode_0001",
-                                "operator": "!=",
-                                "value": "granular"
-                            },
-                            {
-                                "field": "field_69945bb444997",
-                                "operator": "!=",
-                                "value": "1"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "50",
-                        "class": "",
-                        "id": ""
-                    },
-                    "display_format": "H:i:s",
-                    "return_format": "H:i:s",
-                    "parent_repeater": "field_69944a2d44994"
-                },
-                {
-                    "key": "field_69945d234499e",
-                    "label": "St\u00e4nger l\u00f6rdag",
-                    "name": "closes_saturday_",
-                    "aria-label": "",
-                    "type": "time_picker",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_schedule_mode_0001",
-                                "operator": "!=",
-                                "value": "granular"
-                            },
-                            {
-                                "field": "field_69945bb444997",
-                                "operator": "!=",
-                                "value": "1"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "50",
-                        "class": "",
-                        "id": ""
-                    },
-                    "display_format": "H:i:s",
-                    "return_format": "H:i:s",
-                    "parent_repeater": "field_69944a2d44994"
-                },
-                {
-                    "key": "field_69945bd644998",
-                    "label": "St\u00e4ngt s\u00f6ndag",
-                    "name": "closed_sunday",
-                    "aria-label": "",
-                    "type": "true_false",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_schedule_mode_0001",
-                                "operator": "!=",
-                                "value": "granular"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "100",
-                        "class": "",
-                        "id": ""
-                    },
-                    "message": "",
-                    "default_value": 1,
-                    "ui": 0,
-                    "ui_on_text": "",
-                    "ui_off_text": "",
-                    "parent_repeater": "field_69944a2d44994"
-                },
-                {
-                    "key": "field_69945cac4499b",
-                    "label": "\u00d6ppnar s\u00f6ndag",
-                    "name": "opens_sunday",
-                    "aria-label": "",
-                    "type": "time_picker",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_schedule_mode_0001",
-                                "operator": "!=",
-                                "value": "granular"
-                            },
-                            {
-                                "field": "field_69945bd644998",
-                                "operator": "!=",
-                                "value": "1"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "50",
-                        "class": "",
-                        "id": ""
-                    },
-                    "display_format": "H:i:s",
-                    "return_format": "H:i:s",
-                    "parent_repeater": "field_69944a2d44994"
-                },
-                {
-                    "key": "field_69945cc64499c",
-                    "label": "St\u00e4nger s\u00f6ndag",
-                    "name": "closes_sunday",
-                    "aria-label": "",
-                    "type": "time_picker",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_schedule_mode_0001",
-                                "operator": "!=",
-                                "value": "granular"
-                            },
-                            {
-                                "field": "field_69945bd644998",
-                                "operator": "!=",
-                                "value": "1"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "50",
-                        "class": "",
-                        "id": ""
-                    },
-                    "display_format": "H:i:s",
-                    "return_format": "H:i:s",
-                    "parent_repeater": "field_69944a2d44994"
-                },
-                {
-                    "key": "field_gran_monday",
-                    "label": "M\u00e5ndag",
-                    "name": "monday_is_closed",
-                    "aria-label": "",
-                    "type": "true_false",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_schedule_mode_0001",
-                                "operator": "==",
-                                "value": "granular"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "33",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": 0,
-                    "ui": 1,
-                    "ui_on_text": "St\u00e4ngt",
-                    "ui_off_text": "\u00d6ppen",
-                    "parent_repeater": "field_69944a2d44994",
-                    "message": ""
-                },
-                {
-                    "key": "field_gran_monday_opens",
-                    "label": "M\u00e5ndag \u00f6ppnar",
-                    "name": "monday_opens",
-                    "aria-label": "",
-                    "type": "time_picker",
-                    "instructions": "",
-                    "required": false,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_schedule_mode_0001",
-                                "operator": "==",
-                                "value": "granular"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "33",
-                        "class": "",
-                        "id": ""
-                    },
-                    "display_format": "H:i:s",
-                    "return_format": "H:i:s",
-                    "parent_repeater": "field_69944a2d44994"
-                },
-                {
-                    "key": "field_gran_monday_closes",
-                    "label": "M\u00e5ndag st\u00e4nger",
-                    "name": "monday_closes",
-                    "aria-label": "",
-                    "type": "time_picker",
-                    "instructions": "",
-                    "required": false,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_schedule_mode_0001",
-                                "operator": "==",
-                                "value": "granular"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "33",
-                        "class": "",
-                        "id": ""
-                    },
-                    "display_format": "H:i:s",
-                    "return_format": "H:i:s",
-                    "parent_repeater": "field_69944a2d44994"
-                },
-                {
-                    "key": "field_gran_tuesday",
-                    "label": "Tisdag",
-                    "name": "tuesday_is_closed",
-                    "aria-label": "",
-                    "type": "true_false",
-                    "instructions": "",
-                    "required": false,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_schedule_mode_0001",
-                                "operator": "==",
-                                "value": "granular"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "33",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": 0,
-                    "ui": 1,
-                    "ui_on_text": "St\u00e4ngt",
-                    "ui_off_text": "\u00d6ppen",
-                    "parent_repeater": "field_69944a2d44994",
-                    "message": ""
-                },
-                {
-                    "key": "field_gran_tuesday_opens",
-                    "label": "Tisdag \u00f6ppnar",
-                    "name": "tuesday_opens",
-                    "aria-label": "",
-                    "type": "time_picker",
-                    "instructions": "",
-                    "required": false,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_schedule_mode_0001",
-                                "operator": "==",
-                                "value": "granular"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "33",
-                        "class": "",
-                        "id": ""
-                    },
-                    "display_format": "H:i:s",
-                    "return_format": "H:i:s",
-                    "parent_repeater": "field_69944a2d44994"
-                },
-                {
-                    "key": "field_gran_tuesday_closes",
-                    "label": "Tisdag st\u00e4nger",
-                    "name": "tuesday_closes",
-                    "aria-label": "",
-                    "type": "time_picker",
-                    "instructions": "",
-                    "required": false,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_schedule_mode_0001",
-                                "operator": "==",
-                                "value": "granular"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "33",
-                        "class": "",
-                        "id": ""
-                    },
-                    "display_format": "H:i:s",
-                    "return_format": "H:i:s",
-                    "parent_repeater": "field_69944a2d44994"
-                },
-                {
-                    "key": "field_gran_wednesday",
-                    "label": "Onsdag",
-                    "name": "wednesday_is_closed",
-                    "aria-label": "",
-                    "type": "true_false",
-                    "instructions": "",
-                    "required": false,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_schedule_mode_0001",
-                                "operator": "==",
-                                "value": "granular"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "33",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": 0,
-                    "ui": 1,
-                    "ui_on_text": "St\u00e4ngt",
-                    "ui_off_text": "\u00d6ppen",
-                    "parent_repeater": "field_69944a2d44994",
-                    "message": ""
-                },
-                {
-                    "key": "field_gran_wednesday_opens",
-                    "label": "Onsdag \u00f6ppnar",
-                    "name": "wednesday_opens",
-                    "aria-label": "",
-                    "type": "time_picker",
-                    "instructions": "",
-                    "required": false,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_schedule_mode_0001",
-                                "operator": "==",
-                                "value": "granular"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "33",
-                        "class": "",
-                        "id": ""
-                    },
-                    "display_format": "H:i:s",
-                    "return_format": "H:i:s",
-                    "parent_repeater": "field_69944a2d44994"
-                },
-                {
-                    "key": "field_gran_wednesday_closes",
-                    "label": "Onsdag st\u00e4nger",
-                    "name": "wednesday_closes",
-                    "aria-label": "",
-                    "type": "time_picker",
-                    "instructions": "",
-                    "required": false,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_schedule_mode_0001",
-                                "operator": "==",
-                                "value": "granular"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "33",
-                        "class": "",
-                        "id": ""
-                    },
-                    "display_format": "H:i:s",
-                    "return_format": "H:i:s",
-                    "parent_repeater": "field_69944a2d44994"
-                },
-                {
-                    "key": "field_gran_thursday",
-                    "label": "Torsdag",
-                    "name": "thursday_is_closed",
-                    "aria-label": "",
-                    "type": "true_false",
-                    "instructions": "",
-                    "required": false,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_schedule_mode_0001",
-                                "operator": "==",
-                                "value": "granular"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "33",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": 0,
-                    "ui": 1,
-                    "ui_on_text": "St\u00e4ngt",
-                    "ui_off_text": "\u00d6ppen",
-                    "parent_repeater": "field_69944a2d44994",
-                    "message": ""
-                },
-                {
-                    "key": "field_gran_thursday_opens",
-                    "label": "Torsdag \u00f6ppnar",
-                    "name": "thursday_opens",
-                    "aria-label": "",
-                    "type": "time_picker",
-                    "instructions": "",
-                    "required": false,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_schedule_mode_0001",
-                                "operator": "==",
-                                "value": "granular"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "33",
-                        "class": "",
-                        "id": ""
-                    },
-                    "display_format": "H:i:s",
-                    "return_format": "H:i:s",
-                    "parent_repeater": "field_69944a2d44994"
-                },
-                {
-                    "key": "field_gran_thursday_closes",
-                    "label": "Torsdag st\u00e4nger",
-                    "name": "thursday_closes",
-                    "aria-label": "",
-                    "type": "time_picker",
-                    "instructions": "",
-                    "required": false,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_schedule_mode_0001",
-                                "operator": "==",
-                                "value": "granular"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "33",
-                        "class": "",
-                        "id": ""
-                    },
-                    "display_format": "H:i:s",
-                    "return_format": "H:i:s",
-                    "parent_repeater": "field_69944a2d44994"
-                },
-                {
-                    "key": "field_gran_friday",
-                    "label": "Fredag",
-                    "name": "friday_is_closed",
-                    "aria-label": "",
-                    "type": "true_false",
-                    "instructions": "",
-                    "required": false,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_schedule_mode_0001",
-                                "operator": "==",
-                                "value": "granular"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "33",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": 0,
-                    "ui": 1,
-                    "ui_on_text": "St\u00e4ngt",
-                    "ui_off_text": "\u00d6ppen",
-                    "parent_repeater": "field_69944a2d44994",
-                    "message": ""
-                },
-                {
-                    "key": "field_gran_friday_opens",
-                    "label": "Fredag \u00f6ppnar",
-                    "name": "friday_opens",
-                    "aria-label": "",
-                    "type": "time_picker",
-                    "instructions": "",
-                    "required": false,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_schedule_mode_0001",
-                                "operator": "==",
-                                "value": "granular"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "33",
-                        "class": "",
-                        "id": ""
-                    },
-                    "display_format": "H:i:s",
-                    "return_format": "H:i:s",
-                    "parent_repeater": "field_69944a2d44994"
-                },
-                {
-                    "key": "field_gran_friday_closes",
-                    "label": "Fredag st\u00e4nger",
-                    "name": "friday_closes",
-                    "aria-label": "",
-                    "type": "time_picker",
-                    "instructions": "",
-                    "required": false,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_schedule_mode_0001",
-                                "operator": "==",
-                                "value": "granular"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "33",
-                        "class": "",
-                        "id": ""
-                    },
-                    "display_format": "H:i:s",
-                    "return_format": "H:i:s",
-                    "parent_repeater": "field_69944a2d44994"
-                },
-                {
-                    "key": "field_gran_saturday",
-                    "label": "L\u00f6rdag",
-                    "name": "saturday_is_closed",
-                    "aria-label": "",
-                    "type": "true_false",
-                    "instructions": "",
-                    "required": false,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_schedule_mode_0001",
-                                "operator": "==",
-                                "value": "granular"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "33",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": 1,
-                    "ui": 1,
-                    "ui_on_text": "St\u00e4ngt",
-                    "ui_off_text": "\u00d6ppen",
-                    "parent_repeater": "field_69944a2d44994",
-                    "message": ""
-                },
-                {
-                    "key": "field_gran_saturday_opens",
-                    "label": "L\u00f6rdag \u00f6ppnar",
-                    "name": "saturday_opens",
-                    "aria-label": "",
-                    "type": "time_picker",
-                    "instructions": "",
-                    "required": false,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_schedule_mode_0001",
-                                "operator": "==",
-                                "value": "granular"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "33",
-                        "class": "",
-                        "id": ""
-                    },
-                    "display_format": "H:i:s",
-                    "return_format": "H:i:s",
-                    "parent_repeater": "field_69944a2d44994"
-                },
-                {
-                    "key": "field_gran_saturday_closes",
-                    "label": "L\u00f6rdag st\u00e4nger",
-                    "name": "saturday_closes",
-                    "aria-label": "",
-                    "type": "time_picker",
-                    "instructions": "",
-                    "required": false,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_schedule_mode_0001",
-                                "operator": "==",
-                                "value": "granular"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "33",
-                        "class": "",
-                        "id": ""
-                    },
-                    "display_format": "H:i:s",
-                    "return_format": "H:i:s",
-                    "parent_repeater": "field_69944a2d44994"
-                },
-                {
-                    "key": "field_gran_sunday",
-                    "label": "S\u00f6ndag",
-                    "name": "sunday_is_closed",
-                    "aria-label": "",
-                    "type": "true_false",
-                    "instructions": "",
-                    "required": false,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_schedule_mode_0001",
-                                "operator": "==",
-                                "value": "granular"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "33",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": 1,
-                    "ui": 1,
-                    "ui_on_text": "St\u00e4ngt",
-                    "ui_off_text": "\u00d6ppen",
-                    "parent_repeater": "field_69944a2d44994",
-                    "message": ""
-                },
-                {
-                    "key": "field_gran_sunday_opens",
-                    "label": "S\u00f6ndag \u00f6ppnar",
-                    "name": "sunday_opens",
-                    "aria-label": "",
-                    "type": "time_picker",
-                    "instructions": "",
-                    "required": false,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_schedule_mode_0001",
-                                "operator": "==",
-                                "value": "granular"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "33",
-                        "class": "",
-                        "id": ""
-                    },
-                    "display_format": "H:i:s",
-                    "return_format": "H:i:s",
-                    "parent_repeater": "field_69944a2d44994"
-                },
-                {
-                    "key": "field_gran_sunday_closes",
-                    "label": "S\u00f6ndag st\u00e4nger",
-                    "name": "sunday_closes",
-                    "aria-label": "",
-                    "type": "time_picker",
-                    "instructions": "",
-                    "required": false,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_schedule_mode_0001",
-                                "operator": "==",
-                                "value": "granular"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "33",
-                        "class": "",
-                        "id": ""
-                    },
-                    "display_format": "H:i:s",
-                    "return_format": "H:i:s",
-                    "parent_repeater": "field_69944a2d44994"
-                },
-                {
-                    "key": "field_69945be944999",
-                    "label": "Avvikande \u00f6ppettider",
-                    "name": "special_opening_hours",
-                    "aria-label": "",
-                    "type": "repeater",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "acfe_repeater_stylised_button": 0,
-                    "layout": "block",
-                    "min": 0,
-                    "max": 0,
-                    "collapsed": "",
-                    "button_label": "L\u00e4gg till rad",
-                    "rows_per_page": 20,
-                    "sub_fields": [
-                        {
-                            "key": "field_6994600753009",
-                            "label": "Veckodag",
-                            "name": "special_opening_date",
-                            "aria-label": "",
-                            "type": "date_picker",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "display_format": "d\/m\/Y",
-                            "return_format": "d\/m\/Y",
-                            "first_day": 1,
-                            "parent_repeater": "field_69945be944999"
-                        },
-                        {
-                            "key": "field_6994604a5300a",
-                            "label": "\u00d6ppnar denna dagen",
-                            "name": "opens_this_day",
-                            "aria-label": "",
-                            "type": "time_picker",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "display_format": "H:i:s",
-                            "return_format": "H:i:s",
-                            "parent_repeater": "field_69945be944999"
-                        },
-                        {
-                            "key": "field_699460605300b",
-                            "label": "St\u00e4nger denna dagen",
-                            "name": "closes_this_day",
-                            "aria-label": "",
-                            "type": "time_picker",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "display_format": "H:i:s",
-                            "return_format": "H:i:s",
-                            "parent_repeater": "field_69945be944999"
-                        },
-                        {
-                            "key": "field_69d664a65069e",
-                            "label": "Beskrivning",
-                            "name": "special_opening_hours_description",
-                            "aria-label": "",
-                            "type": "text",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "parent_repeater": "field_69945be944999"
-                        }
-                    ],
-                    "parent_repeater": "field_69944a2d44994"
-                }
-            ]
-        },
-        {
-            "key": "field_69ce1e0f99e6d",
-            "label": "Utseende",
-            "name": "",
-            "aria-label": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "placement": "top",
-            "endpoint": 0,
-            "selected": 0
-        },
-        {
-            "key": "field_69ce1e2199e6e",
-            "label": "Utseende f\u00f6r pagineringsknapp",
-            "name": "pagination_btn_style",
-            "aria-label": "",
-            "type": "button_group",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "text": "Text",
-                "icon": "Ikon"
-            },
-            "default_value": "text",
-            "return_format": "value",
-            "allow_null": 0,
-            "layout": "horizontal"
-        },
-        {
-            "key": "field_69ce1e7499e6f",
-            "label": "Visa \u00e5r",
-            "name": "show_year",
-            "aria-label": "",
-            "type": "true_false",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "message": "",
-            "default_value": 1,
-            "ui": 1,
-            "ui_on_text": "",
-            "ui_off_text": ""
-        },
-        {
-            "key": "field_69ce1e8999e70",
-            "label": "Visa veckodatum",
-            "name": "show_week_dates",
-            "aria-label": "",
-            "type": "true_false",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "message": "",
-            "default_value": 1,
-            "ui": 1,
-            "ui_on_text": "",
-            "ui_off_text": ""
-        },
-        {
-            "key": "field_69d66902845ad",
-            "label": "Bakgrundsf\u00e4rg",
-            "name": "background_color",
-            "aria-label": "",
-            "type": "color_picker",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "#cadfde",
-            "enable_opacity": 0,
-            "return_format": "string"
-        },
-        {
-            "key": "field_69d7981b27625",
-            "label": "Textf\u00e4rg",
-            "name": "text_color",
-            "aria-label": "",
-            "type": "button_group",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "white": "Vit",
-                "black": "Svart"
-            },
-            "default_value": "black",
-            "return_format": "value",
-            "allow_null": 0,
-            "layout": "horizontal"
-        }
-    ],
-    "location": [
-        [
             {
-                "param": "post_type",
-                "operator": "==",
-                "value": "mod-opening-hours"
+                "key": "field_69ce1e0f99e6d",
+                "label": "Utseende",
+                "name": "",
+                "aria-label": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "placement": "top",
+                "endpoint": 0,
+                "selected": 0
+            },
+            {
+                "key": "field_69ce1e2199e6e",
+                "label": "Utseende för pagineringsknapp",
+                "name": "pagination_btn_style",
+                "aria-label": "",
+                "type": "button_group",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "text": "Text",
+                    "icon": "Ikon"
+                },
+                "default_value": "text",
+                "return_format": "value",
+                "allow_null": 0,
+                "layout": "horizontal"
+            },
+            {
+                "key": "field_69ce1e7499e6f",
+                "label": "Visa år",
+                "name": "show_year",
+                "aria-label": "",
+                "type": "true_false",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "",
+                "default_value": 1,
+                "ui": 1,
+                "ui_on_text": "",
+                "ui_off_text": ""
+            },
+            {
+                "key": "field_69ce1e8999e70",
+                "label": "Visa veckodatum",
+                "name": "show_week_dates",
+                "aria-label": "",
+                "type": "true_false",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "",
+                "default_value": 1,
+                "ui": 1,
+                "ui_on_text": "",
+                "ui_off_text": ""
+            },
+            {
+                "key": "field_69d66902845ad",
+                "label": "Bakgrundsfärg",
+                "name": "background_color",
+                "aria-label": "",
+                "type": "color_picker",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "#cadfde",
+                "enable_opacity": 0,
+                "return_format": "string"
+            },
+            {
+                "key": "field_69d7981b27625",
+                "label": "Textfärg",
+                "name": "text_color",
+                "aria-label": "",
+                "type": "button_group",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "white": "Vit",
+                    "black": "Svart"
+                },
+                "default_value": "black",
+                "return_format": "value",
+                "allow_null": 0,
+                "layout": "horizontal"
             }
         ],
-        [
-            {
-                "param": "block",
-                "operator": "==",
-                "value": "acf\/opening-hours"
-            }
-        ]
-    ],
-    "menu_order": 0,
-    "position": "normal",
-    "style": "default",
-    "label_placement": "left",
-    "instruction_placement": "label",
-    "hide_on_screen": "",
-    "active": true,
-    "description": "",
-    "show_in_rest": 0,
-    "acfe_display_title": "",
-    "acfe_autosync": [
-        "php",
-        "json"
-    ],
-    "acfe_form": 0,
-    "acfe_meta": "",
-    "acfe_note": ""
-}]
-
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "mod-opening-hours"
+                }
+            ],
+            [
+                {
+                    "param": "block",
+                    "operator": "==",
+                    "value": "acf/opening-hours"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "left",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 0,
+        "acfe_display_title": "",
+        "acfe_autosync": [
+            "php",
+            "json"
+        ],
+        "acfe_form": 0,
+        "acfe_meta": "",
+        "acfe_note": ""
+    }
+]
