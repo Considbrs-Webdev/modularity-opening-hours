@@ -279,15 +279,16 @@ class OpeningHours extends \Modularity\Module
 
             // Build day slots: granular = per-day, standard = Mon-Fri / Sat / Sun
             $daySlotsByDow = [];
+            $dayDescriptionsByDow = [];
             if ($mode === 'granular') {
                 $granularMap = [
-                    1 => ['opens' => 'mondayOpens', 'closes' => 'mondayCloses', 'closed' => 'mondayIsClosed'],
-                    2 => ['opens' => 'tuesdayOpens', 'closes' => 'tuesdayCloses', 'closed' => 'tuesdayIsClosed'],
-                    3 => ['opens' => 'wednesdayOpens', 'closes' => 'wednesdayCloses', 'closed' => 'wednesdayIsClosed'],
-                    4 => ['opens' => 'thursdayOpens', 'closes' => 'thursdayCloses', 'closed' => 'thursdayIsClosed'],
-                    5 => ['opens' => 'fridayOpens', 'closes' => 'fridayCloses', 'closed' => 'fridayIsClosed'],
-                    6 => ['opens' => 'saturdayOpens', 'closes' => 'saturdayCloses', 'closed' => 'saturdayIsClosed'],
-                    7 => ['opens' => 'sundayOpens', 'closes' => 'sundayCloses', 'closed' => 'sundayIsClosed'],
+                    1 => ['opens' => 'mondayOpens', 'closes' => 'mondayCloses', 'closed' => 'mondayIsClosed', 'description' => 'mondayDescription'],
+                    2 => ['opens' => 'tuesdayOpens', 'closes' => 'tuesdayCloses', 'closed' => 'tuesdayIsClosed', 'description' => 'tuesdayDescription'],
+                    3 => ['opens' => 'wednesdayOpens', 'closes' => 'wednesdayCloses', 'closed' => 'wednesdayIsClosed', 'description' => 'wednesdayDescription'],
+                    4 => ['opens' => 'thursdayOpens', 'closes' => 'thursdayCloses', 'closed' => 'thursdayIsClosed', 'description' => 'thursdayDescription'],
+                    5 => ['opens' => 'fridayOpens', 'closes' => 'fridayCloses', 'closed' => 'fridayIsClosed', 'description' => 'fridayDescription'],
+                    6 => ['opens' => 'saturdayOpens', 'closes' => 'saturdayCloses', 'closed' => 'saturdayIsClosed', 'description' => 'saturdayDescription'],
+                    7 => ['opens' => 'sundayOpens', 'closes' => 'sundayCloses', 'closed' => 'sundayIsClosed', 'description' => 'sundayDescription'],
                 ];
                 for ($dow = 1; $dow <= 7; $dow++) {
                     $m = $granularMap[$dow];
@@ -297,6 +298,7 @@ class OpeningHours extends \Modularity\Module
                     $daySlotsByDow[$dow] = ($closed || $open === '' || $close === '')
                         ? [['closed' => true]]
                         : [['open' => $open, 'close' => $close]];
+                    $dayDescriptionsByDow[$dow] = trim((string) ($row[$m['description']] ?? ''));
                 }
             } else {
                 $monFriOpen = $this->normalizeTime((string) ($row['opens'] ?? ''));
@@ -378,7 +380,9 @@ class OpeningHours extends \Modularity\Module
                     // Check for special hours override for this specific date
                     $specialEntry = $allSpecialHours[$dateKey] ?? null;
                     $slots = $specialEntry !== null ? $specialEntry['slots'] : $baseSlots;
-                    $description = $specialEntry['description'] ?? '';
+                    $description = $specialEntry !== null
+                        ? trim((string) ($specialEntry['description'] ?? ''))
+                        : ($dayDescriptionsByDow[$dayOfWeek] ?? '');
 
                     // Format date as "17 feb" (day + short month name)
                     $formattedDate = $dayDate->format('j') . ' ' . $this->getMonthName((int) $dayDate->format('n'));

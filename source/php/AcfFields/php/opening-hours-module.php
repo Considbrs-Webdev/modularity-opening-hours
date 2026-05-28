@@ -1,7 +1,9 @@
 <?php 
 
-if (function_exists('acf_add_local_field_group')) {
-    acf_add_local_field_group(array(
+
+if (function_exists('acf_add_local_field_group')) {
+
+    acf_add_local_field_group(array(
     'key' => 'group_69944a2c22d00',
     'title' => __('Öppettider', 'modularity-opening-hours'),
     'fields' => array(
@@ -416,7 +418,7 @@
                         ),
                     ),
                     'wrapper' => array(
-                        'width' => '33',
+                        'width' => '25',
                         'class' => '',
                         'id' => '',
                     ),
@@ -445,7 +447,7 @@
                         ),
                     ),
                     'wrapper' => array(
-                        'width' => '33',
+                        'width' => '25',
                         'class' => '',
                         'id' => '',
                     ),
@@ -471,7 +473,7 @@
                         ),
                     ),
                     'wrapper' => array(
-                        'width' => '33',
+                        'width' => '25',
                         'class' => '',
                         'id' => '',
                     ),
@@ -480,6 +482,35 @@
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
                 14 => array(
+                    'key' => 'field_gran_monday_desc',
+                    'label' => __('Beskrivning (måndag)', 'modularity-opening-hours'),
+                    'name' => 'monday_description',
+                    'aria-label' => '',
+                    'type' => 'text',
+                    'instructions' => '',
+                    'required' => 0,
+                    'conditional_logic' => array(
+                        0 => array(
+                            0 => array(
+                                'field' => 'field_schedule_mode_0001',
+                                'operator' => '==',
+                                'value' => 'granular',
+                            ),
+                        ),
+                    ),
+                    'wrapper' => array(
+                        'width' => '25',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => '',
+                    'maxlength' => '',
+                    'placeholder' => '',
+                    'prepend' => '',
+                    'append' => '',
+                    'parent_repeater' => 'field_69944a2d44994',
+                ),
+                15 => array(
                     'key' => 'field_gran_tuesday',
                     'label' => __('Tisdag', 'modularity-opening-hours'),
                     'name' => 'tuesday_is_closed',
@@ -497,7 +528,7 @@
                         ),
                     ),
                     'wrapper' => array(
-                        'width' => '33',
+                        'width' => '25',
                         'class' => '',
                         'id' => '',
                     ),
@@ -508,7 +539,7 @@
                     'parent_repeater' => 'field_69944a2d44994',
                     'message' => '',
                 ),
-                15 => array(
+                16 => array(
                     'key' => 'field_gran_tuesday_opens',
                     'label' => __('Tisdag öppnar', 'modularity-opening-hours'),
                     'name' => 'tuesday_opens',
@@ -526,7 +557,7 @@
                         ),
                     ),
                     'wrapper' => array(
-                        'width' => '33',
+                        'width' => '25',
                         'class' => '',
                         'id' => '',
                     ),
@@ -534,7 +565,7 @@
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                16 => array(
+                17 => array(
                     'key' => 'field_gran_tuesday_closes',
                     'label' => __('Tisdag stänger', 'modularity-opening-hours'),
                     'name' => 'tuesday_closes',
@@ -552,7 +583,7 @@
                         ),
                     ),
                     'wrapper' => array(
-                        'width' => '33',
+                        'width' => '25',
                         'class' => '',
                         'id' => '',
                     ),
@@ -560,7 +591,36 @@
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                17 => array(
+                18 => array(
+                    'key' => 'field_gran_tuesday_desc',
+                    'label' => __('Beskrivning (tisdag)', 'modularity-opening-hours'),
+                    'name' => 'tuesday_description',
+                    'aria-label' => '',
+                    'type' => 'text',
+                    'instructions' => '',
+                    'required' => 0,
+                    'conditional_logic' => array(
+                        0 => array(
+                            0 => array(
+                                'field' => 'field_schedule_mode_0001',
+                                'operator' => '==',
+                                'value' => 'granular',
+                            ),
+                        ),
+                    ),
+                    'wrapper' => array(
+                        'width' => '25',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => '',
+                    'maxlength' => '',
+                    'placeholder' => '',
+                    'prepend' => '',
+                    'append' => '',
+                    'parent_repeater' => 'field_69944a2d44994',
+                ),
+                19 => array(
                     'key' => 'field_gran_wednesday',
                     'label' => __('Onsdag', 'modularity-opening-hours'),
                     'name' => 'wednesday_is_closed',
@@ -578,7 +638,7 @@
                         ),
                     ),
                     'wrapper' => array(
-                        'width' => '33',
+                        'width' => '25',
                         'class' => '',
                         'id' => '',
                     ),
@@ -589,7 +649,7 @@
                     'parent_repeater' => 'field_69944a2d44994',
                     'message' => '',
                 ),
-                18 => array(
+                20 => array(
                     'key' => 'field_gran_wednesday_opens',
                     'label' => __('Onsdag öppnar', 'modularity-opening-hours'),
                     'name' => 'wednesday_opens',
@@ -607,7 +667,7 @@
                         ),
                     ),
                     'wrapper' => array(
-                        'width' => '33',
+                        'width' => '25',
                         'class' => '',
                         'id' => '',
                     ),
@@ -615,7 +675,7 @@
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                19 => array(
+                21 => array(
                     'key' => 'field_gran_wednesday_closes',
                     'label' => __('Onsdag stänger', 'modularity-opening-hours'),
                     'name' => 'wednesday_closes',
@@ -633,7 +693,7 @@
                         ),
                     ),
                     'wrapper' => array(
-                        'width' => '33',
+                        'width' => '25',
                         'class' => '',
                         'id' => '',
                     ),
@@ -641,7 +701,36 @@
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                20 => array(
+                22 => array(
+                    'key' => 'field_gran_wednesday_desc',
+                    'label' => __('Beskrivning (onsdag)', 'modularity-opening-hours'),
+                    'name' => 'wednesday_description',
+                    'aria-label' => '',
+                    'type' => 'text',
+                    'instructions' => '',
+                    'required' => 0,
+                    'conditional_logic' => array(
+                        0 => array(
+                            0 => array(
+                                'field' => 'field_schedule_mode_0001',
+                                'operator' => '==',
+                                'value' => 'granular',
+                            ),
+                        ),
+                    ),
+                    'wrapper' => array(
+                        'width' => '25',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => '',
+                    'maxlength' => '',
+                    'placeholder' => '',
+                    'prepend' => '',
+                    'append' => '',
+                    'parent_repeater' => 'field_69944a2d44994',
+                ),
+                23 => array(
                     'key' => 'field_gran_thursday',
                     'label' => __('Torsdag', 'modularity-opening-hours'),
                     'name' => 'thursday_is_closed',
@@ -659,7 +748,7 @@
                         ),
                     ),
                     'wrapper' => array(
-                        'width' => '33',
+                        'width' => '25',
                         'class' => '',
                         'id' => '',
                     ),
@@ -670,7 +759,7 @@
                     'parent_repeater' => 'field_69944a2d44994',
                     'message' => '',
                 ),
-                21 => array(
+                24 => array(
                     'key' => 'field_gran_thursday_opens',
                     'label' => __('Torsdag öppnar', 'modularity-opening-hours'),
                     'name' => 'thursday_opens',
@@ -688,7 +777,7 @@
                         ),
                     ),
                     'wrapper' => array(
-                        'width' => '33',
+                        'width' => '25',
                         'class' => '',
                         'id' => '',
                     ),
@@ -696,7 +785,7 @@
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                22 => array(
+                25 => array(
                     'key' => 'field_gran_thursday_closes',
                     'label' => __('Torsdag stänger', 'modularity-opening-hours'),
                     'name' => 'thursday_closes',
@@ -714,7 +803,7 @@
                         ),
                     ),
                     'wrapper' => array(
-                        'width' => '33',
+                        'width' => '25',
                         'class' => '',
                         'id' => '',
                     ),
@@ -722,7 +811,36 @@
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                23 => array(
+                26 => array(
+                    'key' => 'field_gran_thursday_desc',
+                    'label' => __('Beskrivning (torsdag)', 'modularity-opening-hours'),
+                    'name' => 'thursday_description',
+                    'aria-label' => '',
+                    'type' => 'text',
+                    'instructions' => '',
+                    'required' => 0,
+                    'conditional_logic' => array(
+                        0 => array(
+                            0 => array(
+                                'field' => 'field_schedule_mode_0001',
+                                'operator' => '==',
+                                'value' => 'granular',
+                            ),
+                        ),
+                    ),
+                    'wrapper' => array(
+                        'width' => '25',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => '',
+                    'maxlength' => '',
+                    'placeholder' => '',
+                    'prepend' => '',
+                    'append' => '',
+                    'parent_repeater' => 'field_69944a2d44994',
+                ),
+                27 => array(
                     'key' => 'field_gran_friday',
                     'label' => __('Fredag', 'modularity-opening-hours'),
                     'name' => 'friday_is_closed',
@@ -740,7 +858,7 @@
                         ),
                     ),
                     'wrapper' => array(
-                        'width' => '33',
+                        'width' => '25',
                         'class' => '',
                         'id' => '',
                     ),
@@ -751,7 +869,7 @@
                     'parent_repeater' => 'field_69944a2d44994',
                     'message' => '',
                 ),
-                24 => array(
+                28 => array(
                     'key' => 'field_gran_friday_opens',
                     'label' => __('Fredag öppnar', 'modularity-opening-hours'),
                     'name' => 'friday_opens',
@@ -769,7 +887,7 @@
                         ),
                     ),
                     'wrapper' => array(
-                        'width' => '33',
+                        'width' => '25',
                         'class' => '',
                         'id' => '',
                     ),
@@ -777,7 +895,7 @@
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                25 => array(
+                29 => array(
                     'key' => 'field_gran_friday_closes',
                     'label' => __('Fredag stänger', 'modularity-opening-hours'),
                     'name' => 'friday_closes',
@@ -795,7 +913,7 @@
                         ),
                     ),
                     'wrapper' => array(
-                        'width' => '33',
+                        'width' => '25',
                         'class' => '',
                         'id' => '',
                     ),
@@ -803,7 +921,36 @@
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                26 => array(
+                30 => array(
+                    'key' => 'field_gran_friday_desc',
+                    'label' => __('Beskrivning (fredag)', 'modularity-opening-hours'),
+                    'name' => 'friday_description',
+                    'aria-label' => '',
+                    'type' => 'text',
+                    'instructions' => '',
+                    'required' => 0,
+                    'conditional_logic' => array(
+                        0 => array(
+                            0 => array(
+                                'field' => 'field_schedule_mode_0001',
+                                'operator' => '==',
+                                'value' => 'granular',
+                            ),
+                        ),
+                    ),
+                    'wrapper' => array(
+                        'width' => '25',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => '',
+                    'maxlength' => '',
+                    'placeholder' => '',
+                    'prepend' => '',
+                    'append' => '',
+                    'parent_repeater' => 'field_69944a2d44994',
+                ),
+                31 => array(
                     'key' => 'field_gran_saturday',
                     'label' => __('Lördag', 'modularity-opening-hours'),
                     'name' => 'saturday_is_closed',
@@ -821,7 +968,7 @@
                         ),
                     ),
                     'wrapper' => array(
-                        'width' => '33',
+                        'width' => '25',
                         'class' => '',
                         'id' => '',
                     ),
@@ -832,7 +979,7 @@
                     'parent_repeater' => 'field_69944a2d44994',
                     'message' => '',
                 ),
-                27 => array(
+                32 => array(
                     'key' => 'field_gran_saturday_opens',
                     'label' => __('Lördag öppnar', 'modularity-opening-hours'),
                     'name' => 'saturday_opens',
@@ -850,7 +997,7 @@
                         ),
                     ),
                     'wrapper' => array(
-                        'width' => '33',
+                        'width' => '25',
                         'class' => '',
                         'id' => '',
                     ),
@@ -858,7 +1005,7 @@
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                28 => array(
+                33 => array(
                     'key' => 'field_gran_saturday_closes',
                     'label' => __('Lördag stänger', 'modularity-opening-hours'),
                     'name' => 'saturday_closes',
@@ -876,7 +1023,7 @@
                         ),
                     ),
                     'wrapper' => array(
-                        'width' => '33',
+                        'width' => '25',
                         'class' => '',
                         'id' => '',
                     ),
@@ -884,7 +1031,36 @@
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                29 => array(
+                34 => array(
+                    'key' => 'field_gran_saturday_desc',
+                    'label' => __('Beskrivning (lördag)', 'modularity-opening-hours'),
+                    'name' => 'saturday_description',
+                    'aria-label' => '',
+                    'type' => 'text',
+                    'instructions' => '',
+                    'required' => 0,
+                    'conditional_logic' => array(
+                        0 => array(
+                            0 => array(
+                                'field' => 'field_schedule_mode_0001',
+                                'operator' => '==',
+                                'value' => 'granular',
+                            ),
+                        ),
+                    ),
+                    'wrapper' => array(
+                        'width' => '25',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => '',
+                    'maxlength' => '',
+                    'placeholder' => '',
+                    'prepend' => '',
+                    'append' => '',
+                    'parent_repeater' => 'field_69944a2d44994',
+                ),
+                35 => array(
                     'key' => 'field_gran_sunday',
                     'label' => __('Söndag', 'modularity-opening-hours'),
                     'name' => 'sunday_is_closed',
@@ -902,7 +1078,7 @@
                         ),
                     ),
                     'wrapper' => array(
-                        'width' => '33',
+                        'width' => '25',
                         'class' => '',
                         'id' => '',
                     ),
@@ -913,7 +1089,7 @@
                     'parent_repeater' => 'field_69944a2d44994',
                     'message' => '',
                 ),
-                30 => array(
+                36 => array(
                     'key' => 'field_gran_sunday_opens',
                     'label' => __('Söndag öppnar', 'modularity-opening-hours'),
                     'name' => 'sunday_opens',
@@ -931,7 +1107,7 @@
                         ),
                     ),
                     'wrapper' => array(
-                        'width' => '33',
+                        'width' => '25',
                         'class' => '',
                         'id' => '',
                     ),
@@ -939,7 +1115,7 @@
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                31 => array(
+                37 => array(
                     'key' => 'field_gran_sunday_closes',
                     'label' => __('Söndag stänger', 'modularity-opening-hours'),
                     'name' => 'sunday_closes',
@@ -957,7 +1133,7 @@
                         ),
                     ),
                     'wrapper' => array(
-                        'width' => '33',
+                        'width' => '25',
                         'class' => '',
                         'id' => '',
                     ),
@@ -965,7 +1141,36 @@
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                32 => array(
+                38 => array(
+                    'key' => 'field_gran_sunday_desc',
+                    'label' => __('Beskrivning (söndag)', 'modularity-opening-hours'),
+                    'name' => 'sunday_description',
+                    'aria-label' => '',
+                    'type' => 'text',
+                    'instructions' => '',
+                    'required' => 0,
+                    'conditional_logic' => array(
+                        0 => array(
+                            0 => array(
+                                'field' => 'field_schedule_mode_0001',
+                                'operator' => '==',
+                                'value' => 'granular',
+                            ),
+                        ),
+                    ),
+                    'wrapper' => array(
+                        'width' => '25',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => '',
+                    'maxlength' => '',
+                    'placeholder' => '',
+                    'prepend' => '',
+                    'append' => '',
+                    'parent_repeater' => 'field_69944a2d44994',
+                ),
+                39 => array(
                     'key' => 'field_69945be944999',
                     'label' => __('Avvikande öppettider', 'modularity-opening-hours'),
                     'name' => 'special_opening_hours',
@@ -1225,4 +1430,5 @@
     'acfe_meta' => '',
     'acfe_note' => '',
 ));
-}
+
+}
