@@ -118,11 +118,16 @@ class OpeningHours extends \Modularity\Module
         }
         $isoWeek = (int) (new \DateTimeImmutable())->format('W');
         foreach ($weeks as $i => $week) {
-            if (($week['weekNo'] ?? 0) === $isoWeek) {
+            if ((int) ($week['weekNo'] ?? 0) === $isoWeek) {
                 return $i;
             }
         }
-        return 0;
+        foreach ($weeks as $i => $week) {
+            if ((int) ($week['weekNo'] ?? 0) >= $isoWeek) {
+                return $i;
+            }
+        }
+        return count($weeks) - 1;
     }
 
     /**
