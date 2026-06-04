@@ -1355,6 +1355,26 @@ if (function_exists('acf_add_local_field_group')) {
             'ui_off_text' => '',
         ),
         8 => array(
+            'key' => 'field_69f8a1b2c3d4e',
+            'label' => __('Visa veckonummer i paginering', 'modularity-opening-hours'),
+            'name' => 'show_week_no_in_paging',
+            'aria-label' => '',
+            'type' => 'true_false',
+            'instructions' => __('Visar grannveckors veckonummer med aktuell vecka i fetstil (t.ex. 22 23 24).', 'modularity-opening-hours'),
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'message' => '',
+            'default_value' => 0,
+            'ui' => 1,
+            'ui_on_text' => '',
+            'ui_off_text' => '',
+        ),
+        9 => array(
             'key' => 'field_69d66902845ad',
             'label' => __('Bakgrundsfärg', 'modularity-opening-hours'),
             'name' => 'background_color',
@@ -1372,7 +1392,7 @@ if (function_exists('acf_add_local_field_group')) {
             'enable_opacity' => 0,
             'return_format' => 'string',
         ),
-        9 => array(
+        10 => array(
             'key' => 'field_69d7981b27625',
             'label' => __('Textfärg', 'modularity-opening-hours'),
             'name' => 'text_color',

@@ -13,11 +13,53 @@ document.querySelectorAll('.mod-opening-hours').forEach((root) => {
     if (current >= total) current = total - 1;
 
     const todayDateKey = root.dataset.todayDateKey || '';
+    const pagingMode = root.dataset.pagingMode || 'index';
 
     function applyActiveDay() {
         root.querySelectorAll('.mod-opening-hours__row[data-date-key]').forEach((row) => {
             row.classList.toggle('is-active-day', (row.dataset.dateKey || '') === todayDateKey);
         });
+    }
+
+    function renderPagingInfo() {
+        if (!infoEl) return;
+
+        if (pagingMode === 'week-no') {
+            infoEl.classList.add('mod-opening-hours__paging-info--week-nos');
+            infoEl.replaceChildren();
+
+            if (current > 0) {
+                const prevList = root.querySelector(`.mod-opening-hours__list[data-week-index="${current - 1}"]`);
+                if (prevList?.dataset.weekNo) {
+                    const span = document.createElement('span');
+                    span.className = 'mod-opening-hours__paging-week';
+                    span.textContent = prevList.dataset.weekNo;
+                    infoEl.appendChild(span);
+                }
+            }
+
+            const activeList = root.querySelector(`.mod-opening-hours__list[data-week-index="${current}"]`);
+            const currentSpan = document.createElement('span');
+            currentSpan.className = 'mod-opening-hours__paging-week mod-opening-hours__paging-week--current';
+            currentSpan.textContent = activeList?.dataset.weekNo || String(current + 1);
+            currentSpan.setAttribute('aria-current', 'true');
+            infoEl.appendChild(currentSpan);
+
+            if (current < total - 1) {
+                const nextList = root.querySelector(`.mod-opening-hours__list[data-week-index="${current + 1}"]`);
+                if (nextList?.dataset.weekNo) {
+                    const span = document.createElement('span');
+                    span.className = 'mod-opening-hours__paging-week';
+                    span.textContent = nextList.dataset.weekNo;
+                    infoEl.appendChild(span);
+                }
+            }
+
+            return;
+        }
+
+        infoEl.classList.remove('mod-opening-hours__paging-info--week-nos');
+        infoEl.textContent = `${current + 1} / ${total}`;
     }
 
     function showWeek(index) {
@@ -32,7 +74,7 @@ document.querySelectorAll('.mod-opening-hours').forEach((root) => {
             }
         });
 
-        if (infoEl) infoEl.textContent = `${current + 1} / ${total}`;
+        renderPagingInfo();
         if (prevBtn) prevBtn.disabled = current === 0;
         if (nextBtn) nextBtn.disabled = current === total - 1;
 

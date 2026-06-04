@@ -9,6 +9,7 @@
 @endif
 
 <div class="mod-opening-hours" data-current-week-index="{{ $currentWeekIndex }}" data-total-weeks="{{ $totalWeeks }}"
+    data-paging-mode="{{ !empty($showWeekNoInPaging) ? 'week-no' : 'index' }}"
     data-today-date-key="{{ $todayDateKey ?? '' }}"
     @if (!empty($inlineStyle)) style="{{ $inlineStyle }}" @endif>
     @if (!empty($showTodayHighlight) && $todayDay)
@@ -67,7 +68,17 @@
                         {{ __('Previous week', 'modularity-opening-hours') }}
                     @endif
                 </button>
-                <span class="mod-opening-hours__paging-info">{{ $currentWeekIndex + 1 }} / {{ $totalWeeks }}</span>
+                <span class="mod-opening-hours__paging-info{{ !empty($showWeekNoInPaging) ? ' mod-opening-hours__paging-info--week-nos' : '' }}"
+                    @if (!empty($showWeekNoInPaging)) aria-live="polite" @endif>
+                    @if (!empty($showWeekNoInPaging))
+                        @foreach ($pagingWeekNumbers ?? [] as $item)
+                            <span class="mod-opening-hours__paging-week{{ !empty($item['isCurrent']) ? ' mod-opening-hours__paging-week--current' : '' }}"
+                                @if (!empty($item['isCurrent'])) aria-current="true" @endif>{{ $item['weekNo'] }}</span>
+                        @endforeach
+                    @else
+                        {{ $pagingInfo }}
+                    @endif
+                </span>
                 <button type="button" class="mod-opening-hours__paging-link mod-opening-hours__paging-link--next{{ ($paginationBtnStyle ?? 'text') === 'icon' ? ' mod-opening-hours__paging-link--icon' : '' }}"
                     {{ !$hasNext ? 'disabled' : '' }}>
                     @if (($paginationBtnStyle ?? 'text') === 'icon')
@@ -83,7 +94,8 @@
         <div class="mod-opening-hours__list-container">
             @foreach ($weeks as $weekIndex => $week)
                 <dl class="mod-opening-hours__list" data-week-index="{{ $weekIndex }}"
-                    data-week-label="{{ $week['weekLabel'] }}" {!! (int) $weekIndex !== (int) $currentWeekIndex ? 'hidden' : '' !!}>
+                    data-week-label="{{ $week['weekLabel'] }}" data-week-no="{{ $week['weekNo'] ?? '' }}"
+                    {!! (int) $weekIndex !== (int) $currentWeekIndex ? 'hidden' : '' !!}>
                     @foreach ($week['days'] as $day)
                         <div class="mod-opening-hours__row" data-date-key="{{ $day['dateKey'] ?? '' }}">
                             <dt class="mod-opening-hours__day">

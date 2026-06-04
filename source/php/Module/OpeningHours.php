@@ -47,6 +47,31 @@ class OpeningHours extends \Modularity\Module
         $data['hasPrev'] = $currentIndex > 0;
         $data['hasNext'] = $currentIndex < count($weeks) - 1;
 
+        $showWeekNoInPaging = !empty($data['showWeekNoInPaging']);
+        $showWeekNoInPaging = (bool) apply_filters(
+            'ModularityOpeningHours/showWeekNoInPaging',
+            $showWeekNoInPaging,
+            $data,
+            $this
+        );
+        $data['showWeekNoInPaging'] = $showWeekNoInPaging;
+        $data['pagingInfo'] = apply_filters(
+            'ModularityOpeningHours/pagingInfo',
+            $this->buildPagingInfo($currentIndex, $weeks),
+            $currentIndex,
+            $weeks,
+            $data,
+            $this
+        );
+        $data['pagingWeekNumbers'] = apply_filters(
+            'ModularityOpeningHours/pagingWeekNumbers',
+            $this->buildPagingWeekNumbers($currentIndex, $weeks),
+            $currentIndex,
+            $weeks,
+            $data,
+            $this
+        );
+
         $highlightToday = !empty($data['highlightToday']);
         $showTomorrow = !empty($data['showTomorrowHighlight']);
         $todayDay = $highlightToday ? $this->getTodayDay($weeks) : null;
@@ -484,6 +509,57 @@ class OpeningHours extends \Modularity\Module
             __('Week %1$s', 'modularity-opening-hours'),
             (string) $weekNo
         );
+    }
+
+    /**
+     * @param int $currentIndex
+     * @param array<int, array{weekNo?: int}> $weeks
+     * @return string
+     */
+    private function buildPagingInfo(int $currentIndex, array $weeks): string
+    {
+        $total = count($weeks);
+        if ($total === 0) {
+            return '';
+        }
+
+        return ($currentIndex + 1) . ' / ' . $total;
+    }
+
+    /**
+     * @param int $currentIndex
+     * @param array<int, array{weekNo?: int}> $weeks
+     * @return array<int, array{weekNo: int, isCurrent: bool}>
+     */
+    private function buildPagingWeekNumbers(int $currentIndex, array $weeks): array
+    {
+        $total = count($weeks);
+        if ($total === 0) {
+            return [];
+        }
+
+        $items = [];
+
+        if ($currentIndex > 0) {
+            $items[] = [
+                'weekNo' => (int) ($weeks[$currentIndex - 1]['weekNo'] ?? $currentIndex),
+                'isCurrent' => false,
+            ];
+        }
+
+        $items[] = [
+            'weekNo' => (int) ($weeks[$currentIndex]['weekNo'] ?? ($currentIndex + 1)),
+            'isCurrent' => true,
+        ];
+
+        if ($currentIndex < $total - 1) {
+            $items[] = [
+                'weekNo' => (int) ($weeks[$currentIndex + 1]['weekNo'] ?? ($currentIndex + 2)),
+                'isCurrent' => false,
+            ];
+        }
+
+        return $items;
     }
 
     /**
