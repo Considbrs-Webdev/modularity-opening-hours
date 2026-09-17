@@ -100,7 +100,7 @@
             {
                 "ID": 0,
                 "key": "field_69944a2d44994",
-                "label": "Vecka",
+                "label": "Period",
                 "name": "week_repeater",
                 "aria-label": "",
                 "prefix": "acf",
@@ -124,7 +124,7 @@
                 "min": 0,
                 "max": 0,
                 "collapsed": "",
-                "button_label": "Lägg till vecka",
+                "button_label": "Lägg till period",
                 "rows_per_page": 20,
                 "_name": "week_repeater",
                 "_valid": 1,
@@ -139,7 +139,7 @@
                         "type": "number",
                         "value": null,
                         "menu_order": 0,
-                        "instructions": "",
+                        "instructions": "ISO-veckor, t.ex. 23–35 för sommaren. Om två perioder överlappar vinner den sista.",
                         "required": 0,
                         "id": "",
                         "class": "",
@@ -171,7 +171,7 @@
                         "type": "number",
                         "value": null,
                         "menu_order": 1,
-                        "instructions": "",
+                        "instructions": "ISO-veckor, t.ex. 23–35 för sommaren. Om två perioder överlappar vinner den sista.",
                         "required": 0,
                         "id": "",
                         "class": "",
@@ -220,7 +220,7 @@
                         },
                         "default_value": "standard",
                         "return_format": "value",
-                        "allow_null": 1,
+                        "allow_null": 0,
                         "layout": "horizontal",
                         "parent_repeater": "field_69944a2d44994",
                         "_name": "schedule_mode",
@@ -228,12 +228,12 @@
                     },
                     {
                         "ID": 0,
-                        "key": "field_69944a6544995",
-                        "label": "Öppnar (mån-fre)",
-                        "name": "opens",
+                        "key": "field_std_closed_weekdays",
+                        "label": "Stängt mån–fre",
+                        "name": "closed_weekdays",
                         "aria-label": "",
                         "prefix": "acf",
-                        "type": "time_picker",
+                        "type": "true_false",
                         "value": null,
                         "menu_order": 3,
                         "instructions": "",
@@ -251,21 +251,24 @@
                         ],
                         "parent": "field_69944a2d44994",
                         "wrapper": {
-                            "width": "50",
+                            "width": "100",
                             "class": "",
                             "id": ""
                         },
-                        "display_format": "H:i:s",
-                        "return_format": "H:i:s",
+                        "message": "",
+                        "default_value": 0,
+                        "ui": 1,
+                        "ui_on_text": "Stängt",
+                        "ui_off_text": "Öppen",
                         "parent_repeater": "field_69944a2d44994",
-                        "_name": "opens",
+                        "_name": "closed_weekdays",
                         "_valid": 1
                     },
                     {
                         "ID": 0,
-                        "key": "field_69945b7944996",
-                        "label": "Stänger (mån-fre)",
-                        "name": "closes",
+                        "key": "field_69944a6544995",
+                        "label": "Öppnar (mån-fre)",
+                        "name": "opens",
                         "aria-label": "",
                         "prefix": "acf",
                         "type": "time_picker",
@@ -281,6 +284,11 @@
                                     "field": "field_schedule_mode_0001",
                                     "operator": "!=",
                                     "value": "granular"
+                                },
+                                {
+                                    "field": "field_std_closed_weekdays",
+                                    "operator": "!=",
+                                    "value": "1"
                                 }
                             ]
                         ],
@@ -290,7 +298,47 @@
                             "class": "",
                             "id": ""
                         },
-                        "display_format": "H:i:s",
+                        "display_format": "H:i",
+                        "return_format": "H:i:s",
+                        "parent_repeater": "field_69944a2d44994",
+                        "_name": "opens",
+                        "_valid": 1
+                    },
+                    {
+                        "ID": 0,
+                        "key": "field_69945b7944996",
+                        "label": "Stänger (mån-fre)",
+                        "name": "closes",
+                        "aria-label": "",
+                        "prefix": "acf",
+                        "type": "time_picker",
+                        "value": null,
+                        "menu_order": 5,
+                        "instructions": "",
+                        "required": 0,
+                        "id": "",
+                        "class": "",
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "!=",
+                                    "value": "granular"
+                                },
+                                {
+                                    "field": "field_std_closed_weekdays",
+                                    "operator": "!=",
+                                    "value": "1"
+                                }
+                            ]
+                        ],
+                        "parent": "field_69944a2d44994",
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        },
+                        "display_format": "H:i",
                         "return_format": "H:i:s",
                         "parent_repeater": "field_69944a2d44994",
                         "_name": "closes",
@@ -305,7 +353,7 @@
                         "prefix": "acf",
                         "type": "repeater",
                         "value": null,
-                        "menu_order": 5,
+                        "menu_order": 6,
                         "instructions": "",
                         "required": 0,
                         "id": "",
@@ -316,6 +364,11 @@
                                     "field": "field_schedule_mode_0001",
                                     "operator": "!=",
                                     "value": "granular"
+                                },
+                                {
+                                    "field": "field_std_closed_weekdays",
+                                    "operator": "!=",
+                                    "value": "1"
                                 }
                             ]
                         ],
@@ -358,7 +411,7 @@
                                     "class": "",
                                     "id": ""
                                 },
-                                "display_format": "H:i:s",
+                                "display_format": "H:i",
                                 "return_format": "H:i:s",
                                 "parent_repeater": "field_extra_hours_weekday",
                                 "_name": "opens",
@@ -385,7 +438,7 @@
                                     "class": "",
                                     "id": ""
                                 },
-                                "display_format": "H:i:s",
+                                "display_format": "H:i",
                                 "return_format": "H:i:s",
                                 "parent_repeater": "field_extra_hours_weekday",
                                 "_name": "closes",
@@ -425,6 +478,49 @@
                     },
                     {
                         "ID": 0,
+                        "key": "field_std_weekday_description",
+                        "label": "Beskrivning (mån–fre)",
+                        "name": "weekday_description",
+                        "aria-label": "",
+                        "prefix": "acf",
+                        "type": "text",
+                        "value": null,
+                        "menu_order": 7,
+                        "instructions": "",
+                        "required": 0,
+                        "id": "",
+                        "class": "",
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "!=",
+                                    "value": "granular"
+                                },
+                                {
+                                    "field": "field_std_closed_weekdays",
+                                    "operator": "!=",
+                                    "value": "1"
+                                }
+                            ]
+                        ],
+                        "parent": "field_69944a2d44994",
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "parent_repeater": "field_69944a2d44994",
+                        "_name": "weekday_description",
+                        "_valid": 1,
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": ""
+                    },
+                    {
+                        "ID": 0,
                         "key": "field_69945bb444997",
                         "label": "Stängt lördag",
                         "name": "closed_saturday",
@@ -432,7 +528,7 @@
                         "prefix": "acf",
                         "type": "true_false",
                         "value": null,
-                        "menu_order": 6,
+                        "menu_order": 8,
                         "instructions": "",
                         "required": 0,
                         "id": "",
@@ -454,9 +550,9 @@
                         },
                         "message": "",
                         "default_value": 1,
-                        "ui": 0,
-                        "ui_on_text": "",
-                        "ui_off_text": "",
+                        "ui": 1,
+                        "ui_on_text": "Stängt",
+                        "ui_off_text": "Öppen",
                         "parent_repeater": "field_69944a2d44994",
                         "_name": "closed_saturday",
                         "_valid": 1
@@ -470,7 +566,7 @@
                         "prefix": "acf",
                         "type": "time_picker",
                         "value": null,
-                        "menu_order": 7,
+                        "menu_order": 9,
                         "instructions": "",
                         "required": 0,
                         "id": "",
@@ -495,7 +591,7 @@
                             "class": "",
                             "id": ""
                         },
-                        "display_format": "H:i:s",
+                        "display_format": "H:i",
                         "return_format": "H:i:s",
                         "parent_repeater": "field_69944a2d44994",
                         "_name": "opens_saturday",
@@ -510,7 +606,7 @@
                         "prefix": "acf",
                         "type": "time_picker",
                         "value": null,
-                        "menu_order": 8,
+                        "menu_order": 10,
                         "instructions": "",
                         "required": 0,
                         "id": "",
@@ -535,7 +631,7 @@
                             "class": "",
                             "id": ""
                         },
-                        "display_format": "H:i:s",
+                        "display_format": "H:i",
                         "return_format": "H:i:s",
                         "parent_repeater": "field_69944a2d44994",
                         "_name": "closes_saturday_",
@@ -550,7 +646,7 @@
                         "prefix": "acf",
                         "type": "repeater",
                         "value": null,
-                        "menu_order": 9,
+                        "menu_order": 11,
                         "instructions": "",
                         "required": 0,
                         "id": "",
@@ -608,7 +704,7 @@
                                     "class": "",
                                     "id": ""
                                 },
-                                "display_format": "H:i:s",
+                                "display_format": "H:i",
                                 "return_format": "H:i:s",
                                 "parent_repeater": "field_extra_hours_saturday_std",
                                 "_name": "opens",
@@ -635,7 +731,7 @@
                                     "class": "",
                                     "id": ""
                                 },
-                                "display_format": "H:i:s",
+                                "display_format": "H:i",
                                 "return_format": "H:i:s",
                                 "parent_repeater": "field_extra_hours_saturday_std",
                                 "_name": "closes",
@@ -675,6 +771,49 @@
                     },
                     {
                         "ID": 0,
+                        "key": "field_std_saturday_description",
+                        "label": "Beskrivning (lördag)",
+                        "name": "saturday_description",
+                        "aria-label": "",
+                        "prefix": "acf",
+                        "type": "text",
+                        "value": null,
+                        "menu_order": 12,
+                        "instructions": "",
+                        "required": 0,
+                        "id": "",
+                        "class": "",
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "!=",
+                                    "value": "granular"
+                                },
+                                {
+                                    "field": "field_69945bb444997",
+                                    "operator": "!=",
+                                    "value": "1"
+                                }
+                            ]
+                        ],
+                        "parent": "field_69944a2d44994",
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "parent_repeater": "field_69944a2d44994",
+                        "_name": "saturday_description",
+                        "_valid": 1,
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": ""
+                    },
+                    {
+                        "ID": 0,
                         "key": "field_69945bd644998",
                         "label": "Stängt söndag",
                         "name": "closed_sunday",
@@ -682,7 +821,7 @@
                         "prefix": "acf",
                         "type": "true_false",
                         "value": null,
-                        "menu_order": 10,
+                        "menu_order": 13,
                         "instructions": "",
                         "required": 0,
                         "id": "",
@@ -704,9 +843,9 @@
                         },
                         "message": "",
                         "default_value": 1,
-                        "ui": 0,
-                        "ui_on_text": "",
-                        "ui_off_text": "",
+                        "ui": 1,
+                        "ui_on_text": "Stängt",
+                        "ui_off_text": "Öppen",
                         "parent_repeater": "field_69944a2d44994",
                         "_name": "closed_sunday",
                         "_valid": 1
@@ -720,7 +859,7 @@
                         "prefix": "acf",
                         "type": "time_picker",
                         "value": null,
-                        "menu_order": 11,
+                        "menu_order": 14,
                         "instructions": "",
                         "required": 0,
                         "id": "",
@@ -745,7 +884,7 @@
                             "class": "",
                             "id": ""
                         },
-                        "display_format": "H:i:s",
+                        "display_format": "H:i",
                         "return_format": "H:i:s",
                         "parent_repeater": "field_69944a2d44994",
                         "_name": "opens_sunday",
@@ -760,7 +899,7 @@
                         "prefix": "acf",
                         "type": "time_picker",
                         "value": null,
-                        "menu_order": 12,
+                        "menu_order": 15,
                         "instructions": "",
                         "required": 0,
                         "id": "",
@@ -785,7 +924,7 @@
                             "class": "",
                             "id": ""
                         },
-                        "display_format": "H:i:s",
+                        "display_format": "H:i",
                         "return_format": "H:i:s",
                         "parent_repeater": "field_69944a2d44994",
                         "_name": "closes_sunday",
@@ -800,7 +939,7 @@
                         "prefix": "acf",
                         "type": "repeater",
                         "value": null,
-                        "menu_order": 13,
+                        "menu_order": 16,
                         "instructions": "",
                         "required": 0,
                         "id": "",
@@ -858,7 +997,7 @@
                                     "class": "",
                                     "id": ""
                                 },
-                                "display_format": "H:i:s",
+                                "display_format": "H:i",
                                 "return_format": "H:i:s",
                                 "parent_repeater": "field_extra_hours_sunday_std",
                                 "_name": "opens",
@@ -885,7 +1024,7 @@
                                     "class": "",
                                     "id": ""
                                 },
-                                "display_format": "H:i:s",
+                                "display_format": "H:i",
                                 "return_format": "H:i:s",
                                 "parent_repeater": "field_extra_hours_sunday_std",
                                 "_name": "closes",
@@ -925,6 +1064,49 @@
                     },
                     {
                         "ID": 0,
+                        "key": "field_std_sunday_description",
+                        "label": "Beskrivning (söndag)",
+                        "name": "sunday_description",
+                        "aria-label": "",
+                        "prefix": "acf",
+                        "type": "text",
+                        "value": null,
+                        "menu_order": 17,
+                        "instructions": "",
+                        "required": 0,
+                        "id": "",
+                        "class": "",
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "!=",
+                                    "value": "granular"
+                                },
+                                {
+                                    "field": "field_69945bd644998",
+                                    "operator": "!=",
+                                    "value": "1"
+                                }
+                            ]
+                        ],
+                        "parent": "field_69944a2d44994",
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "parent_repeater": "field_69944a2d44994",
+                        "_name": "sunday_description",
+                        "_valid": 1,
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": ""
+                    },
+                    {
+                        "ID": 0,
                         "key": "field_accordion_monday",
                         "label": "Måndag",
                         "name": "",
@@ -932,7 +1114,7 @@
                         "prefix": "acf",
                         "type": "accordion",
                         "value": false,
-                        "menu_order": 14,
+                        "menu_order": 18,
                         "instructions": "",
                         "required": 0,
                         "id": "",
@@ -968,7 +1150,7 @@
                         "prefix": "acf",
                         "type": "true_false",
                         "value": null,
-                        "menu_order": 15,
+                        "menu_order": 19,
                         "instructions": "",
                         "required": 0,
                         "id": "",
@@ -1006,7 +1188,7 @@
                         "prefix": "acf",
                         "type": "time_picker",
                         "value": null,
-                        "menu_order": 16,
+                        "menu_order": 20,
                         "instructions": "",
                         "required": false,
                         "id": "",
@@ -1017,6 +1199,11 @@
                                     "field": "field_schedule_mode_0001",
                                     "operator": "==",
                                     "value": "granular"
+                                },
+                                {
+                                    "field": "field_gran_monday",
+                                    "operator": "!=",
+                                    "value": "1"
                                 }
                             ]
                         ],
@@ -1026,7 +1213,7 @@
                             "class": "",
                             "id": ""
                         },
-                        "display_format": "H:i:s",
+                        "display_format": "H:i",
                         "return_format": "H:i:s",
                         "parent_repeater": "field_69944a2d44994",
                         "_name": "monday_opens",
@@ -1041,7 +1228,7 @@
                         "prefix": "acf",
                         "type": "time_picker",
                         "value": null,
-                        "menu_order": 17,
+                        "menu_order": 21,
                         "instructions": "",
                         "required": false,
                         "id": "",
@@ -1052,6 +1239,11 @@
                                     "field": "field_schedule_mode_0001",
                                     "operator": "==",
                                     "value": "granular"
+                                },
+                                {
+                                    "field": "field_gran_monday",
+                                    "operator": "!=",
+                                    "value": "1"
                                 }
                             ]
                         ],
@@ -1061,7 +1253,7 @@
                             "class": "",
                             "id": ""
                         },
-                        "display_format": "H:i:s",
+                        "display_format": "H:i",
                         "return_format": "H:i:s",
                         "parent_repeater": "field_69944a2d44994",
                         "_name": "monday_closes",
@@ -1076,7 +1268,7 @@
                         "prefix": "acf",
                         "type": "text",
                         "value": null,
-                        "menu_order": 18,
+                        "menu_order": 22,
                         "instructions": "",
                         "required": 0,
                         "id": "",
@@ -1114,7 +1306,7 @@
                         "prefix": "acf",
                         "type": "repeater",
                         "value": null,
-                        "menu_order": 19,
+                        "menu_order": 23,
                         "instructions": "",
                         "required": 0,
                         "id": "",
@@ -1172,7 +1364,7 @@
                                     "class": "",
                                     "id": ""
                                 },
-                                "display_format": "H:i:s",
+                                "display_format": "H:i",
                                 "return_format": "H:i:s",
                                 "parent_repeater": "field_extra_hours_monday",
                                 "_name": "opens",
@@ -1199,7 +1391,7 @@
                                     "class": "",
                                     "id": ""
                                 },
-                                "display_format": "H:i:s",
+                                "display_format": "H:i",
                                 "return_format": "H:i:s",
                                 "parent_repeater": "field_extra_hours_monday",
                                 "_name": "closes",
@@ -1246,7 +1438,7 @@
                         "prefix": "acf",
                         "type": "accordion",
                         "value": false,
-                        "menu_order": 20,
+                        "menu_order": 24,
                         "instructions": "",
                         "required": 0,
                         "id": "",
@@ -1282,7 +1474,7 @@
                         "prefix": "acf",
                         "type": "true_false",
                         "value": null,
-                        "menu_order": 21,
+                        "menu_order": 25,
                         "instructions": "",
                         "required": false,
                         "id": "",
@@ -1320,7 +1512,7 @@
                         "prefix": "acf",
                         "type": "time_picker",
                         "value": null,
-                        "menu_order": 22,
+                        "menu_order": 26,
                         "instructions": "",
                         "required": false,
                         "id": "",
@@ -1331,6 +1523,11 @@
                                     "field": "field_schedule_mode_0001",
                                     "operator": "==",
                                     "value": "granular"
+                                },
+                                {
+                                    "field": "field_gran_tuesday",
+                                    "operator": "!=",
+                                    "value": "1"
                                 }
                             ]
                         ],
@@ -1340,7 +1537,7 @@
                             "class": "",
                             "id": ""
                         },
-                        "display_format": "H:i:s",
+                        "display_format": "H:i",
                         "return_format": "H:i:s",
                         "parent_repeater": "field_69944a2d44994",
                         "_name": "tuesday_opens",
@@ -1355,7 +1552,7 @@
                         "prefix": "acf",
                         "type": "time_picker",
                         "value": null,
-                        "menu_order": 23,
+                        "menu_order": 27,
                         "instructions": "",
                         "required": false,
                         "id": "",
@@ -1366,6 +1563,11 @@
                                     "field": "field_schedule_mode_0001",
                                     "operator": "==",
                                     "value": "granular"
+                                },
+                                {
+                                    "field": "field_gran_tuesday",
+                                    "operator": "!=",
+                                    "value": "1"
                                 }
                             ]
                         ],
@@ -1375,7 +1577,7 @@
                             "class": "",
                             "id": ""
                         },
-                        "display_format": "H:i:s",
+                        "display_format": "H:i",
                         "return_format": "H:i:s",
                         "parent_repeater": "field_69944a2d44994",
                         "_name": "tuesday_closes",
@@ -1390,7 +1592,7 @@
                         "prefix": "acf",
                         "type": "text",
                         "value": null,
-                        "menu_order": 24,
+                        "menu_order": 28,
                         "instructions": "",
                         "required": 0,
                         "id": "",
@@ -1428,7 +1630,7 @@
                         "prefix": "acf",
                         "type": "repeater",
                         "value": null,
-                        "menu_order": 25,
+                        "menu_order": 29,
                         "instructions": "",
                         "required": 0,
                         "id": "",
@@ -1486,7 +1688,7 @@
                                     "class": "",
                                     "id": ""
                                 },
-                                "display_format": "H:i:s",
+                                "display_format": "H:i",
                                 "return_format": "H:i:s",
                                 "parent_repeater": "field_extra_hours_tuesday",
                                 "_name": "opens",
@@ -1513,7 +1715,7 @@
                                     "class": "",
                                     "id": ""
                                 },
-                                "display_format": "H:i:s",
+                                "display_format": "H:i",
                                 "return_format": "H:i:s",
                                 "parent_repeater": "field_extra_hours_tuesday",
                                 "_name": "closes",
@@ -1560,7 +1762,7 @@
                         "prefix": "acf",
                         "type": "accordion",
                         "value": false,
-                        "menu_order": 26,
+                        "menu_order": 30,
                         "instructions": "",
                         "required": 0,
                         "id": "",
@@ -1596,7 +1798,7 @@
                         "prefix": "acf",
                         "type": "true_false",
                         "value": null,
-                        "menu_order": 27,
+                        "menu_order": 31,
                         "instructions": "",
                         "required": false,
                         "id": "",
@@ -1634,7 +1836,7 @@
                         "prefix": "acf",
                         "type": "time_picker",
                         "value": null,
-                        "menu_order": 28,
+                        "menu_order": 32,
                         "instructions": "",
                         "required": false,
                         "id": "",
@@ -1645,6 +1847,11 @@
                                     "field": "field_schedule_mode_0001",
                                     "operator": "==",
                                     "value": "granular"
+                                },
+                                {
+                                    "field": "field_gran_wednesday",
+                                    "operator": "!=",
+                                    "value": "1"
                                 }
                             ]
                         ],
@@ -1654,7 +1861,7 @@
                             "class": "",
                             "id": ""
                         },
-                        "display_format": "H:i:s",
+                        "display_format": "H:i",
                         "return_format": "H:i:s",
                         "parent_repeater": "field_69944a2d44994",
                         "_name": "wednesday_opens",
@@ -1669,7 +1876,7 @@
                         "prefix": "acf",
                         "type": "time_picker",
                         "value": null,
-                        "menu_order": 29,
+                        "menu_order": 33,
                         "instructions": "",
                         "required": false,
                         "id": "",
@@ -1680,6 +1887,11 @@
                                     "field": "field_schedule_mode_0001",
                                     "operator": "==",
                                     "value": "granular"
+                                },
+                                {
+                                    "field": "field_gran_wednesday",
+                                    "operator": "!=",
+                                    "value": "1"
                                 }
                             ]
                         ],
@@ -1689,7 +1901,7 @@
                             "class": "",
                             "id": ""
                         },
-                        "display_format": "H:i:s",
+                        "display_format": "H:i",
                         "return_format": "H:i:s",
                         "parent_repeater": "field_69944a2d44994",
                         "_name": "wednesday_closes",
@@ -1704,7 +1916,7 @@
                         "prefix": "acf",
                         "type": "text",
                         "value": null,
-                        "menu_order": 30,
+                        "menu_order": 34,
                         "instructions": "",
                         "required": 0,
                         "id": "",
@@ -1742,7 +1954,7 @@
                         "prefix": "acf",
                         "type": "repeater",
                         "value": null,
-                        "menu_order": 31,
+                        "menu_order": 35,
                         "instructions": "",
                         "required": 0,
                         "id": "",
@@ -1800,7 +2012,7 @@
                                     "class": "",
                                     "id": ""
                                 },
-                                "display_format": "H:i:s",
+                                "display_format": "H:i",
                                 "return_format": "H:i:s",
                                 "parent_repeater": "field_extra_hours_wednesday",
                                 "_name": "opens",
@@ -1827,7 +2039,7 @@
                                     "class": "",
                                     "id": ""
                                 },
-                                "display_format": "H:i:s",
+                                "display_format": "H:i",
                                 "return_format": "H:i:s",
                                 "parent_repeater": "field_extra_hours_wednesday",
                                 "_name": "closes",
@@ -1874,7 +2086,7 @@
                         "prefix": "acf",
                         "type": "accordion",
                         "value": false,
-                        "menu_order": 32,
+                        "menu_order": 36,
                         "instructions": "",
                         "required": 0,
                         "id": "",
@@ -1910,7 +2122,7 @@
                         "prefix": "acf",
                         "type": "true_false",
                         "value": null,
-                        "menu_order": 33,
+                        "menu_order": 37,
                         "instructions": "",
                         "required": false,
                         "id": "",
@@ -1948,7 +2160,7 @@
                         "prefix": "acf",
                         "type": "time_picker",
                         "value": null,
-                        "menu_order": 34,
+                        "menu_order": 38,
                         "instructions": "",
                         "required": false,
                         "id": "",
@@ -1959,6 +2171,11 @@
                                     "field": "field_schedule_mode_0001",
                                     "operator": "==",
                                     "value": "granular"
+                                },
+                                {
+                                    "field": "field_gran_thursday",
+                                    "operator": "!=",
+                                    "value": "1"
                                 }
                             ]
                         ],
@@ -1968,7 +2185,7 @@
                             "class": "",
                             "id": ""
                         },
-                        "display_format": "H:i:s",
+                        "display_format": "H:i",
                         "return_format": "H:i:s",
                         "parent_repeater": "field_69944a2d44994",
                         "_name": "thursday_opens",
@@ -1983,7 +2200,7 @@
                         "prefix": "acf",
                         "type": "time_picker",
                         "value": null,
-                        "menu_order": 35,
+                        "menu_order": 39,
                         "instructions": "",
                         "required": false,
                         "id": "",
@@ -1994,6 +2211,11 @@
                                     "field": "field_schedule_mode_0001",
                                     "operator": "==",
                                     "value": "granular"
+                                },
+                                {
+                                    "field": "field_gran_thursday",
+                                    "operator": "!=",
+                                    "value": "1"
                                 }
                             ]
                         ],
@@ -2003,7 +2225,7 @@
                             "class": "",
                             "id": ""
                         },
-                        "display_format": "H:i:s",
+                        "display_format": "H:i",
                         "return_format": "H:i:s",
                         "parent_repeater": "field_69944a2d44994",
                         "_name": "thursday_closes",
@@ -2018,7 +2240,7 @@
                         "prefix": "acf",
                         "type": "text",
                         "value": null,
-                        "menu_order": 36,
+                        "menu_order": 40,
                         "instructions": "",
                         "required": 0,
                         "id": "",
@@ -2056,7 +2278,7 @@
                         "prefix": "acf",
                         "type": "repeater",
                         "value": null,
-                        "menu_order": 37,
+                        "menu_order": 41,
                         "instructions": "",
                         "required": 0,
                         "id": "",
@@ -2114,7 +2336,7 @@
                                     "class": "",
                                     "id": ""
                                 },
-                                "display_format": "H:i:s",
+                                "display_format": "H:i",
                                 "return_format": "H:i:s",
                                 "parent_repeater": "field_extra_hours_thursday",
                                 "_name": "opens",
@@ -2141,7 +2363,7 @@
                                     "class": "",
                                     "id": ""
                                 },
-                                "display_format": "H:i:s",
+                                "display_format": "H:i",
                                 "return_format": "H:i:s",
                                 "parent_repeater": "field_extra_hours_thursday",
                                 "_name": "closes",
@@ -2188,7 +2410,7 @@
                         "prefix": "acf",
                         "type": "accordion",
                         "value": false,
-                        "menu_order": 38,
+                        "menu_order": 42,
                         "instructions": "",
                         "required": 0,
                         "id": "",
@@ -2224,7 +2446,7 @@
                         "prefix": "acf",
                         "type": "true_false",
                         "value": null,
-                        "menu_order": 39,
+                        "menu_order": 43,
                         "instructions": "",
                         "required": false,
                         "id": "",
@@ -2262,7 +2484,7 @@
                         "prefix": "acf",
                         "type": "time_picker",
                         "value": null,
-                        "menu_order": 40,
+                        "menu_order": 44,
                         "instructions": "",
                         "required": false,
                         "id": "",
@@ -2273,6 +2495,11 @@
                                     "field": "field_schedule_mode_0001",
                                     "operator": "==",
                                     "value": "granular"
+                                },
+                                {
+                                    "field": "field_gran_friday",
+                                    "operator": "!=",
+                                    "value": "1"
                                 }
                             ]
                         ],
@@ -2282,7 +2509,7 @@
                             "class": "",
                             "id": ""
                         },
-                        "display_format": "H:i:s",
+                        "display_format": "H:i",
                         "return_format": "H:i:s",
                         "parent_repeater": "field_69944a2d44994",
                         "_name": "friday_opens",
@@ -2297,7 +2524,7 @@
                         "prefix": "acf",
                         "type": "time_picker",
                         "value": null,
-                        "menu_order": 41,
+                        "menu_order": 45,
                         "instructions": "",
                         "required": false,
                         "id": "",
@@ -2308,6 +2535,11 @@
                                     "field": "field_schedule_mode_0001",
                                     "operator": "==",
                                     "value": "granular"
+                                },
+                                {
+                                    "field": "field_gran_friday",
+                                    "operator": "!=",
+                                    "value": "1"
                                 }
                             ]
                         ],
@@ -2317,7 +2549,7 @@
                             "class": "",
                             "id": ""
                         },
-                        "display_format": "H:i:s",
+                        "display_format": "H:i",
                         "return_format": "H:i:s",
                         "parent_repeater": "field_69944a2d44994",
                         "_name": "friday_closes",
@@ -2332,7 +2564,7 @@
                         "prefix": "acf",
                         "type": "text",
                         "value": null,
-                        "menu_order": 42,
+                        "menu_order": 46,
                         "instructions": "",
                         "required": 0,
                         "id": "",
@@ -2370,7 +2602,7 @@
                         "prefix": "acf",
                         "type": "repeater",
                         "value": null,
-                        "menu_order": 43,
+                        "menu_order": 47,
                         "instructions": "",
                         "required": 0,
                         "id": "",
@@ -2428,7 +2660,7 @@
                                     "class": "",
                                     "id": ""
                                 },
-                                "display_format": "H:i:s",
+                                "display_format": "H:i",
                                 "return_format": "H:i:s",
                                 "parent_repeater": "field_extra_hours_friday",
                                 "_name": "opens",
@@ -2455,7 +2687,7 @@
                                     "class": "",
                                     "id": ""
                                 },
-                                "display_format": "H:i:s",
+                                "display_format": "H:i",
                                 "return_format": "H:i:s",
                                 "parent_repeater": "field_extra_hours_friday",
                                 "_name": "closes",
@@ -2502,7 +2734,7 @@
                         "prefix": "acf",
                         "type": "accordion",
                         "value": false,
-                        "menu_order": 44,
+                        "menu_order": 48,
                         "instructions": "",
                         "required": 0,
                         "id": "",
@@ -2538,7 +2770,7 @@
                         "prefix": "acf",
                         "type": "true_false",
                         "value": null,
-                        "menu_order": 45,
+                        "menu_order": 49,
                         "instructions": "",
                         "required": false,
                         "id": "",
@@ -2576,7 +2808,7 @@
                         "prefix": "acf",
                         "type": "time_picker",
                         "value": null,
-                        "menu_order": 46,
+                        "menu_order": 50,
                         "instructions": "",
                         "required": false,
                         "id": "",
@@ -2587,6 +2819,11 @@
                                     "field": "field_schedule_mode_0001",
                                     "operator": "==",
                                     "value": "granular"
+                                },
+                                {
+                                    "field": "field_gran_saturday",
+                                    "operator": "!=",
+                                    "value": "1"
                                 }
                             ]
                         ],
@@ -2596,7 +2833,7 @@
                             "class": "",
                             "id": ""
                         },
-                        "display_format": "H:i:s",
+                        "display_format": "H:i",
                         "return_format": "H:i:s",
                         "parent_repeater": "field_69944a2d44994",
                         "_name": "saturday_opens",
@@ -2611,7 +2848,7 @@
                         "prefix": "acf",
                         "type": "time_picker",
                         "value": null,
-                        "menu_order": 47,
+                        "menu_order": 51,
                         "instructions": "",
                         "required": false,
                         "id": "",
@@ -2622,6 +2859,11 @@
                                     "field": "field_schedule_mode_0001",
                                     "operator": "==",
                                     "value": "granular"
+                                },
+                                {
+                                    "field": "field_gran_saturday",
+                                    "operator": "!=",
+                                    "value": "1"
                                 }
                             ]
                         ],
@@ -2631,7 +2873,7 @@
                             "class": "",
                             "id": ""
                         },
-                        "display_format": "H:i:s",
+                        "display_format": "H:i",
                         "return_format": "H:i:s",
                         "parent_repeater": "field_69944a2d44994",
                         "_name": "saturday_closes",
@@ -2646,7 +2888,7 @@
                         "prefix": "acf",
                         "type": "text",
                         "value": null,
-                        "menu_order": 48,
+                        "menu_order": 52,
                         "instructions": "",
                         "required": 0,
                         "id": "",
@@ -2684,7 +2926,7 @@
                         "prefix": "acf",
                         "type": "repeater",
                         "value": null,
-                        "menu_order": 49,
+                        "menu_order": 53,
                         "instructions": "",
                         "required": 0,
                         "id": "",
@@ -2742,7 +2984,7 @@
                                     "class": "",
                                     "id": ""
                                 },
-                                "display_format": "H:i:s",
+                                "display_format": "H:i",
                                 "return_format": "H:i:s",
                                 "parent_repeater": "field_extra_hours_saturday",
                                 "_name": "opens",
@@ -2769,7 +3011,7 @@
                                     "class": "",
                                     "id": ""
                                 },
-                                "display_format": "H:i:s",
+                                "display_format": "H:i",
                                 "return_format": "H:i:s",
                                 "parent_repeater": "field_extra_hours_saturday",
                                 "_name": "closes",
@@ -2816,7 +3058,7 @@
                         "prefix": "acf",
                         "type": "accordion",
                         "value": false,
-                        "menu_order": 50,
+                        "menu_order": 54,
                         "instructions": "",
                         "required": 0,
                         "id": "",
@@ -2852,7 +3094,7 @@
                         "prefix": "acf",
                         "type": "true_false",
                         "value": null,
-                        "menu_order": 51,
+                        "menu_order": 55,
                         "instructions": "",
                         "required": false,
                         "id": "",
@@ -2890,7 +3132,7 @@
                         "prefix": "acf",
                         "type": "time_picker",
                         "value": null,
-                        "menu_order": 52,
+                        "menu_order": 56,
                         "instructions": "",
                         "required": false,
                         "id": "",
@@ -2901,6 +3143,11 @@
                                     "field": "field_schedule_mode_0001",
                                     "operator": "==",
                                     "value": "granular"
+                                },
+                                {
+                                    "field": "field_gran_sunday",
+                                    "operator": "!=",
+                                    "value": "1"
                                 }
                             ]
                         ],
@@ -2910,7 +3157,7 @@
                             "class": "",
                             "id": ""
                         },
-                        "display_format": "H:i:s",
+                        "display_format": "H:i",
                         "return_format": "H:i:s",
                         "parent_repeater": "field_69944a2d44994",
                         "_name": "sunday_opens",
@@ -2925,7 +3172,7 @@
                         "prefix": "acf",
                         "type": "time_picker",
                         "value": null,
-                        "menu_order": 53,
+                        "menu_order": 57,
                         "instructions": "",
                         "required": false,
                         "id": "",
@@ -2936,6 +3183,11 @@
                                     "field": "field_schedule_mode_0001",
                                     "operator": "==",
                                     "value": "granular"
+                                },
+                                {
+                                    "field": "field_gran_sunday",
+                                    "operator": "!=",
+                                    "value": "1"
                                 }
                             ]
                         ],
@@ -2945,7 +3197,7 @@
                             "class": "",
                             "id": ""
                         },
-                        "display_format": "H:i:s",
+                        "display_format": "H:i",
                         "return_format": "H:i:s",
                         "parent_repeater": "field_69944a2d44994",
                         "_name": "sunday_closes",
@@ -2960,7 +3212,7 @@
                         "prefix": "acf",
                         "type": "text",
                         "value": null,
-                        "menu_order": 54,
+                        "menu_order": 58,
                         "instructions": "",
                         "required": 0,
                         "id": "",
@@ -2998,7 +3250,7 @@
                         "prefix": "acf",
                         "type": "repeater",
                         "value": null,
-                        "menu_order": 55,
+                        "menu_order": 59,
                         "instructions": "",
                         "required": 0,
                         "id": "",
@@ -3056,7 +3308,7 @@
                                     "class": "",
                                     "id": ""
                                 },
-                                "display_format": "H:i:s",
+                                "display_format": "H:i",
                                 "return_format": "H:i:s",
                                 "parent_repeater": "field_extra_hours_sunday",
                                 "_name": "opens",
@@ -3083,7 +3335,7 @@
                                     "class": "",
                                     "id": ""
                                 },
-                                "display_format": "H:i:s",
+                                "display_format": "H:i",
                                 "return_format": "H:i:s",
                                 "parent_repeater": "field_extra_hours_sunday",
                                 "_name": "closes",
@@ -3130,8 +3382,8 @@
                         "prefix": "acf",
                         "type": "repeater",
                         "value": null,
-                        "menu_order": 56,
-                        "instructions": "",
+                        "menu_order": 60,
+                        "instructions": "Gäller ett kalenderdatum, t.ex. röd dag. Avvikande datum gäller hela modulen, inte bara denna period. Datumet måste ha rätt år.",
                         "required": 0,
                         "id": "",
                         "class": "",
@@ -3147,7 +3399,7 @@
                         "min": 0,
                         "max": 0,
                         "collapsed": "",
-                        "button_label": "Lägg till rad",
+                        "button_label": "Lägg till avvikande dag",
                         "rows_per_page": 20,
                         "parent_repeater": "field_69944a2d44994",
                         "_name": "special_opening_hours",
@@ -3156,7 +3408,7 @@
                             {
                                 "ID": 0,
                                 "key": "field_6994600753009",
-                                "label": "Veckodag",
+                                "label": "Datum",
                                 "name": "special_opening_date",
                                 "aria-label": "",
                                 "prefix": "acf",
@@ -3184,12 +3436,12 @@
                             },
                             {
                                 "ID": 0,
-                                "key": "field_6994604a5300a",
-                                "label": "Öppnar denna dagen",
-                                "name": "opens_this_day",
+                                "key": "field_special_closed_this_day",
+                                "label": "Stängt denna dag",
+                                "name": "closed_this_day",
                                 "aria-label": "",
                                 "prefix": "acf",
-                                "type": "time_picker",
+                                "type": "true_false",
                                 "value": null,
                                 "menu_order": 1,
                                 "instructions": "",
@@ -3203,7 +3455,45 @@
                                     "class": "",
                                     "id": ""
                                 },
-                                "display_format": "H:i:s",
+                                "message": "",
+                                "default_value": 0,
+                                "ui": 1,
+                                "ui_on_text": "Stängt",
+                                "ui_off_text": "Öppen",
+                                "parent_repeater": "field_69945be944999",
+                                "_name": "closed_this_day",
+                                "_valid": 1
+                            },
+                            {
+                                "ID": 0,
+                                "key": "field_6994604a5300a",
+                                "label": "Öppnar denna dagen",
+                                "name": "opens_this_day",
+                                "aria-label": "",
+                                "prefix": "acf",
+                                "type": "time_picker",
+                                "value": null,
+                                "menu_order": 2,
+                                "instructions": "",
+                                "required": 0,
+                                "id": "",
+                                "class": "",
+                                "conditional_logic": [
+                                    [
+                                        {
+                                            "field": "field_special_closed_this_day",
+                                            "operator": "!=",
+                                            "value": "1"
+                                        }
+                                    ]
+                                ],
+                                "parent": "field_69945be944999",
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "display_format": "H:i",
                                 "return_format": "H:i:s",
                                 "parent_repeater": "field_69945be944999",
                                 "_name": "opens_this_day",
@@ -3218,19 +3508,27 @@
                                 "prefix": "acf",
                                 "type": "time_picker",
                                 "value": null,
-                                "menu_order": 2,
+                                "menu_order": 3,
                                 "instructions": "",
                                 "required": 0,
                                 "id": "",
                                 "class": "",
-                                "conditional_logic": 0,
+                                "conditional_logic": [
+                                    [
+                                        {
+                                            "field": "field_special_closed_this_day",
+                                            "operator": "!=",
+                                            "value": "1"
+                                        }
+                                    ]
+                                ],
                                 "parent": "field_69945be944999",
                                 "wrapper": {
                                     "width": "",
                                     "class": "",
                                     "id": ""
                                 },
-                                "display_format": "H:i:s",
+                                "display_format": "H:i",
                                 "return_format": "H:i:s",
                                 "parent_repeater": "field_69945be944999",
                                 "_name": "closes_this_day",
@@ -3245,7 +3543,7 @@
                                 "prefix": "acf",
                                 "type": "text",
                                 "value": null,
-                                "menu_order": 3,
+                                "menu_order": 4,
                                 "instructions": "",
                                 "required": 0,
                                 "id": "",
@@ -3275,7 +3573,7 @@
                                 "prefix": "acf",
                                 "type": "repeater",
                                 "value": null,
-                                "menu_order": 4,
+                                "menu_order": 5,
                                 "instructions": "",
                                 "required": 0,
                                 "id": "",
@@ -3331,7 +3629,7 @@
                                             "class": "",
                                             "id": ""
                                         },
-                                        "display_format": "H:i:s",
+                                        "display_format": "H:i",
                                         "return_format": "H:i:s",
                                         "parent_repeater": "field_extra_hours_special",
                                         "_name": "opens",
@@ -3358,7 +3656,7 @@
                                             "class": "",
                                             "id": ""
                                         },
-                                        "display_format": "H:i:s",
+                                        "display_format": "H:i",
                                         "return_format": "H:i:s",
                                         "parent_repeater": "field_extra_hours_special",
                                         "_name": "closes",
