@@ -40,6 +40,15 @@
         margin: 0;
         font-size: 1.25rem;
         font-weight: 700;
+
+        &.mod-opening-hours__slots {
+            gap: 0.5rem;
+        }
+
+        .mod-opening-hours__description {
+            font-weight: 400;
+            opacity: 0.8;
+        }
     }
 
     &__week-header {
@@ -115,6 +124,7 @@
     &__row {
         display: grid;
         grid-template-columns: 1fr 1fr;
+        align-items: start;
         margin: 0;
         border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 
@@ -136,12 +146,21 @@
     }
 
     &__slots {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 0.25rem;
+        display: grid;
+        grid-template-columns: max-content minmax(0, 1fr);
+        column-gap: 0.5rem;
+        row-gap: 0.35rem;
+        align-items: baseline;
         margin: 0;
         padding: 0.6rem 1rem;
+    }
+
+    &__slot {
+        display: contents;
+    }
+
+    &__slot--closed .mod-opening-hours__closed {
+        grid-column: 1 / -1;
     }
 
     &__closed {
@@ -151,10 +170,27 @@
 
     &__range {
         white-space: nowrap;
+        font-variant-numeric: tabular-nums;
+    }
+
+    &__detail {
+        min-width: 0;
+        display: flex;
+        align-items: baseline;
+        gap: 0.4rem;
+    }
+
+    &__sep {
+        flex-shrink: 0;
+        opacity: 0.55;
+        font-weight: 400;
     }
 
     &__description {
-        display: block;
+        font-weight: 400;
+        font-style: normal;
+        opacity: 0.8;
+        overflow-wrap: anywhere;
     }
 }
 

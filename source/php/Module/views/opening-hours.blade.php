@@ -19,36 +19,24 @@
                     <p class="mod-opening-hours__today-label">
                         {{ __('Today', 'modularity-opening-hours') }}, <span class="mod-opening-hours__today-name">{{ $todayDay['name'] ?? '' }} {{ $todayDay['date'] ?? '' }}</span>
                     </p>
-                    <p class="mod-opening-hours__today-hours">
-                        @foreach ($todayDay['slots'] ?? [] as $slot)
-                            @if (!empty($slot['closed']))
-                                <span class="mod-opening-hours__closed">{{ __('Closed', 'modularity-opening-hours') }}</span>
-                            @else
-                                <span class="mod-opening-hours__range">{{ $slot['open'] }} – {{ $slot['close'] }}</span>
-                            @endif
-                        @endforeach
-                    </p>
-                    @if (!empty($todayDay['description']))
-                        <p class="mod-opening-hours__description">{{ $todayDay['description'] }}</p>
-                    @endif
+                    <div class="mod-opening-hours__today-hours mod-opening-hours__slots">
+                        @include('partials.opening-hours-slots', [
+                            'slots' => $todayDay['slots'] ?? [],
+                            'dayDescription' => $todayDay['description'] ?? '',
+                        ])
+                    </div>
                 </div>
                 @if (!empty($showTomorrowHighlight) && $tomorrowDay)
                     <div class="mod-opening-hours__featured-slot">
                         <p class="mod-opening-hours__today-label">
                             {{ __('Tomorrow', 'modularity-opening-hours') }}, <span class="mod-opening-hours__today-name">{{ $tomorrowDay['name'] ?? '' }} {{ $tomorrowDay['date'] ?? '' }}</span>
                         </p>
-                        <p class="mod-opening-hours__today-hours">
-                            @foreach ($tomorrowDay['slots'] ?? [] as $slot)
-                                @if (!empty($slot['closed']))
-                                    <span class="mod-opening-hours__closed">{{ __('Closed', 'modularity-opening-hours') }}</span>
-                                @else
-                                    <span class="mod-opening-hours__range">{{ $slot['open'] }} – {{ $slot['close'] }}</span>
-                                @endif
-                            @endforeach
-                        </p>
-                        @if (!empty($tomorrowDay['description']))
-                            <p class="mod-opening-hours__description">{{ $tomorrowDay['description'] }}</p>
-                        @endif
+                        <div class="mod-opening-hours__today-hours mod-opening-hours__slots">
+                            @include('partials.opening-hours-slots', [
+                                'slots' => $tomorrowDay['slots'] ?? [],
+                                'dayDescription' => $tomorrowDay['description'] ?? '',
+                            ])
+                        </div>
                     </div>
                 @endif
             </div>
@@ -103,21 +91,10 @@
                                 <span class="mod-opening-hours__date">{{ $day['date'] }}</span>
                             </dt>
                             <dd class="mod-opening-hours__slots">
-                                @foreach ($day['slots'] as $slot)
-                                    @if (!empty($slot['closed']))
-                                        <span
-                                            class="mod-opening-hours__closed">{{ __('Closed', 'modularity-opening-hours') }}</span>
-                                    @else
-                                        <span class="mod-opening-hours__range">{{ $slot['open'] }} –
-                                            {{ $slot['close'] }}</span>
-                                    @endif
-                                    @if (!$loop->last)
-                                        <span class="mod-opening-hours__sep">, </span>
-                                    @endif
-                                @endforeach
-                                @if (!empty($day['description']))
-                                    <span class="mod-opening-hours__description">- {{ $day['description'] }}</span>
-                                @endif
+                                @include('partials.opening-hours-slots', [
+                                    'slots' => $day['slots'],
+                                    'dayDescription' => $day['description'] ?? '',
+                                ])
                             </dd>
                         </div>
                     @endforeach
