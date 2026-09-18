@@ -39,6 +39,14 @@ msgstr "Öppettider"
 msgid "A opening-hours module."
 msgstr ""
 
+#: source/php/AcfFields/php/opening-hours-module.php
+msgid "Lägg till tid"
+msgstr "Lägg till tid"
+
+#: source/php/AcfFields/php/opening-hours-module.php
+msgid "Använd första raden för den vanliga tiden. Lägg till fler tider om samma dag har flera pass."
+msgstr "Använd första raden för den vanliga tiden. Lägg till fler tider om samma dag har flera pass."
+
 #: source/php/Module/OpeningHours.php:201
 msgid "Jan"
 msgstr "jan"

@@ -215,6 +215,104 @@ class OpeningHours extends \Modularity\Module
     }
 
     /**
+     * @param mixed $extraRows Repeater rows (opens, closes, description) after camelCase.
+     * @return array<int, array{open: string, close: string, label?: string}>
+     */
+    private function extraHourSlotsFromRepeater($extraRows): array
+    {
+        if (!is_array($extraRows) || $extraRows === []) {
+            return [];
+        }
+
+        $slots = [];
+        foreach ($extraRows as $row) {
+            if (!is_array($row)) {
+                continue;
+            }
+            $open = $this->normalizeTime((string) ($row['opens'] ?? ''));
+            $close = $this->normalizeTime((string) ($row['closes'] ?? ''));
+            if ($open === '' || $close === '') {
+                continue;
+            }
+            $label = trim((string) ($row['description'] ?? ''));
+            $slot = ['open' => $open, 'close' => $close];
+            if ($label !== '') {
+                $slot['label'] = $label;
+            }
+            $slots[] = $slot;
+        }
+
+        return $slots;
+    }
+
+    /**
+     * @param array<int, array<string, mixed>> $slots
+     * @param string $primaryLabel
+     * @param mixed $extraRows
+     * @return array<int, array<string, mixed>>
+     */
+    private function mergeExtraHoursIntoSlots(array $slots, string $primaryLabel, $extraRows): array
+    {
+        if ($slots !== [] && !empty($slots[0]['closed'])) {
+            return $slots;
+        }
+
+        $merged = [];
+        foreach ($slots as $index => $slot) {
+            if (!empty($slot['closed'])) {
+                $merged[] = $slot;
+                continue;
+            }
+            $label = $index === 0 ? trim($primaryLabel) : trim((string) ($slot['label'] ?? ''));
+            $entry = [
+                'open' => (string) ($slot['open'] ?? ''),
+                'close' => (string) ($slot['close'] ?? ''),
+            ];
+            if ($label !== '') {
+                $entry['label'] = $label;
+            }
+            $merged[] = $entry;
+        }
+
+        foreach ($this->extraHourSlotsFromRepeater($extraRows) as $extraSlot) {
+            $merged[] = $extraSlot;
+        }
+
+        if ($merged === []) {
+            return [['closed' => true]];
+        }
+
+        usort($merged, function (array $a, array $b): int {
+            if (!empty($a['closed'])) {
+                return 1;
+            }
+            if (!empty($b['closed'])) {
+                return -1;
+            }
+
+            return strcmp((string) ($a['open'] ?? ''), (string) ($b['open'] ?? ''));
+        });
+
+        return $merged;
+    }
+
+    /**
+     * @param array<int, array<string, mixed>> $slots
+     */
+    private function dayDescriptionFromSlots(array $slots): string
+    {
+        foreach ($slots as $slot) {
+            if (!empty($slot['closed'])) {
+                continue;
+            }
+
+            return trim((string) ($slot['label'] ?? ''));
+        }
+
+        return '';
+    }
+
+    /**
      * Parse date string from ACF date picker (d/m/Y format)
      * @param string $dateStr
      * @return \DateTimeImmutable|null
@@ -307,13 +405,13 @@ class OpeningHours extends \Modularity\Module
             $dayDescriptionsByDow = [];
             if ($mode === 'granular') {
                 $granularMap = [
-                    1 => ['opens' => 'mondayOpens', 'closes' => 'mondayCloses', 'closed' => 'mondayIsClosed', 'description' => 'mondayDescription'],
-                    2 => ['opens' => 'tuesdayOpens', 'closes' => 'tuesdayCloses', 'closed' => 'tuesdayIsClosed', 'description' => 'tuesdayDescription'],
-                    3 => ['opens' => 'wednesdayOpens', 'closes' => 'wednesdayCloses', 'closed' => 'wednesdayIsClosed', 'description' => 'wednesdayDescription'],
-                    4 => ['opens' => 'thursdayOpens', 'closes' => 'thursdayCloses', 'closed' => 'thursdayIsClosed', 'description' => 'thursdayDescription'],
-                    5 => ['opens' => 'fridayOpens', 'closes' => 'fridayCloses', 'closed' => 'fridayIsClosed', 'description' => 'fridayDescription'],
-                    6 => ['opens' => 'saturdayOpens', 'closes' => 'saturdayCloses', 'closed' => 'saturdayIsClosed', 'description' => 'saturdayDescription'],
-                    7 => ['opens' => 'sundayOpens', 'closes' => 'sundayCloses', 'closed' => 'sundayIsClosed', 'description' => 'sundayDescription'],
+                    1 => ['opens' => 'mondayOpens', 'closes' => 'mondayCloses', 'closed' => 'mondayIsClosed', 'description' => 'mondayDescription', 'extraHours' => 'mondayExtraHours'],
+                    2 => ['opens' => 'tuesdayOpens', 'closes' => 'tuesdayCloses', 'closed' => 'tuesdayIsClosed', 'description' => 'tuesdayDescription', 'extraHours' => 'tuesdayExtraHours'],
+                    3 => ['opens' => 'wednesdayOpens', 'closes' => 'wednesdayCloses', 'closed' => 'wednesdayIsClosed', 'description' => 'wednesdayDescription', 'extraHours' => 'wednesdayExtraHours'],
+                    4 => ['opens' => 'thursdayOpens', 'closes' => 'thursdayCloses', 'closed' => 'thursdayIsClosed', 'description' => 'thursdayDescription', 'extraHours' => 'thursdayExtraHours'],
+                    5 => ['opens' => 'fridayOpens', 'closes' => 'fridayCloses', 'closed' => 'fridayIsClosed', 'description' => 'fridayDescription', 'extraHours' => 'fridayExtraHours'],
+                    6 => ['opens' => 'saturdayOpens', 'closes' => 'saturdayCloses', 'closed' => 'saturdayIsClosed', 'description' => 'saturdayDescription', 'extraHours' => 'saturdayExtraHours'],
+                    7 => ['opens' => 'sundayOpens', 'closes' => 'sundayCloses', 'closed' => 'sundayIsClosed', 'description' => 'sundayDescription', 'extraHours' => 'sundayExtraHours'],
                 ];
                 for ($dow = 1; $dow <= 7; $dow++) {
                     $m = $granularMap[$dow];
@@ -323,7 +421,13 @@ class OpeningHours extends \Modularity\Module
                     $daySlotsByDow[$dow] = ($closed || $open === '' || $close === '')
                         ? [['closed' => true]]
                         : [['open' => $open, 'close' => $close]];
-                    $dayDescriptionsByDow[$dow] = trim((string) ($row[$m['description']] ?? ''));
+                    $primaryLabel = trim((string) ($row[$m['description']] ?? ''));
+                    $daySlotsByDow[$dow] = $this->mergeExtraHoursIntoSlots(
+                        $daySlotsByDow[$dow],
+                        $primaryLabel,
+                        $row[$m['extraHours']] ?? null
+                    );
+                    $dayDescriptionsByDow[$dow] = $this->dayDescriptionFromSlots($daySlotsByDow[$dow]);
                 }
             } else {
                 $monFriOpen = $this->normalizeTime((string) ($row['opens'] ?? ''));
@@ -352,6 +456,22 @@ class OpeningHours extends \Modularity\Module
                     6 => $satSlots,
                     7 => $sunSlots,
                 ];
+                $standardExtras = [
+                    1 => $row['weekdayExtraHours'] ?? null,
+                    2 => $row['weekdayExtraHours'] ?? null,
+                    3 => $row['weekdayExtraHours'] ?? null,
+                    4 => $row['weekdayExtraHours'] ?? null,
+                    5 => $row['weekdayExtraHours'] ?? null,
+                    6 => $row['saturdayExtraHours'] ?? null,
+                    7 => $row['sundayExtraHours'] ?? null,
+                ];
+                for ($dow = 1; $dow <= 7; $dow++) {
+                    $daySlotsByDow[$dow] = $this->mergeExtraHoursIntoSlots(
+                        $daySlotsByDow[$dow],
+                        '',
+                        $standardExtras[$dow]
+                    );
+                }
             }
 
             // Collect special opening hours (by date) from this row
@@ -372,16 +492,19 @@ class OpeningHours extends \Modularity\Module
                 $specialDescription = trim((string) ($special['specialOpeningHoursDescription'] ?? ''));
                 
                 if ($specialOpen !== '' && $specialClose !== '') {
-                    $allSpecialHours[$dateKey] = [
-                        'slots' => [['open' => $specialOpen, 'close' => $specialClose]],
-                        'description' => $specialDescription,
-                    ];
+                    $specialSlots = [['open' => $specialOpen, 'close' => $specialClose]];
                 } else {
-                    $allSpecialHours[$dateKey] = [
-                        'slots' => [['closed' => true]],
-                        'description' => $specialDescription,
-                    ];
+                    $specialSlots = [['closed' => true]];
                 }
+                $specialSlots = $this->mergeExtraHoursIntoSlots(
+                    $specialSlots,
+                    $specialDescription,
+                    $special['extraHours'] ?? null
+                );
+                $allSpecialHours[$dateKey] = [
+                    'slots' => $specialSlots,
+                    'description' => $this->dayDescriptionFromSlots($specialSlots),
+                ];
             }
 
             // Generate weeks for the range
