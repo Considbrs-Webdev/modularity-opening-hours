@@ -305,10 +305,8 @@ class OpeningHours extends \Modularity\Module
             if (!empty($slot['closed'])) {
                 continue;
             }
-            $label = trim((string) ($slot['label'] ?? ''));
-            if ($label !== '') {
-                return $label;
-            }
+
+            return trim((string) ($slot['label'] ?? ''));
         }
 
         return '';

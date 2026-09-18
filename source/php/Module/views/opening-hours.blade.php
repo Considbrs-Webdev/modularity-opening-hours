@@ -22,7 +22,6 @@
                     <div class="mod-opening-hours__today-hours mod-opening-hours__slots">
                         @include('partials.opening-hours-slots', [
                             'slots' => $todayDay['slots'] ?? [],
-                            'dayDescription' => $todayDay['description'] ?? '',
                         ])
                     </div>
                 </div>
@@ -34,7 +33,6 @@
                         <div class="mod-opening-hours__today-hours mod-opening-hours__slots">
                             @include('partials.opening-hours-slots', [
                                 'slots' => $tomorrowDay['slots'] ?? [],
-                                'dayDescription' => $tomorrowDay['description'] ?? '',
                             ])
                         </div>
                     </div>
@@ -93,7 +91,6 @@
                             <dd class="mod-opening-hours__slots">
                                 @include('partials.opening-hours-slots', [
                                     'slots' => $day['slots'],
-                                    'dayDescription' => $day['description'] ?? '',
                                 ])
                             </dd>
                         </div>
