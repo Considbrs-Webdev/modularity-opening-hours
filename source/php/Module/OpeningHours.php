@@ -430,11 +430,15 @@ class OpeningHours extends \Modularity\Module
                     $dayDescriptionsByDow[$dow] = $this->dayDescriptionFromSlots($daySlotsByDow[$dow]);
                 }
             } else {
+                $closedMonFri = !empty($row['closedWeekdays']);
                 $monFriOpen = $this->normalizeTime((string) ($row['opens'] ?? ''));
                 $monFriClose = $this->normalizeTime((string) ($row['closes'] ?? ''));
-                $monFriSlots = ($monFriOpen !== '' && $monFriClose !== '')
+                $monFriSlots = (!$closedMonFri && $monFriOpen !== '' && $monFriClose !== '')
                     ? [['open' => $monFriOpen, 'close' => $monFriClose]]
                     : [['closed' => true]];
+                $weekdayDescription = trim((string) ($row['weekdayDescription'] ?? ''));
+                $saturdayDescription = trim((string) ($row['saturdayDescription'] ?? ''));
+                $sundayDescription = trim((string) ($row['sundayDescription'] ?? ''));
                 $closedSat = !empty($row['closedSaturday']);
                 $satOpen = $this->normalizeTime((string) ($row['opensSaturday'] ?? ''));
                 $satClose = $this->normalizeTime((string) ($row['closesSaturday'] ?? ''));
@@ -465,12 +469,22 @@ class OpeningHours extends \Modularity\Module
                     6 => $row['saturdayExtraHours'] ?? null,
                     7 => $row['sundayExtraHours'] ?? null,
                 ];
+                $standardLabels = [
+                    1 => $weekdayDescription,
+                    2 => $weekdayDescription,
+                    3 => $weekdayDescription,
+                    4 => $weekdayDescription,
+                    5 => $weekdayDescription,
+                    6 => $saturdayDescription,
+                    7 => $sundayDescription,
+                ];
                 for ($dow = 1; $dow <= 7; $dow++) {
                     $daySlotsByDow[$dow] = $this->mergeExtraHoursIntoSlots(
                         $daySlotsByDow[$dow],
-                        '',
+                        $standardLabels[$dow],
                         $standardExtras[$dow]
                     );
+                    $dayDescriptionsByDow[$dow] = $this->dayDescriptionFromSlots($daySlotsByDow[$dow]);
                 }
             }
 
@@ -490,8 +504,9 @@ class OpeningHours extends \Modularity\Module
                 $specialOpen = $this->normalizeTime((string) ($special['opensThisDay'] ?? ''));
                 $specialClose = $this->normalizeTime((string) ($special['closesThisDay'] ?? ''));
                 $specialDescription = trim((string) ($special['specialOpeningHoursDescription'] ?? ''));
-                
-                if ($specialOpen !== '' && $specialClose !== '') {
+                $closedThisDay = !empty($special['closedThisDay']);
+
+                if (!$closedThisDay && $specialOpen !== '' && $specialClose !== '') {
                     $specialSlots = [['open' => $specialOpen, 'close' => $specialClose]];
                 } else {
                     $specialSlots = [['closed' => true]];

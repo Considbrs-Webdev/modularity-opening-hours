@@ -47,6 +47,34 @@ msgstr "Lägg till tid"
 msgid "Använd första raden för den vanliga tiden. Lägg till fler tider om samma dag har flera pass."
 msgstr "Använd första raden för den vanliga tiden. Lägg till fler tider om samma dag har flera pass."
 
+#: source/php/AcfFields/php/opening-hours-module.php
+msgid "Period"
+msgstr "Period"
+
+#: source/php/AcfFields/php/opening-hours-module.php
+msgid "Lägg till period"
+msgstr "Lägg till period"
+
+#: source/php/AcfFields/php/opening-hours-module.php
+msgid "ISO-veckor, t.ex. 23–35 för sommaren. Om två perioder överlappar vinner den sista."
+msgstr "ISO-veckor, t.ex. 23–35 för sommaren. Om två perioder överlappar vinner den sista."
+
+#: source/php/AcfFields/php/opening-hours-module.php
+msgid "Lägg till avvikande dag"
+msgstr "Lägg till avvikande dag"
+
+#: source/php/AcfFields/php/opening-hours-module.php
+msgid "Gäller ett kalenderdatum, t.ex. röd dag. Avvikande datum gäller hela modulen, inte bara denna period. Datumet måste ha rätt år."
+msgstr "Gäller ett kalenderdatum, t.ex. röd dag. Avvikande datum gäller hela modulen, inte bara denna period. Datumet måste ha rätt år."
+
+#: source/php/AcfFields/php/opening-hours-module.php
+msgid "Stängt mån–fre"
+msgstr "Stängt mån–fre"
+
+#: source/php/AcfFields/php/opening-hours-module.php
+msgid "Stängt denna dag"
+msgstr "Stängt denna dag"
+
 #: source/php/Module/OpeningHours.php:201
 msgid "Jan"
 msgstr "jan"

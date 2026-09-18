@@ -75,7 +75,7 @@ if (function_exists('acf_add_local_field_group')) {
         ),
         3 => array(
             'key' => 'field_69944a2d44994',
-            'label' => __('Vecka', 'modularity-opening-hours'),
+            'label' => __('Period', 'modularity-opening-hours'),
             'name' => 'week_repeater',
             'aria-label' => '',
             'type' => 'repeater',
@@ -93,7 +93,7 @@ if (function_exists('acf_add_local_field_group')) {
             'min' => 0,
             'max' => 0,
             'collapsed' => '',
-            'button_label' => __('Lägg till vecka', 'modularity-opening-hours'),
+            'button_label' => __('Lägg till period', 'modularity-opening-hours'),
             'rows_per_page' => 20,
             'sub_fields' => array(
                 0 => array(
@@ -102,7 +102,7 @@ if (function_exists('acf_add_local_field_group')) {
                     'name' => 'week_no_from',
                     'aria-label' => '',
                     'type' => 'number',
-                    'instructions' => '',
+                    'instructions' => __('ISO-veckor, t.ex. 23–35 för sommaren. Om två perioder överlappar vinner den sista.', 'modularity-opening-hours'),
                     'required' => 0,
                     'conditional_logic' => 0,
                     'wrapper' => array(
@@ -125,7 +125,7 @@ if (function_exists('acf_add_local_field_group')) {
                     'name' => 'week_no_to',
                     'aria-label' => '',
                     'type' => 'number',
-                    'instructions' => '',
+                    'instructions' => __('ISO-veckor, t.ex. 23–35 för sommaren. Om två perioder överlappar vinner den sista.', 'modularity-opening-hours'),
                     'required' => 0,
                     'conditional_logic' => 0,
                     'wrapper' => array(
@@ -160,13 +160,42 @@ if (function_exists('acf_add_local_field_group')) {
                         'standard' => __('Standard', 'modularity-opening-hours'),
                         'granular' => __('Granulärt', 'modularity-opening-hours'),
                     ),
-                    'default_value' => __('standard', 'modularity-opening-hours'),
+                    'default_value' => 'standard',
                     'return_format' => 'value',
-                    'allow_null' => 1,
+                    'allow_null' => 0,
                     'layout' => 'horizontal',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
                 3 => array(
+                    'key' => 'field_std_closed_weekdays',
+                    'label' => __('Stängt mån–fre', 'modularity-opening-hours'),
+                    'name' => 'closed_weekdays',
+                    'aria-label' => '',
+                    'type' => 'true_false',
+                    'instructions' => '',
+                    'required' => 0,
+                    'conditional_logic' => array(
+                        0 => array(
+                            0 => array(
+                                'field' => 'field_schedule_mode_0001',
+                                'operator' => '!=',
+                                'value' => 'granular',
+                            ),
+                        ),
+                    ),
+                    'wrapper' => array(
+                        'width' => '100',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'message' => '',
+                    'default_value' => 0,
+                    'ui' => 1,
+                    'ui_on_text' => __('Stängt', 'modularity-opening-hours'),
+                    'ui_off_text' => __('Öppen', 'modularity-opening-hours'),
+                    'parent_repeater' => 'field_69944a2d44994',
+                ),
+                4 => array(
                     'key' => 'field_69944a6544995',
                     'label' => __('Öppnar (mån-fre)', 'modularity-opening-hours'),
                     'name' => 'opens',
@@ -181,6 +210,11 @@ if (function_exists('acf_add_local_field_group')) {
                                 'operator' => '!=',
                                 'value' => 'granular',
                             ),
+                            1 => array(
+                                'field' => 'field_std_closed_weekdays',
+                                'operator' => '!=',
+                                'value' => '1',
+                            ),
                         ),
                     ),
                     'wrapper' => array(
@@ -188,11 +222,11 @@ if (function_exists('acf_add_local_field_group')) {
                         'class' => '',
                         'id' => '',
                     ),
-                    'display_format' => 'H:i:s',
+                    'display_format' => 'H:i',
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                4 => array(
+                5 => array(
                     'key' => 'field_69945b7944996',
                     'label' => __('Stänger (mån-fre)', 'modularity-opening-hours'),
                     'name' => 'closes',
@@ -207,6 +241,11 @@ if (function_exists('acf_add_local_field_group')) {
                                 'operator' => '!=',
                                 'value' => 'granular',
                             ),
+                            1 => array(
+                                'field' => 'field_std_closed_weekdays',
+                                'operator' => '!=',
+                                'value' => '1',
+                            ),
                         ),
                     ),
                     'wrapper' => array(
@@ -214,11 +253,11 @@ if (function_exists('acf_add_local_field_group')) {
                         'class' => '',
                         'id' => '',
                     ),
-                    'display_format' => 'H:i:s',
+                    'display_format' => 'H:i',
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                5 => array(
+                6 => array(
                     'key' => 'field_extra_hours_weekday',
                     'label' => __('Fler tider (mån–fre)', 'modularity-opening-hours'),
                     'name' => 'weekday_extra_hours',
@@ -232,6 +271,11 @@ if (function_exists('acf_add_local_field_group')) {
                                 'field' => 'field_schedule_mode_0001',
                                 'operator' => '!=',
                                 'value' => 'granular',
+                            ),
+                            1 => array(
+                                'field' => 'field_std_closed_weekdays',
+                                'operator' => '!=',
+                                'value' => '1',
                             ),
                         ),
                     ),
@@ -254,7 +298,7 @@ if (function_exists('acf_add_local_field_group')) {
                             'label' => __('Öppnar', 'modularity-opening-hours'),
                             'name' => 'opens',
                             'type' => 'time_picker',
-                            'display_format' => 'H:i:s',
+                            'display_format' => 'H:i',
                             'return_format' => 'H:i:s',
                             'parent_repeater' => 'field_extra_hours_weekday',
                         ),
@@ -263,7 +307,7 @@ if (function_exists('acf_add_local_field_group')) {
                             'label' => __('Stänger', 'modularity-opening-hours'),
                             'name' => 'closes',
                             'type' => 'time_picker',
-                            'display_format' => 'H:i:s',
+                            'display_format' => 'H:i',
                             'return_format' => 'H:i:s',
                             'parent_repeater' => 'field_extra_hours_weekday',
                         ),
@@ -277,7 +321,37 @@ if (function_exists('acf_add_local_field_group')) {
                     ),
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                6 => array(
+                7 => array(
+                    'key' => 'field_std_weekday_description',
+                    'label' => __('Beskrivning (mån–fre)', 'modularity-opening-hours'),
+                    'name' => 'weekday_description',
+                    'aria-label' => '',
+                    'type' => 'text',
+                    'instructions' => '',
+                    'required' => 0,
+                    'conditional_logic' => array(
+                        0 => array(
+                            0 => array(
+                                'field' => 'field_schedule_mode_0001',
+                                'operator' => '!=',
+                                'value' => 'granular',
+                            ),
+                            1 => array(
+                                'field' => 'field_std_closed_weekdays',
+                                'operator' => '!=',
+                                'value' => '1',
+                            ),
+                        ),
+                    ),
+                    'wrapper' => array(
+                        'width' => '50',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => '',
+                    'parent_repeater' => 'field_69944a2d44994',
+                ),
+                8 => array(
                     'key' => 'field_69945bb444997',
                     'label' => __('Stängt lördag', 'modularity-opening-hours'),
                     'name' => 'closed_saturday',
@@ -301,12 +375,12 @@ if (function_exists('acf_add_local_field_group')) {
                     ),
                     'message' => '',
                     'default_value' => 1,
-                    'ui' => 0,
-                    'ui_on_text' => '',
-                    'ui_off_text' => '',
+                    'ui' => 1,
+                    'ui_on_text' => __('Stängt', 'modularity-opening-hours'),
+                    'ui_off_text' => __('Öppen', 'modularity-opening-hours'),
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                7 => array(
+                9 => array(
                     'key' => 'field_69945cf74499d',
                     'label' => __('Öppnar lördag', 'modularity-opening-hours'),
                     'name' => 'opens_saturday',
@@ -333,11 +407,11 @@ if (function_exists('acf_add_local_field_group')) {
                         'class' => '',
                         'id' => '',
                     ),
-                    'display_format' => 'H:i:s',
+                    'display_format' => 'H:i',
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                8 => array(
+                10 => array(
                     'key' => 'field_69945d234499e',
                     'label' => __('Stänger lördag', 'modularity-opening-hours'),
                     'name' => 'closes_saturday_',
@@ -364,11 +438,11 @@ if (function_exists('acf_add_local_field_group')) {
                         'class' => '',
                         'id' => '',
                     ),
-                    'display_format' => 'H:i:s',
+                    'display_format' => 'H:i',
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                9 => array(
+                11 => array(
                     'key' => 'field_extra_hours_saturday_std',
                     'label' => __('Fler tider (lördag)', 'modularity-opening-hours'),
                     'name' => 'saturday_extra_hours',
@@ -409,7 +483,7 @@ if (function_exists('acf_add_local_field_group')) {
                             'label' => __('Öppnar', 'modularity-opening-hours'),
                             'name' => 'opens',
                             'type' => 'time_picker',
-                            'display_format' => 'H:i:s',
+                            'display_format' => 'H:i',
                             'return_format' => 'H:i:s',
                             'parent_repeater' => 'field_extra_hours_saturday_std',
                         ),
@@ -418,7 +492,7 @@ if (function_exists('acf_add_local_field_group')) {
                             'label' => __('Stänger', 'modularity-opening-hours'),
                             'name' => 'closes',
                             'type' => 'time_picker',
-                            'display_format' => 'H:i:s',
+                            'display_format' => 'H:i',
                             'return_format' => 'H:i:s',
                             'parent_repeater' => 'field_extra_hours_saturday_std',
                         ),
@@ -432,7 +506,37 @@ if (function_exists('acf_add_local_field_group')) {
                     ),
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                10 => array(
+                12 => array(
+                    'key' => 'field_std_saturday_description',
+                    'label' => __('Beskrivning (lördag)', 'modularity-opening-hours'),
+                    'name' => 'saturday_description',
+                    'aria-label' => '',
+                    'type' => 'text',
+                    'instructions' => '',
+                    'required' => 0,
+                    'conditional_logic' => array(
+                        0 => array(
+                            0 => array(
+                                'field' => 'field_schedule_mode_0001',
+                                'operator' => '!=',
+                                'value' => 'granular',
+                            ),
+                            1 => array(
+                                'field' => 'field_69945bb444997',
+                                'operator' => '!=',
+                                'value' => '1',
+                            ),
+                        ),
+                    ),
+                    'wrapper' => array(
+                        'width' => '50',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => '',
+                    'parent_repeater' => 'field_69944a2d44994',
+                ),
+                13 => array(
                     'key' => 'field_69945bd644998',
                     'label' => __('Stängt söndag', 'modularity-opening-hours'),
                     'name' => 'closed_sunday',
@@ -456,12 +560,12 @@ if (function_exists('acf_add_local_field_group')) {
                     ),
                     'message' => '',
                     'default_value' => 1,
-                    'ui' => 0,
-                    'ui_on_text' => '',
-                    'ui_off_text' => '',
+                    'ui' => 1,
+                    'ui_on_text' => __('Stängt', 'modularity-opening-hours'),
+                    'ui_off_text' => __('Öppen', 'modularity-opening-hours'),
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                11 => array(
+                14 => array(
                     'key' => 'field_69945cac4499b',
                     'label' => __('Öppnar söndag', 'modularity-opening-hours'),
                     'name' => 'opens_sunday',
@@ -488,11 +592,11 @@ if (function_exists('acf_add_local_field_group')) {
                         'class' => '',
                         'id' => '',
                     ),
-                    'display_format' => 'H:i:s',
+                    'display_format' => 'H:i',
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                12 => array(
+                15 => array(
                     'key' => 'field_69945cc64499c',
                     'label' => __('Stänger söndag', 'modularity-opening-hours'),
                     'name' => 'closes_sunday',
@@ -519,11 +623,11 @@ if (function_exists('acf_add_local_field_group')) {
                         'class' => '',
                         'id' => '',
                     ),
-                    'display_format' => 'H:i:s',
+                    'display_format' => 'H:i',
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                13 => array(
+                16 => array(
                     'key' => 'field_extra_hours_sunday_std',
                     'label' => __('Fler tider (söndag)', 'modularity-opening-hours'),
                     'name' => 'sunday_extra_hours',
@@ -564,7 +668,7 @@ if (function_exists('acf_add_local_field_group')) {
                             'label' => __('Öppnar', 'modularity-opening-hours'),
                             'name' => 'opens',
                             'type' => 'time_picker',
-                            'display_format' => 'H:i:s',
+                            'display_format' => 'H:i',
                             'return_format' => 'H:i:s',
                             'parent_repeater' => 'field_extra_hours_sunday_std',
                         ),
@@ -573,7 +677,7 @@ if (function_exists('acf_add_local_field_group')) {
                             'label' => __('Stänger', 'modularity-opening-hours'),
                             'name' => 'closes',
                             'type' => 'time_picker',
-                            'display_format' => 'H:i:s',
+                            'display_format' => 'H:i',
                             'return_format' => 'H:i:s',
                             'parent_repeater' => 'field_extra_hours_sunday_std',
                         ),
@@ -587,7 +691,37 @@ if (function_exists('acf_add_local_field_group')) {
                     ),
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                14 => array(
+                17 => array(
+                    'key' => 'field_std_sunday_description',
+                    'label' => __('Beskrivning (söndag)', 'modularity-opening-hours'),
+                    'name' => 'sunday_description',
+                    'aria-label' => '',
+                    'type' => 'text',
+                    'instructions' => '',
+                    'required' => 0,
+                    'conditional_logic' => array(
+                        0 => array(
+                            0 => array(
+                                'field' => 'field_schedule_mode_0001',
+                                'operator' => '!=',
+                                'value' => 'granular',
+                            ),
+                            1 => array(
+                                'field' => 'field_69945bd644998',
+                                'operator' => '!=',
+                                'value' => '1',
+                            ),
+                        ),
+                    ),
+                    'wrapper' => array(
+                        'width' => '50',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => '',
+                    'parent_repeater' => 'field_69944a2d44994',
+                ),
+                18 => array(
                     'key' => 'field_accordion_monday',
                     'label' => __('Måndag', 'modularity-opening-hours'),
                     'name' => '',
@@ -614,7 +748,7 @@ if (function_exists('acf_add_local_field_group')) {
                     'endpoint' => 0,
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                15 => array(
+                19 => array(
                     'key' => 'field_gran_monday',
                     'label' => __('Måndag', 'modularity-opening-hours'),
                     'name' => 'monday_is_closed',
@@ -643,7 +777,7 @@ if (function_exists('acf_add_local_field_group')) {
                     'parent_repeater' => 'field_69944a2d44994',
                     'message' => '',
                 ),
-                16 => array(
+                20 => array(
                     'key' => 'field_gran_monday_opens',
                     'label' => __('Måndag öppnar', 'modularity-opening-hours'),
                     'name' => 'monday_opens',
@@ -658,6 +792,11 @@ if (function_exists('acf_add_local_field_group')) {
                                 'operator' => '==',
                                 'value' => 'granular',
                             ),
+                            1 => array(
+                                'field' => 'field_gran_monday',
+                                'operator' => '!=',
+                                'value' => '1',
+                            ),
                         ),
                     ),
                     'wrapper' => array(
@@ -665,11 +804,11 @@ if (function_exists('acf_add_local_field_group')) {
                         'class' => '',
                         'id' => '',
                     ),
-                    'display_format' => 'H:i:s',
+                    'display_format' => 'H:i',
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                17 => array(
+                21 => array(
                     'key' => 'field_gran_monday_closes',
                     'label' => __('Måndag stänger', 'modularity-opening-hours'),
                     'name' => 'monday_closes',
@@ -684,6 +823,11 @@ if (function_exists('acf_add_local_field_group')) {
                                 'operator' => '==',
                                 'value' => 'granular',
                             ),
+                            1 => array(
+                                'field' => 'field_gran_monday',
+                                'operator' => '!=',
+                                'value' => '1',
+                            ),
                         ),
                     ),
                     'wrapper' => array(
@@ -691,11 +835,11 @@ if (function_exists('acf_add_local_field_group')) {
                         'class' => '',
                         'id' => '',
                     ),
-                    'display_format' => 'H:i:s',
+                    'display_format' => 'H:i',
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                18 => array(
+                22 => array(
                     'key' => 'field_gran_monday_desc',
                     'label' => __('Beskrivning (måndag)', 'modularity-opening-hours'),
                     'name' => 'monday_description',
@@ -724,7 +868,7 @@ if (function_exists('acf_add_local_field_group')) {
                     'append' => '',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                19 => array(
+                23 => array(
                     'key' => 'field_extra_hours_monday',
                     'label' => __('Fler tider (måndag)', 'modularity-opening-hours'),
                     'name' => 'monday_extra_hours',
@@ -765,7 +909,7 @@ if (function_exists('acf_add_local_field_group')) {
                             'label' => __('Öppnar', 'modularity-opening-hours'),
                             'name' => 'opens',
                             'type' => 'time_picker',
-                            'display_format' => 'H:i:s',
+                            'display_format' => 'H:i',
                             'return_format' => 'H:i:s',
                             'parent_repeater' => 'field_extra_hours_monday',
                         ),
@@ -774,7 +918,7 @@ if (function_exists('acf_add_local_field_group')) {
                             'label' => __('Stänger', 'modularity-opening-hours'),
                             'name' => 'closes',
                             'type' => 'time_picker',
-                            'display_format' => 'H:i:s',
+                            'display_format' => 'H:i',
                             'return_format' => 'H:i:s',
                             'parent_repeater' => 'field_extra_hours_monday',
                         ),
@@ -788,7 +932,7 @@ if (function_exists('acf_add_local_field_group')) {
                     ),
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                20 => array(
+                24 => array(
                     'key' => 'field_accordion_tuesday',
                     'label' => __('Tisdag', 'modularity-opening-hours'),
                     'name' => '',
@@ -815,7 +959,7 @@ if (function_exists('acf_add_local_field_group')) {
                     'endpoint' => 0,
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                21 => array(
+                25 => array(
                     'key' => 'field_gran_tuesday',
                     'label' => __('Tisdag', 'modularity-opening-hours'),
                     'name' => 'tuesday_is_closed',
@@ -844,7 +988,7 @@ if (function_exists('acf_add_local_field_group')) {
                     'parent_repeater' => 'field_69944a2d44994',
                     'message' => '',
                 ),
-                22 => array(
+                26 => array(
                     'key' => 'field_gran_tuesday_opens',
                     'label' => __('Tisdag öppnar', 'modularity-opening-hours'),
                     'name' => 'tuesday_opens',
@@ -859,6 +1003,11 @@ if (function_exists('acf_add_local_field_group')) {
                                 'operator' => '==',
                                 'value' => 'granular',
                             ),
+                            1 => array(
+                                'field' => 'field_gran_tuesday',
+                                'operator' => '!=',
+                                'value' => '1',
+                            ),
                         ),
                     ),
                     'wrapper' => array(
@@ -866,11 +1015,11 @@ if (function_exists('acf_add_local_field_group')) {
                         'class' => '',
                         'id' => '',
                     ),
-                    'display_format' => 'H:i:s',
+                    'display_format' => 'H:i',
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                23 => array(
+                27 => array(
                     'key' => 'field_gran_tuesday_closes',
                     'label' => __('Tisdag stänger', 'modularity-opening-hours'),
                     'name' => 'tuesday_closes',
@@ -885,6 +1034,11 @@ if (function_exists('acf_add_local_field_group')) {
                                 'operator' => '==',
                                 'value' => 'granular',
                             ),
+                            1 => array(
+                                'field' => 'field_gran_tuesday',
+                                'operator' => '!=',
+                                'value' => '1',
+                            ),
                         ),
                     ),
                     'wrapper' => array(
@@ -892,11 +1046,11 @@ if (function_exists('acf_add_local_field_group')) {
                         'class' => '',
                         'id' => '',
                     ),
-                    'display_format' => 'H:i:s',
+                    'display_format' => 'H:i',
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                24 => array(
+                28 => array(
                     'key' => 'field_gran_tuesday_desc',
                     'label' => __('Beskrivning (tisdag)', 'modularity-opening-hours'),
                     'name' => 'tuesday_description',
@@ -925,7 +1079,7 @@ if (function_exists('acf_add_local_field_group')) {
                     'append' => '',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                25 => array(
+                29 => array(
                     'key' => 'field_extra_hours_tuesday',
                     'label' => __('Fler tider (tisdag)', 'modularity-opening-hours'),
                     'name' => 'tuesday_extra_hours',
@@ -966,7 +1120,7 @@ if (function_exists('acf_add_local_field_group')) {
                             'label' => __('Öppnar', 'modularity-opening-hours'),
                             'name' => 'opens',
                             'type' => 'time_picker',
-                            'display_format' => 'H:i:s',
+                            'display_format' => 'H:i',
                             'return_format' => 'H:i:s',
                             'parent_repeater' => 'field_extra_hours_tuesday',
                         ),
@@ -975,7 +1129,7 @@ if (function_exists('acf_add_local_field_group')) {
                             'label' => __('Stänger', 'modularity-opening-hours'),
                             'name' => 'closes',
                             'type' => 'time_picker',
-                            'display_format' => 'H:i:s',
+                            'display_format' => 'H:i',
                             'return_format' => 'H:i:s',
                             'parent_repeater' => 'field_extra_hours_tuesday',
                         ),
@@ -989,7 +1143,7 @@ if (function_exists('acf_add_local_field_group')) {
                     ),
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                26 => array(
+                30 => array(
                     'key' => 'field_accordion_wednesday',
                     'label' => __('Onsdag', 'modularity-opening-hours'),
                     'name' => '',
@@ -1016,7 +1170,7 @@ if (function_exists('acf_add_local_field_group')) {
                     'endpoint' => 0,
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                27 => array(
+                31 => array(
                     'key' => 'field_gran_wednesday',
                     'label' => __('Onsdag', 'modularity-opening-hours'),
                     'name' => 'wednesday_is_closed',
@@ -1045,7 +1199,7 @@ if (function_exists('acf_add_local_field_group')) {
                     'parent_repeater' => 'field_69944a2d44994',
                     'message' => '',
                 ),
-                28 => array(
+                32 => array(
                     'key' => 'field_gran_wednesday_opens',
                     'label' => __('Onsdag öppnar', 'modularity-opening-hours'),
                     'name' => 'wednesday_opens',
@@ -1060,6 +1214,11 @@ if (function_exists('acf_add_local_field_group')) {
                                 'operator' => '==',
                                 'value' => 'granular',
                             ),
+                            1 => array(
+                                'field' => 'field_gran_wednesday',
+                                'operator' => '!=',
+                                'value' => '1',
+                            ),
                         ),
                     ),
                     'wrapper' => array(
@@ -1067,11 +1226,11 @@ if (function_exists('acf_add_local_field_group')) {
                         'class' => '',
                         'id' => '',
                     ),
-                    'display_format' => 'H:i:s',
+                    'display_format' => 'H:i',
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                29 => array(
+                33 => array(
                     'key' => 'field_gran_wednesday_closes',
                     'label' => __('Onsdag stänger', 'modularity-opening-hours'),
                     'name' => 'wednesday_closes',
@@ -1086,6 +1245,11 @@ if (function_exists('acf_add_local_field_group')) {
                                 'operator' => '==',
                                 'value' => 'granular',
                             ),
+                            1 => array(
+                                'field' => 'field_gran_wednesday',
+                                'operator' => '!=',
+                                'value' => '1',
+                            ),
                         ),
                     ),
                     'wrapper' => array(
@@ -1093,11 +1257,11 @@ if (function_exists('acf_add_local_field_group')) {
                         'class' => '',
                         'id' => '',
                     ),
-                    'display_format' => 'H:i:s',
+                    'display_format' => 'H:i',
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                30 => array(
+                34 => array(
                     'key' => 'field_gran_wednesday_desc',
                     'label' => __('Beskrivning (onsdag)', 'modularity-opening-hours'),
                     'name' => 'wednesday_description',
@@ -1126,7 +1290,7 @@ if (function_exists('acf_add_local_field_group')) {
                     'append' => '',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                31 => array(
+                35 => array(
                     'key' => 'field_extra_hours_wednesday',
                     'label' => __('Fler tider (onsdag)', 'modularity-opening-hours'),
                     'name' => 'wednesday_extra_hours',
@@ -1167,7 +1331,7 @@ if (function_exists('acf_add_local_field_group')) {
                             'label' => __('Öppnar', 'modularity-opening-hours'),
                             'name' => 'opens',
                             'type' => 'time_picker',
-                            'display_format' => 'H:i:s',
+                            'display_format' => 'H:i',
                             'return_format' => 'H:i:s',
                             'parent_repeater' => 'field_extra_hours_wednesday',
                         ),
@@ -1176,7 +1340,7 @@ if (function_exists('acf_add_local_field_group')) {
                             'label' => __('Stänger', 'modularity-opening-hours'),
                             'name' => 'closes',
                             'type' => 'time_picker',
-                            'display_format' => 'H:i:s',
+                            'display_format' => 'H:i',
                             'return_format' => 'H:i:s',
                             'parent_repeater' => 'field_extra_hours_wednesday',
                         ),
@@ -1190,7 +1354,7 @@ if (function_exists('acf_add_local_field_group')) {
                     ),
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                32 => array(
+                36 => array(
                     'key' => 'field_accordion_thursday',
                     'label' => __('Torsdag', 'modularity-opening-hours'),
                     'name' => '',
@@ -1217,7 +1381,7 @@ if (function_exists('acf_add_local_field_group')) {
                     'endpoint' => 0,
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                33 => array(
+                37 => array(
                     'key' => 'field_gran_thursday',
                     'label' => __('Torsdag', 'modularity-opening-hours'),
                     'name' => 'thursday_is_closed',
@@ -1246,7 +1410,7 @@ if (function_exists('acf_add_local_field_group')) {
                     'parent_repeater' => 'field_69944a2d44994',
                     'message' => '',
                 ),
-                34 => array(
+                38 => array(
                     'key' => 'field_gran_thursday_opens',
                     'label' => __('Torsdag öppnar', 'modularity-opening-hours'),
                     'name' => 'thursday_opens',
@@ -1261,6 +1425,11 @@ if (function_exists('acf_add_local_field_group')) {
                                 'operator' => '==',
                                 'value' => 'granular',
                             ),
+                            1 => array(
+                                'field' => 'field_gran_thursday',
+                                'operator' => '!=',
+                                'value' => '1',
+                            ),
                         ),
                     ),
                     'wrapper' => array(
@@ -1268,11 +1437,11 @@ if (function_exists('acf_add_local_field_group')) {
                         'class' => '',
                         'id' => '',
                     ),
-                    'display_format' => 'H:i:s',
+                    'display_format' => 'H:i',
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                35 => array(
+                39 => array(
                     'key' => 'field_gran_thursday_closes',
                     'label' => __('Torsdag stänger', 'modularity-opening-hours'),
                     'name' => 'thursday_closes',
@@ -1287,6 +1456,11 @@ if (function_exists('acf_add_local_field_group')) {
                                 'operator' => '==',
                                 'value' => 'granular',
                             ),
+                            1 => array(
+                                'field' => 'field_gran_thursday',
+                                'operator' => '!=',
+                                'value' => '1',
+                            ),
                         ),
                     ),
                     'wrapper' => array(
@@ -1294,11 +1468,11 @@ if (function_exists('acf_add_local_field_group')) {
                         'class' => '',
                         'id' => '',
                     ),
-                    'display_format' => 'H:i:s',
+                    'display_format' => 'H:i',
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                36 => array(
+                40 => array(
                     'key' => 'field_gran_thursday_desc',
                     'label' => __('Beskrivning (torsdag)', 'modularity-opening-hours'),
                     'name' => 'thursday_description',
@@ -1327,7 +1501,7 @@ if (function_exists('acf_add_local_field_group')) {
                     'append' => '',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                37 => array(
+                41 => array(
                     'key' => 'field_extra_hours_thursday',
                     'label' => __('Fler tider (torsdag)', 'modularity-opening-hours'),
                     'name' => 'thursday_extra_hours',
@@ -1368,7 +1542,7 @@ if (function_exists('acf_add_local_field_group')) {
                             'label' => __('Öppnar', 'modularity-opening-hours'),
                             'name' => 'opens',
                             'type' => 'time_picker',
-                            'display_format' => 'H:i:s',
+                            'display_format' => 'H:i',
                             'return_format' => 'H:i:s',
                             'parent_repeater' => 'field_extra_hours_thursday',
                         ),
@@ -1377,7 +1551,7 @@ if (function_exists('acf_add_local_field_group')) {
                             'label' => __('Stänger', 'modularity-opening-hours'),
                             'name' => 'closes',
                             'type' => 'time_picker',
-                            'display_format' => 'H:i:s',
+                            'display_format' => 'H:i',
                             'return_format' => 'H:i:s',
                             'parent_repeater' => 'field_extra_hours_thursday',
                         ),
@@ -1391,7 +1565,7 @@ if (function_exists('acf_add_local_field_group')) {
                     ),
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                38 => array(
+                42 => array(
                     'key' => 'field_accordion_friday',
                     'label' => __('Fredag', 'modularity-opening-hours'),
                     'name' => '',
@@ -1418,7 +1592,7 @@ if (function_exists('acf_add_local_field_group')) {
                     'endpoint' => 0,
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                39 => array(
+                43 => array(
                     'key' => 'field_gran_friday',
                     'label' => __('Fredag', 'modularity-opening-hours'),
                     'name' => 'friday_is_closed',
@@ -1447,7 +1621,7 @@ if (function_exists('acf_add_local_field_group')) {
                     'parent_repeater' => 'field_69944a2d44994',
                     'message' => '',
                 ),
-                40 => array(
+                44 => array(
                     'key' => 'field_gran_friday_opens',
                     'label' => __('Fredag öppnar', 'modularity-opening-hours'),
                     'name' => 'friday_opens',
@@ -1462,6 +1636,11 @@ if (function_exists('acf_add_local_field_group')) {
                                 'operator' => '==',
                                 'value' => 'granular',
                             ),
+                            1 => array(
+                                'field' => 'field_gran_friday',
+                                'operator' => '!=',
+                                'value' => '1',
+                            ),
                         ),
                     ),
                     'wrapper' => array(
@@ -1469,11 +1648,11 @@ if (function_exists('acf_add_local_field_group')) {
                         'class' => '',
                         'id' => '',
                     ),
-                    'display_format' => 'H:i:s',
+                    'display_format' => 'H:i',
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                41 => array(
+                45 => array(
                     'key' => 'field_gran_friday_closes',
                     'label' => __('Fredag stänger', 'modularity-opening-hours'),
                     'name' => 'friday_closes',
@@ -1488,6 +1667,11 @@ if (function_exists('acf_add_local_field_group')) {
                                 'operator' => '==',
                                 'value' => 'granular',
                             ),
+                            1 => array(
+                                'field' => 'field_gran_friday',
+                                'operator' => '!=',
+                                'value' => '1',
+                            ),
                         ),
                     ),
                     'wrapper' => array(
@@ -1495,11 +1679,11 @@ if (function_exists('acf_add_local_field_group')) {
                         'class' => '',
                         'id' => '',
                     ),
-                    'display_format' => 'H:i:s',
+                    'display_format' => 'H:i',
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                42 => array(
+                46 => array(
                     'key' => 'field_gran_friday_desc',
                     'label' => __('Beskrivning (fredag)', 'modularity-opening-hours'),
                     'name' => 'friday_description',
@@ -1528,7 +1712,7 @@ if (function_exists('acf_add_local_field_group')) {
                     'append' => '',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                43 => array(
+                47 => array(
                     'key' => 'field_extra_hours_friday',
                     'label' => __('Fler tider (fredag)', 'modularity-opening-hours'),
                     'name' => 'friday_extra_hours',
@@ -1569,7 +1753,7 @@ if (function_exists('acf_add_local_field_group')) {
                             'label' => __('Öppnar', 'modularity-opening-hours'),
                             'name' => 'opens',
                             'type' => 'time_picker',
-                            'display_format' => 'H:i:s',
+                            'display_format' => 'H:i',
                             'return_format' => 'H:i:s',
                             'parent_repeater' => 'field_extra_hours_friday',
                         ),
@@ -1578,7 +1762,7 @@ if (function_exists('acf_add_local_field_group')) {
                             'label' => __('Stänger', 'modularity-opening-hours'),
                             'name' => 'closes',
                             'type' => 'time_picker',
-                            'display_format' => 'H:i:s',
+                            'display_format' => 'H:i',
                             'return_format' => 'H:i:s',
                             'parent_repeater' => 'field_extra_hours_friday',
                         ),
@@ -1592,7 +1776,7 @@ if (function_exists('acf_add_local_field_group')) {
                     ),
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                44 => array(
+                48 => array(
                     'key' => 'field_accordion_saturday',
                     'label' => __('Lördag', 'modularity-opening-hours'),
                     'name' => '',
@@ -1619,7 +1803,7 @@ if (function_exists('acf_add_local_field_group')) {
                     'endpoint' => 0,
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                45 => array(
+                49 => array(
                     'key' => 'field_gran_saturday',
                     'label' => __('Lördag', 'modularity-opening-hours'),
                     'name' => 'saturday_is_closed',
@@ -1648,7 +1832,7 @@ if (function_exists('acf_add_local_field_group')) {
                     'parent_repeater' => 'field_69944a2d44994',
                     'message' => '',
                 ),
-                46 => array(
+                50 => array(
                     'key' => 'field_gran_saturday_opens',
                     'label' => __('Lördag öppnar', 'modularity-opening-hours'),
                     'name' => 'saturday_opens',
@@ -1663,6 +1847,11 @@ if (function_exists('acf_add_local_field_group')) {
                                 'operator' => '==',
                                 'value' => 'granular',
                             ),
+                            1 => array(
+                                'field' => 'field_gran_saturday',
+                                'operator' => '!=',
+                                'value' => '1',
+                            ),
                         ),
                     ),
                     'wrapper' => array(
@@ -1670,11 +1859,11 @@ if (function_exists('acf_add_local_field_group')) {
                         'class' => '',
                         'id' => '',
                     ),
-                    'display_format' => 'H:i:s',
+                    'display_format' => 'H:i',
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                47 => array(
+                51 => array(
                     'key' => 'field_gran_saturday_closes',
                     'label' => __('Lördag stänger', 'modularity-opening-hours'),
                     'name' => 'saturday_closes',
@@ -1689,6 +1878,11 @@ if (function_exists('acf_add_local_field_group')) {
                                 'operator' => '==',
                                 'value' => 'granular',
                             ),
+                            1 => array(
+                                'field' => 'field_gran_saturday',
+                                'operator' => '!=',
+                                'value' => '1',
+                            ),
                         ),
                     ),
                     'wrapper' => array(
@@ -1696,11 +1890,11 @@ if (function_exists('acf_add_local_field_group')) {
                         'class' => '',
                         'id' => '',
                     ),
-                    'display_format' => 'H:i:s',
+                    'display_format' => 'H:i',
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                48 => array(
+                52 => array(
                     'key' => 'field_gran_saturday_desc',
                     'label' => __('Beskrivning (lördag)', 'modularity-opening-hours'),
                     'name' => 'saturday_description',
@@ -1729,7 +1923,7 @@ if (function_exists('acf_add_local_field_group')) {
                     'append' => '',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                49 => array(
+                53 => array(
                     'key' => 'field_extra_hours_saturday',
                     'label' => __('Fler tider (lördag)', 'modularity-opening-hours'),
                     'name' => 'saturday_extra_hours',
@@ -1770,7 +1964,7 @@ if (function_exists('acf_add_local_field_group')) {
                             'label' => __('Öppnar', 'modularity-opening-hours'),
                             'name' => 'opens',
                             'type' => 'time_picker',
-                            'display_format' => 'H:i:s',
+                            'display_format' => 'H:i',
                             'return_format' => 'H:i:s',
                             'parent_repeater' => 'field_extra_hours_saturday',
                         ),
@@ -1779,7 +1973,7 @@ if (function_exists('acf_add_local_field_group')) {
                             'label' => __('Stänger', 'modularity-opening-hours'),
                             'name' => 'closes',
                             'type' => 'time_picker',
-                            'display_format' => 'H:i:s',
+                            'display_format' => 'H:i',
                             'return_format' => 'H:i:s',
                             'parent_repeater' => 'field_extra_hours_saturday',
                         ),
@@ -1793,7 +1987,7 @@ if (function_exists('acf_add_local_field_group')) {
                     ),
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                50 => array(
+                54 => array(
                     'key' => 'field_accordion_sunday',
                     'label' => __('Söndag', 'modularity-opening-hours'),
                     'name' => '',
@@ -1820,7 +2014,7 @@ if (function_exists('acf_add_local_field_group')) {
                     'endpoint' => 0,
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                51 => array(
+                55 => array(
                     'key' => 'field_gran_sunday',
                     'label' => __('Söndag', 'modularity-opening-hours'),
                     'name' => 'sunday_is_closed',
@@ -1849,7 +2043,7 @@ if (function_exists('acf_add_local_field_group')) {
                     'parent_repeater' => 'field_69944a2d44994',
                     'message' => '',
                 ),
-                52 => array(
+                56 => array(
                     'key' => 'field_gran_sunday_opens',
                     'label' => __('Söndag öppnar', 'modularity-opening-hours'),
                     'name' => 'sunday_opens',
@@ -1864,6 +2058,11 @@ if (function_exists('acf_add_local_field_group')) {
                                 'operator' => '==',
                                 'value' => 'granular',
                             ),
+                            1 => array(
+                                'field' => 'field_gran_sunday',
+                                'operator' => '!=',
+                                'value' => '1',
+                            ),
                         ),
                     ),
                     'wrapper' => array(
@@ -1871,11 +2070,11 @@ if (function_exists('acf_add_local_field_group')) {
                         'class' => '',
                         'id' => '',
                     ),
-                    'display_format' => 'H:i:s',
+                    'display_format' => 'H:i',
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                53 => array(
+                57 => array(
                     'key' => 'field_gran_sunday_closes',
                     'label' => __('Söndag stänger', 'modularity-opening-hours'),
                     'name' => 'sunday_closes',
@@ -1890,6 +2089,11 @@ if (function_exists('acf_add_local_field_group')) {
                                 'operator' => '==',
                                 'value' => 'granular',
                             ),
+                            1 => array(
+                                'field' => 'field_gran_sunday',
+                                'operator' => '!=',
+                                'value' => '1',
+                            ),
                         ),
                     ),
                     'wrapper' => array(
@@ -1897,11 +2101,11 @@ if (function_exists('acf_add_local_field_group')) {
                         'class' => '',
                         'id' => '',
                     ),
-                    'display_format' => 'H:i:s',
+                    'display_format' => 'H:i',
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                54 => array(
+                58 => array(
                     'key' => 'field_gran_sunday_desc',
                     'label' => __('Beskrivning (söndag)', 'modularity-opening-hours'),
                     'name' => 'sunday_description',
@@ -1930,7 +2134,7 @@ if (function_exists('acf_add_local_field_group')) {
                     'append' => '',
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                55 => array(
+                59 => array(
                     'key' => 'field_extra_hours_sunday',
                     'label' => __('Fler tider (söndag)', 'modularity-opening-hours'),
                     'name' => 'sunday_extra_hours',
@@ -1971,7 +2175,7 @@ if (function_exists('acf_add_local_field_group')) {
                             'label' => __('Öppnar', 'modularity-opening-hours'),
                             'name' => 'opens',
                             'type' => 'time_picker',
-                            'display_format' => 'H:i:s',
+                            'display_format' => 'H:i',
                             'return_format' => 'H:i:s',
                             'parent_repeater' => 'field_extra_hours_sunday',
                         ),
@@ -1980,7 +2184,7 @@ if (function_exists('acf_add_local_field_group')) {
                             'label' => __('Stänger', 'modularity-opening-hours'),
                             'name' => 'closes',
                             'type' => 'time_picker',
-                            'display_format' => 'H:i:s',
+                            'display_format' => 'H:i',
                             'return_format' => 'H:i:s',
                             'parent_repeater' => 'field_extra_hours_sunday',
                         ),
@@ -1994,13 +2198,40 @@ if (function_exists('acf_add_local_field_group')) {
                     ),
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
-                56 => array(
+                60 => array(
+                    'key' => 'field_accordion_weekdays_end',
+                    'label' => '',
+                    'name' => '',
+                    'aria-label' => '',
+                    'type' => 'accordion',
+                    'instructions' => '',
+                    'required' => 0,
+                    'conditional_logic' => array(
+                        0 => array(
+                            0 => array(
+                                'field' => 'field_schedule_mode_0001',
+                                'operator' => '==',
+                                'value' => 'granular',
+                            ),
+                        ),
+                    ),
+                    'wrapper' => array(
+                        'width' => '',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'open' => 0,
+                    'multi_expand' => 1,
+                    'endpoint' => 1,
+                    'parent_repeater' => 'field_69944a2d44994',
+                ),
+                61 => array(
                     'key' => 'field_69945be944999',
                     'label' => __('Avvikande öppettider', 'modularity-opening-hours'),
                     'name' => 'special_opening_hours',
                     'aria-label' => '',
                     'type' => 'repeater',
-                    'instructions' => '',
+                    'instructions' => __('Gäller ett kalenderdatum, t.ex. röd dag. Avvikande datum gäller hela modulen, inte bara denna period. Datumet måste ha rätt år.', 'modularity-opening-hours'),
                     'required' => 0,
                     'conditional_logic' => 0,
                     'wrapper' => array(
@@ -2013,12 +2244,12 @@ if (function_exists('acf_add_local_field_group')) {
                     'min' => 0,
                     'max' => 0,
                     'collapsed' => '',
-                    'button_label' => __('Lägg till rad', 'modularity-opening-hours'),
+                    'button_label' => __('Lägg till avvikande dag', 'modularity-opening-hours'),
                     'rows_per_page' => 20,
                     'sub_fields' => array(
                         0 => array(
                             'key' => 'field_6994600753009',
-                            'label' => __('Veckodag', 'modularity-opening-hours'),
+                            'label' => __('Datum', 'modularity-opening-hours'),
                             'name' => 'special_opening_date',
                             'aria-label' => '',
                             'type' => 'date_picker',
@@ -2036,6 +2267,27 @@ if (function_exists('acf_add_local_field_group')) {
                             'parent_repeater' => 'field_69945be944999',
                         ),
                         1 => array(
+                            'key' => 'field_special_closed_this_day',
+                            'label' => __('Stängt denna dag', 'modularity-opening-hours'),
+                            'name' => 'closed_this_day',
+                            'aria-label' => '',
+                            'type' => 'true_false',
+                            'instructions' => '',
+                            'required' => 0,
+                            'conditional_logic' => 0,
+                            'wrapper' => array(
+                                'width' => '',
+                                'class' => '',
+                                'id' => '',
+                            ),
+                            'message' => '',
+                            'default_value' => 0,
+                            'ui' => 1,
+                            'ui_on_text' => __('Stängt', 'modularity-opening-hours'),
+                            'ui_off_text' => __('Öppen', 'modularity-opening-hours'),
+                            'parent_repeater' => 'field_69945be944999',
+                        ),
+                        2 => array(
                             'key' => 'field_6994604a5300a',
                             'label' => __('Öppnar denna dagen', 'modularity-opening-hours'),
                             'name' => 'opens_this_day',
@@ -2043,17 +2295,25 @@ if (function_exists('acf_add_local_field_group')) {
                             'type' => 'time_picker',
                             'instructions' => '',
                             'required' => 0,
-                            'conditional_logic' => 0,
+                            'conditional_logic' => array(
+                            0 => array(
+                                0 => array(
+                                    'field' => 'field_special_closed_this_day',
+                                    'operator' => '!=',
+                                    'value' => '1',
+                                ),
+                            ),
+                        ),
                             'wrapper' => array(
                                 'width' => '',
                                 'class' => '',
                                 'id' => '',
                             ),
-                            'display_format' => 'H:i:s',
+                            'display_format' => 'H:i',
                             'return_format' => 'H:i:s',
                             'parent_repeater' => 'field_69945be944999',
                         ),
-                        2 => array(
+                        3 => array(
                             'key' => 'field_699460605300b',
                             'label' => __('Stänger denna dagen', 'modularity-opening-hours'),
                             'name' => 'closes_this_day',
@@ -2061,17 +2321,25 @@ if (function_exists('acf_add_local_field_group')) {
                             'type' => 'time_picker',
                             'instructions' => '',
                             'required' => 0,
-                            'conditional_logic' => 0,
+                            'conditional_logic' => array(
+                            0 => array(
+                                0 => array(
+                                    'field' => 'field_special_closed_this_day',
+                                    'operator' => '!=',
+                                    'value' => '1',
+                                ),
+                            ),
+                        ),
                             'wrapper' => array(
                                 'width' => '',
                                 'class' => '',
                                 'id' => '',
                             ),
-                            'display_format' => 'H:i:s',
+                            'display_format' => 'H:i',
                             'return_format' => 'H:i:s',
                             'parent_repeater' => 'field_69945be944999',
                         ),
-                        3 => array(
+                        4 => array(
                             'key' => 'field_69d664a65069e',
                             'label' => __('Beskrivning', 'modularity-opening-hours'),
                             'name' => 'special_opening_hours_description',
@@ -2092,7 +2360,7 @@ if (function_exists('acf_add_local_field_group')) {
                             'append' => '',
                             'parent_repeater' => 'field_69945be944999',
                         ),
-                        array(
+                        5 => array(
                             'key' => 'field_extra_hours_special',
                             'label' => __('Fler tider', 'modularity-opening-hours'),
                             'name' => 'extra_hours',
@@ -2109,6 +2377,11 @@ if (function_exists('acf_add_local_field_group')) {
                                 1 => array(
                                     'field' => 'field_699460605300b',
                                     'operator' => '!=empty',
+                                ),
+                                2 => array(
+                                    'field' => 'field_special_closed_this_day',
+                                    'operator' => '!=',
+                                    'value' => '1',
                                 ),
                             ),
                         ),
@@ -2131,7 +2404,7 @@ if (function_exists('acf_add_local_field_group')) {
                                     'label' => __('Öppnar', 'modularity-opening-hours'),
                                     'name' => 'opens',
                                     'type' => 'time_picker',
-                                    'display_format' => 'H:i:s',
+                                    'display_format' => 'H:i',
                                     'return_format' => 'H:i:s',
                                     'parent_repeater' => 'field_extra_hours_special',
                                 ),
@@ -2140,7 +2413,7 @@ if (function_exists('acf_add_local_field_group')) {
                                     'label' => __('Stänger', 'modularity-opening-hours'),
                                     'name' => 'closes',
                                     'type' => 'time_picker',
-                                    'display_format' => 'H:i:s',
+                                    'display_format' => 'H:i',
                                     'return_format' => 'H:i:s',
                                     'parent_repeater' => 'field_extra_hours_special',
                                 ),
