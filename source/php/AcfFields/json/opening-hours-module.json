@@ -3375,6 +3375,42 @@
                     },
                     {
                         "ID": 0,
+                        "key": "field_accordion_weekdays_end",
+                        "label": "",
+                        "name": "",
+                        "aria-label": "",
+                        "prefix": "acf",
+                        "type": "accordion",
+                        "value": false,
+                        "menu_order": 60,
+                        "instructions": "",
+                        "required": 0,
+                        "id": "",
+                        "class": "",
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_schedule_mode_0001",
+                                    "operator": "==",
+                                    "value": "granular"
+                                }
+                            ]
+                        ],
+                        "parent": "field_69944a2d44994",
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "open": 0,
+                        "multi_expand": 1,
+                        "endpoint": 1,
+                        "parent_repeater": "field_69944a2d44994",
+                        "_name": "",
+                        "_valid": 1
+                    },
+                    {
+                        "ID": 0,
                         "key": "field_69945be944999",
                         "label": "Avvikande öppettider",
                         "name": "special_opening_hours",
@@ -3382,7 +3418,7 @@
                         "prefix": "acf",
                         "type": "repeater",
                         "value": null,
-                        "menu_order": 60,
+                        "menu_order": 61,
                         "instructions": "Gäller ett kalenderdatum, t.ex. röd dag. Avvikande datum gäller hela modulen, inte bara denna period. Datumet måste ha rätt år.",
                         "required": 0,
                         "id": "",
@@ -3426,8 +3462,8 @@
                                     "class": "",
                                     "id": ""
                                 },
-                                "display_format": "d\/m\/Y",
-                                "return_format": "d\/m\/Y",
+                                "display_format": "d/m/Y",
+                                "return_format": "d/m/Y",
                                 "first_day": 1,
                                 "parent_repeater": "field_69945be944999",
                                 "_name": "special_opening_date",
@@ -3587,6 +3623,11 @@
                                         {
                                             "field": "field_699460605300b",
                                             "operator": "!=empty"
+                                        },
+                                        {
+                                            "field": "field_special_closed_this_day",
+                                            "operator": "!=",
+                                            "value": "1"
                                         }
                                     ]
                                 ],
@@ -3919,7 +3960,7 @@
                 {
                     "param": "block",
                     "operator": "==",
-                    "value": "acf\/opening-hours"
+                    "value": "acf/opening-hours"
                 }
             ]
         ],

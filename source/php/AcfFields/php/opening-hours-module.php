@@ -2199,6 +2199,33 @@ if (function_exists('acf_add_local_field_group')) {
                     'parent_repeater' => 'field_69944a2d44994',
                 ),
                 60 => array(
+                    'key' => 'field_accordion_weekdays_end',
+                    'label' => '',
+                    'name' => '',
+                    'aria-label' => '',
+                    'type' => 'accordion',
+                    'instructions' => '',
+                    'required' => 0,
+                    'conditional_logic' => array(
+                        0 => array(
+                            0 => array(
+                                'field' => 'field_schedule_mode_0001',
+                                'operator' => '==',
+                                'value' => 'granular',
+                            ),
+                        ),
+                    ),
+                    'wrapper' => array(
+                        'width' => '',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'open' => 0,
+                    'multi_expand' => 1,
+                    'endpoint' => 1,
+                    'parent_repeater' => 'field_69944a2d44994',
+                ),
+                61 => array(
                     'key' => 'field_69945be944999',
                     'label' => __('Avvikande öppettider', 'modularity-opening-hours'),
                     'name' => 'special_opening_hours',
@@ -2350,6 +2377,11 @@ if (function_exists('acf_add_local_field_group')) {
                                 1 => array(
                                     'field' => 'field_699460605300b',
                                     'operator' => '!=empty',
+                                ),
+                                2 => array(
+                                    'field' => 'field_special_closed_this_day',
+                                    'operator' => '!=',
+                                    'value' => '1',
                                 ),
                             ),
                         ),
