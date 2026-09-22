@@ -3,7 +3,7 @@
 /**
  * Plugin Name:       Modularity OpeningHours
  * Description:       A module for displaying opening hours.
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author:            Considbrs-Webdev
  * License:           MIT
  * License URI:       https://opensource.org/licenses/MIT
