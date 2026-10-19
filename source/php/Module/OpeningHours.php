@@ -110,6 +110,9 @@ class OpeningHours extends \Modularity\Module
      * modules or blocks saved before the field existed have none. The legacy fallback lives in
      * {@see WeekHeading::preLoadParts()}.
      *
+     * Pass the stored value through unchanged. An unchecked checkbox is `false` or `''`;
+     * coercing that to `null` would restore the default heading.
+     *
      * @return string[]
      */
     private function getHeadingParts(): array
@@ -117,7 +120,7 @@ class OpeningHours extends \Modularity\Module
         $id = $this->getID();
         $value = $id ? get_field(WeekHeading::FIELD_NAME, $id) : null;
 
-        return WeekHeading::normalizeParts(is_array($value) ? $value : null);
+        return WeekHeading::normalizeParts($value);
     }
 
     /**

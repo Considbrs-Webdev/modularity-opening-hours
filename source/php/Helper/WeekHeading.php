@@ -79,13 +79,18 @@ class WeekHeading
     /**
      * Sanitize a field value to the allowed parts, in display order.
      *
-     * A missing field means the default heading: week number, dates and year.
+     * `null` means the field was never saved and restores the default heading: week number,
+     * dates and year. An empty checkbox comes back as `false`, `''`, or `[]` and hides every part.
      *
      * @param mixed $parts Value of the `week_heading_parts` field.
      * @return string[]
      */
     public static function normalizeParts($parts): array
     {
+        if ($parts === false || $parts === '') {
+            return [];
+        }
+
         if ($parts === null) {
             return self::allowedParts();
         }
