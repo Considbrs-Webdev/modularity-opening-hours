@@ -42,7 +42,10 @@
     @endif
     @if (!empty($weeks))
         <div class="mod-opening-hours__week-header">
-            <h3 class="mod-opening-hours__week-title" data-week-title>{{ $currentWeek['weekLabel'] ?? '' }}</h3>
+            <h3 class="mod-opening-hours__week-title">
+                <span aria-hidden="true" data-week-title>{{ $currentWeek['weekLabel'] ?? '' }}</span>
+                <span class="mod-opening-hours__week-title-full" data-week-title-full>{{ $currentWeek['weekLabelFull'] ?? '' }}</span>
+            </h3>
             <nav class="mod-opening-hours__paging"
                 aria-label="{{ __('Opening hours week navigation', 'modularity-opening-hours') }}">
                 <button type="button" class="mod-opening-hours__paging-link mod-opening-hours__paging-link--prev{{ ($paginationBtnStyle ?? 'text') === 'icon' ? ' mod-opening-hours__paging-link--icon' : '' }}"
@@ -80,7 +83,7 @@
         <div class="mod-opening-hours__list-container">
             @foreach ($weeks as $weekIndex => $week)
                 <dl class="mod-opening-hours__list" data-week-index="{{ $weekIndex }}"
-                    data-week-label="{{ $week['weekLabel'] }}" data-week-no="{{ $week['weekNo'] ?? '' }}"
+                    data-week-label="{{ $week['weekLabel'] }}" data-week-label-full="{{ $week['weekLabelFull'] ?? $week['weekLabel'] }}" data-week-no="{{ $week['weekNo'] ?? '' }}"
                     {!! (int) $weekIndex !== (int) $currentWeekIndex ? 'hidden' : '' !!}>
                     @foreach ($week['days'] as $day)
                         <div class="mod-opening-hours__row" data-date-key="{{ $day['dateKey'] ?? '' }}">

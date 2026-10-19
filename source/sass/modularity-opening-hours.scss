@@ -65,6 +65,20 @@
         font-weight: 600;
     }
 
+    // Modularity sets position: relative on every class containing "mod-", so the selector is
+    // doubled to stay ahead of it.
+    & &__week-title-full {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+        border: 0;
+    }
+
     &__paging {
         display: flex;
         align-items: center;

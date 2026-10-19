@@ -155,7 +155,7 @@ msgstr "Söndag"
 #: source/php/Module/OpeningHours.php:423
 #, php-format
 msgid "Week %1$s %2$s (%3$s – %4$s)"
-msgstr "Vecka  %1$s %2$s (%3$s – %4$s)"
+msgstr "Vecka %1$s %2$s (%3$s – %4$s)"
 
 #. translators: 1: ISO week number, 2: year.
 #: source/php/Module/OpeningHours.php:434

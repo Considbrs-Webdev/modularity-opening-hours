@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace ModularityOpeningHours\Module;
 
+use ModularityOpeningHours\Helper\WeekHeading;
+
 /**
  * Class OpeningHours
  * @package ModularityOpeningHours\Module
@@ -33,9 +35,11 @@ class OpeningHours extends \Modularity\Module
 
         $weekRepeater = $this->normalizeWeekRepeater($data['weekRepeater'] ?? null);
         $year = $this->getYear();
-        $showYear = !empty($data['showYear']);
-        $showWeekDates = !empty($data['showWeekDates']);
-        $weeks = $this->buildWeeksFromRepeater($weekRepeater, $year, $showYear, $showWeekDates);
+        $headingParts = $this->getHeadingParts();
+        $data['weekHeadingParts'] = $headingParts;
+        $data['showYear'] = in_array(WeekHeading::PART_YEAR, $headingParts, true);
+        $data['showWeekDates'] = in_array(WeekHeading::PART_DATES, $headingParts, true);
+        $weeks = $this->buildWeeksFromRepeater($weekRepeater, $year, $headingParts);
         $data['paginationBtnStyle'] = $data['paginationBtnStyle'] ?? 'text';
         $currentIndex = $this->getCurrentWeekIndex($weeks);
         $data['weeks'] = $weeks;
@@ -97,6 +101,23 @@ class OpeningHours extends \Modularity\Module
         $data['inlineStyle'] = implode('; ', $styles);
 
         return $data;
+    }
+
+    /**
+     * Parts shown in the visible week heading.
+     *
+     * Read explicitly because ACF only returns fields that already have stored values, and
+     * modules or blocks saved before the field existed have none. The legacy fallback lives in
+     * {@see WeekHeading::preLoadParts()}.
+     *
+     * @return string[]
+     */
+    private function getHeadingParts(): array
+    {
+        $id = $this->getID();
+        $value = $id ? get_field(WeekHeading::FIELD_NAME, $id) : null;
+
+        return WeekHeading::normalizeParts(is_array($value) ? $value : null);
     }
 
     /**
@@ -356,11 +377,10 @@ class OpeningHours extends \Modularity\Module
     /**
      * @param array<int, array> $repeater
      * @param int $year
-     * @param bool $showYear
-     * @param bool $showWeekDates
-     * @return array<int, array{weekLabel: string, weekNo: int, days: array<int, array{name: string, date: string, slots: array}>}>
+     * @param string[] $headingParts Parts shown in the visible week heading, see {@see WeekHeading}.
+     * @return array<int, array{weekLabel: string, weekLabelFull: string, weekNo: int, days: array<int, array{name: string, date: string, slots: array}>}>
      */
-    private function buildWeeksFromRepeater(array $repeater, int $year, bool $showYear = true, bool $showWeekDates = true): array
+    private function buildWeeksFromRepeater(array $repeater, int $year, array $headingParts): array
     {
         $weeks = [];
         $dayNames = [
@@ -528,7 +548,7 @@ class OpeningHours extends \Modularity\Module
                 $monday = $weekOne->modify('monday this week')->modify('+' . ($currentWeekNo - 1) . ' weeks');
                 $weekEnd = $monday->modify('+6 days');
                 
-                $weekLabel = $this->buildWeekLabel($currentWeekNo, $year, $monday, $weekEnd, $showYear, $showWeekDates);
+                $weekLabels = $this->buildWeekLabels($currentWeekNo, $year, $monday, $weekEnd, $headingParts);
 
                 // Build days with actual dates
                 $days = [];
@@ -560,7 +580,8 @@ class OpeningHours extends \Modularity\Module
                 }
 
                 $weeks[] = [
-                    'weekLabel' => $weekLabel,
+                    'weekLabel' => $weekLabels['visible'],
+                    'weekLabelFull' => $weekLabels['full'],
                     'weekNo' => $currentWeekNo,
                     'days' => $days,
                 ];
@@ -597,56 +618,21 @@ class OpeningHours extends \Modularity\Module
     }
 
     /**
-     * Build week label based on display settings
+     * Build the visible and accessible week labels based on the selected heading parts.
+     *
      * @param int $weekNo
      * @param int $year
      * @param \DateTimeImmutable $monday
      * @param \DateTimeImmutable $weekEnd
-     * @param bool $showYear
-     * @param bool $showWeekDates
-     * @return string
+     * @param string[] $headingParts
+     * @return array{visible: string, full: string}
      */
-    private function buildWeekLabel(int $weekNo, int $year, \DateTimeImmutable $monday, \DateTimeImmutable $weekEnd, bool $showYear, bool $showWeekDates): string
+    private function buildWeekLabels(int $weekNo, int $year, \DateTimeImmutable $monday, \DateTimeImmutable $weekEnd, array $headingParts): array
     {
         $startDate = $monday->format('j') . ' ' . $this->getMonthName((int) $monday->format('n'));
         $endDate = $weekEnd->format('j') . ' ' . $this->getMonthName((int) $weekEnd->format('n'));
 
-        if ($showYear && $showWeekDates) {
-            return sprintf(
-                /* translators: 1: ISO week number, 2: year, 3: week start (day and month), 4: week end (day and month). */
-                __('Week %1$s %2$s (%3$s – %4$s)', 'modularity-opening-hours'),
-                (string) $weekNo,
-                (string) $year,
-                $startDate,
-                $endDate
-            );
-        }
-
-        if ($showYear && !$showWeekDates) {
-            return sprintf(
-                /* translators: 1: ISO week number, 2: year. */
-                __('Week %1$s %2$s', 'modularity-opening-hours'),
-                (string) $weekNo,
-                (string) $year
-            );
-        }
-
-        if (!$showYear && $showWeekDates) {
-            return sprintf(
-                /* translators: 1: ISO week number, 2: week start (day and month), 3: week end (day and month). */
-                __('Week %1$s (%2$s – %3$s)', 'modularity-opening-hours'),
-                (string) $weekNo,
-                $startDate,
-                $endDate
-            );
-        }
-
-        // Neither year nor dates
-        return sprintf(
-            /* translators: 1: ISO week number. */
-            __('Week %1$s', 'modularity-opening-hours'),
-            (string) $weekNo
-        );
+        return WeekHeading::buildLabels($headingParts, $weekNo, $year, $startDate, $endDate);
     }
 
     /**
