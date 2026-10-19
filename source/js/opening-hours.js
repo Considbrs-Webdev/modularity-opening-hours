@@ -1,4 +1,9 @@
-document.querySelectorAll('.mod-opening-hours').forEach((root) => {
+const ROOT_SELECTOR = '.mod-opening-hours';
+const INIT_FLAG = 'openingHoursInit';
+
+function initOpeningHours(root) {
+    if (root.dataset[INIT_FLAG] === '1') return;
+
     const lists = root.querySelectorAll('.mod-opening-hours__list[data-week-index]');
     const titleEl = root.querySelector('[data-week-title]');
     const titleFullEl = root.querySelector('[data-week-title-full]');
@@ -8,6 +13,8 @@ document.querySelectorAll('.mod-opening-hours').forEach((root) => {
 
     const total = lists.length;
     if (total === 0) return;
+
+    root.dataset[INIT_FLAG] = '1';
 
     let current = parseInt(root.dataset.currentWeekIndex ?? '0', 10);
     if (Number.isNaN(current) || current < 0) current = 0;
@@ -96,4 +103,29 @@ document.querySelectorAll('.mod-opening-hours').forEach((root) => {
     });
 
     showWeek(current);
-});
+}
+
+function initAll(scope) {
+    if (scope.matches?.(ROOT_SELECTOR)) initOpeningHours(scope);
+    scope.querySelectorAll(ROOT_SELECTOR).forEach(initOpeningHours);
+}
+
+/**
+ * The block editor re-renders ACF blocks by replacing their markup, so new
+ * roots must be initialised as they appear.
+ */
+function observeEditorRenders() {
+    new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            mutation.addedNodes.forEach((node) => {
+                if (node.nodeType === Node.ELEMENT_NODE) initAll(node);
+            });
+        });
+    }).observe(document.documentElement, { childList: true, subtree: true });
+}
+
+initAll(document);
+
+if (window.frameElement?.name === 'editor-canvas') {
+    observeEditorRenders();
+}

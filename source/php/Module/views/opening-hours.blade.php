@@ -84,7 +84,7 @@
             @foreach ($weeks as $weekIndex => $week)
                 <dl class="mod-opening-hours__list" data-week-index="{{ $weekIndex }}"
                     data-week-label="{{ $week['weekLabel'] }}" data-week-label-full="{{ $week['weekLabelFull'] ?? $week['weekLabel'] }}" data-week-no="{{ $week['weekNo'] ?? '' }}"
-                    {!! (int) $weekIndex !== (int) $currentWeekIndex ? 'hidden' : '' !!}>
+                    {!! (int) $weekIndex !== (int) $currentWeekIndex ? 'hidden="hidden"' : '' !!}>
                     @foreach ($week['days'] as $day)
                         <div class="mod-opening-hours__row" data-date-key="{{ $day['dateKey'] ?? '' }}">
                             <dt class="mod-opening-hours__day">
