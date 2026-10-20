@@ -3,6 +3,7 @@
 namespace ModularityOpeningHours;
 
 use ModularityOpeningHours\Helper\CacheBust;
+use ModularityOpeningHours\Helper\WeekHeading;
 
 /**
  * Class App
@@ -21,6 +22,8 @@ class App
 
         // Enqueue styles
         add_action('wp_enqueue_scripts', [$this, 'enqueueStyles']);
+
+        add_filter('acf/pre_load_value', [WeekHeading::class, 'preLoadParts'], 10, 3);
     }
 
     /**

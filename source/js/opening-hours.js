@@ -1,6 +1,7 @@
 document.querySelectorAll('.mod-opening-hours').forEach((root) => {
     const lists = root.querySelectorAll('.mod-opening-hours__list[data-week-index]');
     const titleEl = root.querySelector('[data-week-title]');
+    const titleFullEl = root.querySelector('[data-week-title-full]');
     const infoEl = root.querySelector('.mod-opening-hours__paging-info');
     const prevBtn = root.querySelector('.mod-opening-hours__paging-link--prev');
     const nextBtn = root.querySelector('.mod-opening-hours__paging-link--next');
@@ -69,8 +70,11 @@ document.querySelectorAll('.mod-opening-hours').forEach((root) => {
             const listIndex = parseInt(list.dataset.weekIndex, 10);
             list.hidden = listIndex !== current;
 
-            if (listIndex === current && titleEl) {
-                titleEl.textContent = list.dataset.weekLabel || '';
+            if (listIndex === current) {
+                if (titleEl) titleEl.textContent = list.dataset.weekLabel || '';
+                if (titleFullEl) {
+                    titleFullEl.textContent = list.dataset.weekLabelFull || list.dataset.weekLabel || '';
+                }
             }
         });
 
