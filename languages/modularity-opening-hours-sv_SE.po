@@ -151,6 +151,34 @@ msgstr "Lördag"
 msgid "Sunday"
 msgstr "Söndag"
 
+#: source/php/Module/OpeningHours.php:376
+msgid "Mon"
+msgstr "Mån"
+
+#: source/php/Module/OpeningHours.php:377
+msgid "Tue"
+msgstr "Tis"
+
+#: source/php/Module/OpeningHours.php:378
+msgid "Wed"
+msgstr "Ons"
+
+#: source/php/Module/OpeningHours.php:379
+msgid "Thu"
+msgstr "Tors"
+
+#: source/php/Module/OpeningHours.php:380
+msgid "Fri"
+msgstr "Fre"
+
+#: source/php/Module/OpeningHours.php:381
+msgid "Sat"
+msgstr "Lör"
+
+#: source/php/Module/OpeningHours.php:382
+msgid "Sun"
+msgstr "Sön"
+
 #. translators: 1: ISO week number, 2: year, 3: week start (day and month), 4: week end (day and month).
 #: source/php/Module/OpeningHours.php:423
 #, php-format

@@ -85,7 +85,8 @@
                     @foreach ($week['days'] as $day)
                         <div class="mod-opening-hours__row" data-date-key="{{ $day['dateKey'] ?? '' }}">
                             <dt class="mod-opening-hours__day">
-                                {{ $day['name'] }}
+                                <span class="mod-opening-hours__day-name">{{ $day['name'] }}</span>
+                                <span class="mod-opening-hours__day-name-short">{{ $day['shortName'] ?? $day['name'] }}</span>
                                 <span class="mod-opening-hours__date">{{ $day['date'] }}</span>
                             </dt>
                             <dd class="mod-opening-hours__slots">

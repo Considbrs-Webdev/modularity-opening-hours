@@ -358,7 +358,7 @@ class OpeningHours extends \Modularity\Module
      * @param int $year
      * @param bool $showYear
      * @param bool $showWeekDates
-     * @return array<int, array{weekLabel: string, weekNo: int, days: array<int, array{name: string, date: string, slots: array}>}>
+     * @return array<int, array{weekLabel: string, weekNo: int, days: array<int, array{name: string, shortName: string, date: string, slots: array}>}>
      */
     private function buildWeeksFromRepeater(array $repeater, int $year, bool $showYear = true, bool $showWeekDates = true): array
     {
@@ -371,6 +371,15 @@ class OpeningHours extends \Modularity\Module
             5 => __('Friday', 'modularity-opening-hours'),
             6 => __('Saturday', 'modularity-opening-hours'),
             7 => __('Sunday', 'modularity-opening-hours'),
+        ];
+        $dayShortNames = [
+            1 => __('Mon', 'modularity-opening-hours'),
+            2 => __('Tue', 'modularity-opening-hours'),
+            3 => __('Wed', 'modularity-opening-hours'),
+            4 => __('Thu', 'modularity-opening-hours'),
+            5 => __('Fri', 'modularity-opening-hours'),
+            6 => __('Sat', 'modularity-opening-hours'),
+            7 => __('Sun', 'modularity-opening-hours'),
         ];
 
         // Collect all special opening hours by date from all repeater rows
@@ -552,6 +561,7 @@ class OpeningHours extends \Modularity\Module
 
                     $days[] = [
                         'name' => $dayNames[$dayOfWeek],
+                        'shortName' => $dayShortNames[$dayOfWeek],
                         'date' => $formattedDate,
                         'dateKey' => $dateKey,
                         'slots' => $slots,
