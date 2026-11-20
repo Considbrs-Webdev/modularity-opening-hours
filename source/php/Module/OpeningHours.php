@@ -725,7 +725,7 @@ class OpeningHours extends \Modularity\Module
      */
     public function style(): void
     {
-        $this->wpEnqueue?->add('css/modularity-opening-hours.css', [], '1.1.0');
+        $this->wpEnqueue?->add('css/modularity-opening-hours.css', [], '1.1.1');
     }
 
     /**
